@@ -42,5 +42,4 @@ During the development of this project, the following technical skills were prac
 - 🔐 **Login System** – basic authentication for administrators  
 
 ---
-
-## 🧩 Project Structure
+e
