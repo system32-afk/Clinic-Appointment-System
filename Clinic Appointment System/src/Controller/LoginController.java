@@ -2,15 +2,21 @@ package Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import Util.Database;
-import java.sql.Connection;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.ResultSet;
 
 
 public class LoginController {
-    private final Connection conn = Database.getConnection();
+
     private final String email = "Admin@email.com";
     private final String password = "Admin123";
 
@@ -21,21 +27,18 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private void Signin(ActionEvent event) {
+    private void Signin(ActionEvent event) throws IOException {
         String inputEmail = emailField.getText();
         String inputPassword = passwordField.getText();
 
         if (inputEmail.equals(email) && inputPassword.equals(password)) {
             System.out.println("LOGIN SUCCESSFUL");
 
-            ResultSet result = Database.query("SELECT * FROM patient");
-            try {
-                while (result.next()) {
-                    System.out.println("Patient: " + result.getString("FirstName"));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
 
 
