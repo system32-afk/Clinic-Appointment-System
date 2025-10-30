@@ -1,12 +1,18 @@
 package Controller;
 
 import Util.Database;
+import Util.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -16,9 +22,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -66,6 +74,8 @@ public class DashboardController {
         loadData();
     }
 
+
+
     private void loadData() {
         try {
             // Get appointment count
@@ -78,7 +88,7 @@ public class DashboardController {
                 InProgressAppointments.setText(String.valueOf(appointments));
             }
 
-            // Get patient names
+            // Get appointment info
             ResultSet Appointment = Database.query(
                     "SELECT a.AppointmentID, " +
                             "CONCAT(p.LastName, ', ', p.FirstName) AS PatientName, " +
@@ -89,87 +99,54 @@ public class DashboardController {
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
             );
 
-
-            //this loads the appointments
             statsContainer.getChildren().clear(); // clear previous rows
-            while (Appointment.next()) { // loop through each row
-
-                //gets the data from each record
-                int appointmentID = Appointment.getInt("AppointmentID");
+            while (Appointment.next()) {
                 String patientName = Appointment.getString("PatientName");
-                String DoctorName = Appointment.getString("DoctorName");
+                String doctorName = Appointment.getString("DoctorName");
                 String appointmentTime = Appointment.getString("Time");
-                String Status = Appointment.getString("Status");
+                String status = Appointment.getString("Status");
 
-                HBox row = new HBox();
-                row.setSpacing(10);
-
-                //creates a dropdown per row
-                ComboBox<String> statusDropdown = new ComboBox<>();
-                statusDropdown.getItems().addAll("Pending","In-Progress","Completed","Canceled");
-                statusDropdown.setValue(Status);
-
-                // Set rounded corners
-                statusDropdown.setStyle(
-                        "-fx-background-radius: 15; " +
-                                "-fx-border-radius: 15; " +
-                                "-fx-border-color: gray; " +
-                                "-fx-border-width: 1; " +
-                                "-fx-padding: 0 0 0 5;" // optional: padding for text inside
-                );
-
-                //Update color upon loading
-                updateDropdownColor(statusDropdown,Status);
-
-                //update color when changed
-                statusDropdown.setOnAction(e -> {
-                    String newStatus = statusDropdown.getValue();
-                    updateDropdownColor(statusDropdown,newStatus);
-
-                    Database.update("UPDATE Appointment SET Status = '"+ newStatus + "' WHERE AppointmentID = "+appointmentID);
-                });
-
-
-                VBox Names = new VBox();
-                Names.setSpacing(2);
-
+                // Left side: Patient + Doctor
+                VBox names = new VBox(2);
                 Label patientLabel = new Label(patientName);
-                patientLabel.setFont(Font.font("Arial",30));
+                patientLabel.setFont(Font.font("Arial", 30));
 
-                Label doctorLabel = new Label(DoctorName);
-                doctorLabel.setFont(Font.font("Arial",15));
+                Label doctorLabel = new Label(doctorName);
+                doctorLabel.setFont(Font.font("Arial", 15));
                 doctorLabel.setStyle("-fx-text-fill: gray;");
 
-                Names.getChildren().addAll(patientLabel,doctorLabel);
+                names.getChildren().addAll(patientLabel, doctorLabel);
 
-                //Spacer lang
+                // Right side: Time + Status Label
+                Label timeLabel = new Label(appointmentTime);
+                timeLabel.setFont(Font.font("Arial", 30));
+
+                Label statusLabel = new Label(status);
+                statusLabel.setFont(Font.font("Arial", 15));
+                statusLabel.setPadding(new Insets(5, 15, 5, 15));
+
+                updateStatusColor(statusLabel, status);
+
+                // Combine time + status in one HBox
+                HBox timeAndStatus = new HBox(20, timeLabel, statusLabel);
+                timeAndStatus.setAlignment(Pos.CENTER_LEFT);
+
+                // Main row
+                HBox row = new HBox(10);
+                row.setAlignment(Pos.CENTER_LEFT);
+
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                //a separate HBOX for time and status
-                Label Timelabel = new Label(appointmentTime);
-                Timelabel.setFont(Font.font("Arial",30));
-                HBox timeAndStatus = new HBox();
-                timeAndStatus.setSpacing(30);
-                timeAndStatus.getChildren().addAll(Timelabel,statusDropdown);
+                row.getChildren().addAll(names, spacer, timeAndStatus);
 
-
-
-
-
-                HBox.setMargin(patientLabel,new Insets(0,0,0,10));
-                row.getChildren().addAll(Names,spacer,timeAndStatus);
-
-                row.setAlignment(Pos.CENTER_LEFT);
-
-                // Separator line under each row
-                Line separator = new Line(0, 0, 900, 0); // 800px wide line
+                // Separator line
+                Line separator = new Line(0, 0, 900, 0);
                 separator.setStroke(Color.LIGHTGRAY);
                 separator.setStrokeWidth(1);
-                VBox rowWithLine = new VBox(5); // 5px spacing between content and line
+
+                VBox rowWithLine = new VBox(5);
                 rowWithLine.getChildren().addAll(row, separator);
-
-
 
                 statsContainer.getChildren().add(rowWithLine);
             }
@@ -178,6 +155,7 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
 
 
     private void updateDateTime() {
@@ -190,14 +168,26 @@ public class DashboardController {
         Time.setText(timeFormatter.format(now));
     }
 
-    private void updateDropdownColor(ComboBox<String> comboBox, String status) {
+    private void updateStatusColor(Label label, String status) {
+        String color;
         switch (status) {
-            case "Pending" -> comboBox.setStyle("-fx-background-color: #FCFF9D; -fx-font-weight: bold;");
-            case "Completed" -> comboBox.setStyle("-fx-background-color: #9DFFAF; -fx-font-weight: bold;");
-            case "Canceled" -> comboBox.setStyle("-fx-background-color: #FF9D9F; -fx-font-weight: bold;");
-            case "In-Progress" -> comboBox.setStyle("-fx-background-color: #9DEFFF; -fx-font-weight: bold;");
-            default -> comboBox.setStyle(""); // default styling
+            case "Pending" -> color = "#FCFF9D";
+            case "Completed" -> color = "#9DFFAF";
+            case "Canceled" -> color = "#FF9D9F";
+            case "In-Progress" -> color = "#9DEFFF";
+            default -> color = "#E0E0E0";
         }
+        label.setStyle(
+                "-fx-background-color: " + color + ";" +
+                        "-fx-background-radius: 15;"
+        );
     }
+
+
+
+    public void AppointmentScreen(ActionEvent e) throws IOException{
+        SceneManager.transition(e,"Appointments");
+    }
+
 
 }

@@ -17,7 +17,7 @@
    <children>
       <Pane layoutX="257.0" layoutY="183.0" prefHeight="490.0" prefWidth="486.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: ffffffff; -fx-background-color: ffffffff;">
          <children>
-            <Text layoutX="23.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back!" wrappingWidth="175.1656494140625">
+            <Text fx:id="manipulate" layoutX="23.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back!" wrappingWidth="175.1656494140625">
                <font>
                   <Font name="Arial" size="25.0" />
                </font>
@@ -80,5 +80,6 @@
             <Font size="30.0" />
          </font>
       </Text>
+      <Pane layoutX="792.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

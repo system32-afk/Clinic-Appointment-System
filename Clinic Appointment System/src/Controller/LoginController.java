@@ -9,11 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import Util.Database;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-
+import Util.SceneManager;
 
 public class LoginController {
 
@@ -27,6 +28,8 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
+    private Text manipulate;
+    @FXML
     private void Signin(ActionEvent event) throws IOException {
         String inputEmail = emailField.getText();
         String inputPassword = passwordField.getText();
@@ -34,16 +37,10 @@ public class LoginController {
         if (inputEmail.equals(email) && inputPassword.equals(password)) {
             System.out.println("LOGIN SUCCESSFUL");
 
-            Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Dashboard.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-
+            SceneManager.transition(event,"Dashboard");
 
         } else {
-            System.out.println("INVALID CREDENTIALS");
+            manipulate.setText("INVALID CREDENTIALS");
         }
     }
 }

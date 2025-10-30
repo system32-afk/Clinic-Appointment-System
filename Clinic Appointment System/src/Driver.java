@@ -12,7 +12,6 @@ public class Driver extends Application {
     public static void main(String[] args) {
 
         Connection connection = Database.getConnection();
-
         if(connection != null){
             launch(args);
         }
