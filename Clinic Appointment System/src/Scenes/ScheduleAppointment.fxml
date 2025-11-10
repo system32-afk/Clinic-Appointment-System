@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.ScheduleAppointmentController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ScheduleAppointmentController">
+   <children>
+      <TextField layoutX="51.0" layoutY="67.0" prefHeight="26.0" prefWidth="234.0" />
+      <TextField layoutX="300.0" layoutY="67.0" prefHeight="26.0" prefWidth="234.0" />
+      <TextField layoutX="300.0" layoutY="173.0" prefHeight="26.0" prefWidth="234.0" />
+      <TextField layoutX="51.0" layoutY="173.0" prefHeight="26.0" prefWidth="234.0" />
+      <ChoiceBox layoutX="91.0" layoutY="250.0" prefHeight="26.0" prefWidth="153.0" />
+      <Text layoutX="51.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+   </children>
 </AnchorPane>

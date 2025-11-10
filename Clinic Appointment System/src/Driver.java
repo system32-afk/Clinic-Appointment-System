@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import Util.Database;
 
 import java.sql.Connection;
+import java.util.Random;
 
 
 public class Driver extends Application {
@@ -20,7 +21,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Patients.fxml"));
         primaryStage.setTitle("Clinic Appointment System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
