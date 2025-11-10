@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `medical_consultation_system` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `medical_consultation_system`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: medical_consultation_system
@@ -30,8 +28,9 @@ CREATE TABLE `appointment` (
   `DoctorID` int DEFAULT NULL,
   `ReasonForVisit` text,
   `ServiceNeeded` int DEFAULT NULL,
-  `AppointmentDate` datetime DEFAULT NULL,
-  `Status` enum('Pending','Approved','Completed','Cancelled') DEFAULT 'Pending',
+  `Date` date DEFAULT NULL,
+  `Time` time DEFAULT NULL,
+  `Status` enum('Pending','In-Progress','Completed','Canceled') DEFAULT 'Pending',
   PRIMARY KEY (`AppointmentID`),
   KEY `PatientID` (`PatientID`),
   KEY `DoctorID` (`DoctorID`),
@@ -39,7 +38,7 @@ CREATE TABLE `appointment` (
   CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`),
   CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`),
   CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`ServiceNeeded`) REFERENCES `service` (`ServiceID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,6 +47,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+INSERT INTO `appointment` VALUES (1,1,1,'Regular check-up',1,'2025-11-01','09:00:00','Completed');
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,4 +388,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-28 19:30:25
+-- Dump completed on 2025-11-05 15:12:36
