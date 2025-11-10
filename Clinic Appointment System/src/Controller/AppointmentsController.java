@@ -204,6 +204,6 @@ public class AppointmentsController {
 
 
     public void DashboardScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "Dashboard");
+        SceneManager.transition(e, "ADMINDashboard");
     }
 }

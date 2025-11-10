@@ -9,6 +9,7 @@ public class Database {
     private static final String USER = "root";
     private static final String PASSWORD = "Sample";//ENTER YOUR MYSQL PASSWORD HERE
 
+
     // Establish connection with database
     public static Connection getConnection() {
         if (connection == null) {
@@ -27,11 +28,16 @@ public class Database {
         return connection;
     }
 
-    // Run SELECT queries
-    public static ResultSet query(String sql) {
+    public static ResultSet query(String sql, Object... params) {
         try {
-            Statement stat = getConnection().createStatement();
-            return stat.executeQuery(sql);
+            PreparedStatement pst = getConnection().prepareStatement(sql);
+
+            // Set all parameters
+            for (int i = 0; i < params.length; i++) {
+                pst.setObject(i + 1, params[i]);
+            }
+
+            return pst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -39,13 +45,17 @@ public class Database {
     }
 
     // Run INSERT, UPDATE, DELETE
-    public static int update(String sql) {
+    public static int update(String sql, Object... params) {
         try {
-            Statement stat = getConnection().createStatement();
-            return stat.executeUpdate(sql);
+            PreparedStatement pst = getConnection().prepareStatement(sql);
+            for (int i = 0; i < params.length; i++) {
+                pst.setObject(i + 1, params[i]);
+            }
+            return pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
     }
+
 }
