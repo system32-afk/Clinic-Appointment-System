@@ -33,7 +33,7 @@ public class SceneManager {
 
     }
 
-    public static void onOpenPopup(ActionEvent event, String screenName, String title) throws IOException {
+    public static void OpenPopup(ActionEvent event, String screenName, String title) throws IOException {
         // get current window (the stage that fired the event)
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

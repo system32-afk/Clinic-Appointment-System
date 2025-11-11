@@ -47,6 +47,8 @@ public class AddPatientController {
     private Button AddPatient;
 
 
+
+
     @FXML
     private void AddPatient(ActionEvent e){
         String FirstName = FirstNameField.getText();
@@ -138,6 +140,7 @@ public class AddPatientController {
         Stage stage = (Stage) AddPatient.getScene().getWindow();
         stage.close();
     }
+
 
 }
 

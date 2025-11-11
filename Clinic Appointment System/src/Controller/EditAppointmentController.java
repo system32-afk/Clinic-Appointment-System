@@ -2,28 +2,23 @@ package Controller;
 
 import Util.Alerts;
 import Util.Database;
-import com.mysql.cj.protocol.Resultset;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ScheduleAppointmentController {
+public class EditAppointmentController {
 
     @FXML
     private TextField PatientField;
@@ -56,14 +51,58 @@ public class ScheduleAppointmentController {
 
     private List<Integer> patientIds = new ArrayList<>();
 
+    private int APPID = 0;
+
     @FXML
     public void initialize() throws SQLException {
         loadDoctors();
         DoctorSelector.setOnAction(e -> updateAvailableTimes());
         DateSelector.setOnAction(e -> updateAvailableTimes());
         ResultText.setVisible(false); //hide this first
-
     }
+
+    public void setAPPID(int APPOINTMENTID){
+        this.APPID = APPOINTMENTID;
+        loadAppointmentData();
+    }
+
+
+    private void loadAppointmentData() {
+        String sql = "SELECT * FROM appointment WHERE appointmentID = ?";
+        try {
+            ResultSet rs = Database.query(sql, APPID);
+            if (rs != null && rs.next()) {
+
+                // fill up the forms for editing
+                String patientID = rs.getString("PatientID");
+                PatientField.setText("P-" + patientID); // add the P- prefix if needed
+
+
+                ReasonField.setText(rs.getString("ReasonForVisit"));
+
+
+                DateSelector.setValue(rs.getDate("Date").toLocalDate());
+
+
+                int doctorId = rs.getInt("DoctorID");
+                int doctorIndex = doctorIds.indexOf(doctorId);
+                if (doctorIndex >= 0) {
+                    DoctorSelector.getSelectionModel().select(doctorIndex);
+                }
+
+
+                LocalTime time = rs.getTime("Time").toLocalTime();
+
+                updateAvailableTimes();
+                TimeSelector.getSelectionModel().select(time);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alerts.Warning("Failed to load appointment data");
+        }
+    }
+
+
 
 
 
@@ -141,9 +180,9 @@ public class ScheduleAppointmentController {
         int doctorId = doctorIds.get(selectedIndex);
 
         try {
-            List<String> availableSlots = getAvailableSlots(doctorId, selectedDate);
+            // Pass current appointment ID so its time is not filtered out
+            List<String> availableSlots = getAvailableSlots(doctorId, selectedDate, APPID);
 
-            // Convert List<String> -> List<LocalTime>
             List<LocalTime> timeSlots = availableSlots.stream()
                     .map(slot -> LocalTime.parse(slot, DateTimeFormatter.ofPattern("HH:mm")))
                     .collect(Collectors.toList());
@@ -153,6 +192,7 @@ public class ScheduleAppointmentController {
             ex.printStackTrace();
         }
     }
+
 
 
     private List<String> generateTimeSlots() {
@@ -169,14 +209,16 @@ public class ScheduleAppointmentController {
         return slots;
     }
 
-    private List<String> getAvailableSlots(int doctorId, LocalDate date) throws SQLException {
+    private List<String> getAvailableSlots(int doctorId, LocalDate date, Integer excludeAppointmentID) throws SQLException {
         List<String> allSlots = generateTimeSlots();
 
-        String sql = "SELECT Time FROM appointment WHERE DoctorID = ? AND Date = ? AND Status != 'Canceled'";
+        String sql = "SELECT Time, AppointmentID FROM appointment WHERE DoctorID = ? AND Date = ? AND Status != 'Canceled'";
         ResultSet rs = Database.query(sql, doctorId, date);
 
         List<String> bookedSlots = new ArrayList<>();
         while (rs.next()) {
+            int appId = rs.getInt("AppointmentID");
+            if (excludeAppointmentID != null && appId == excludeAppointmentID) continue; // Skip current appointment
             bookedSlots.add(rs.getTime("Time").toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
         }
 
@@ -184,6 +226,8 @@ public class ScheduleAppointmentController {
                 .filter(slot -> bookedSlots.stream().noneMatch(booked -> overlaps(slot, booked)))
                 .collect(Collectors.toList());
     }
+
+
 
     private boolean overlaps(String slot, String booked) {
         LocalTime slotStart = LocalTime.parse(slot, DateTimeFormatter.ofPattern("HH:mm"));
@@ -241,7 +285,7 @@ public class ScheduleAppointmentController {
             errors.append("Reason is required!\n");
         }
 
-        if(hasOverlappingAppointment(patientIDInt, date, time)){
+        if(hasOverlappingAppointment(patientIDInt, date, time, APPID)){
             errors.append("Patient has an overlapping schedule, please pick another time or date\n");
         }
 
@@ -250,19 +294,20 @@ public class ScheduleAppointmentController {
             return;
         }
 
-        String sql = "INSERT INTO appointment (PatientID, DoctorID, ReasonForVisit, Date, Time, Status) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "UPDATE appointment SET PatientID = ?, DoctorID = ?, ReasonForVisit = ?, Date = ?, Time = ?, Status = ? WHERE AppointmentID = ?";
+        Database.update(sql, patientIDInt, doctorID, reason, date, time, "Pending", APPID);
 
-        Database.update(sql, patientIDInt, doctorID, reason, date, time, "Pending");
 
-        Alerts.Info("Appointment Successfully added");
+        Alerts.Info("Appointment details successfully edited!");
         Stage stage = (Stage) ScheduleAppointment.getScene().getWindow();
         stage.close();
+
+        initialize();
     }
 
-    private boolean hasOverlappingAppointment(int patientId, LocalDate date, LocalTime selectedTime) throws SQLException {
+    private boolean hasOverlappingAppointment(int patientId, LocalDate date, LocalTime selectedTime, Integer excludeAppointmentID) throws SQLException {
         String sql = """
-        SELECT Time 
+        SELECT AppointmentID, Time 
         FROM appointment 
         WHERE PatientID = ? 
           AND Date = ? 
@@ -272,21 +317,20 @@ public class ScheduleAppointmentController {
         ResultSet rs = Database.query(sql, patientId, date);
 
         while (rs.next()) {
+            int appId = rs.getInt("AppointmentID");
+            if (excludeAppointmentID != null && appId == excludeAppointmentID) continue; // Skip the current appointment
+
             LocalTime bookedStart = rs.getTime("Time").toLocalTime();
             LocalTime bookedEnd = bookedStart.plusHours(1);
-
             LocalTime selectedEnd = selectedTime.plusHours(1);
 
-            // Check for overlap
             boolean overlaps = !selectedEnd.isBefore(bookedStart) && !selectedTime.isAfter(bookedEnd);
-
-            if (overlaps) {
-                return true; // Found overlap
-            }
+            if (overlaps) return true;
         }
 
-        return false; // No overlaps
+        return false;
     }
+
 
     @FXML
     public void cancel(){

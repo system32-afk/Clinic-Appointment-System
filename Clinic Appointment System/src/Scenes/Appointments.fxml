@@ -41,29 +41,29 @@
          <content>
             <VBox fx:id="AppointmentTBL" prefHeight="351.0" prefWidth="946.0" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-color: #dddddd;">
                <children>
-                  <HBox prefHeight="46.0" prefWidth="914.0" style="-fx-spacing: 50;">
+                  <HBox prefHeight="46.0" prefWidth="914.0" style="-fx-spacing: 20;">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID" textAlignment="CENTER" wrappingWidth="94.6077880859375">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient" textAlignment="CENTER" wrappingWidth="108.60777306556702">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor" textAlignment="CENTER" wrappingWidth="127.60785636305809">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date &amp; Time" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date &amp; Time" textAlignment="CENTER" wrappingWidth="119.40777587890625">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reason" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reason" textAlignment="CENTER" wrappingWidth="160.20775604248047">
                            <font>
                               <Font size="13.0" />
                            </font>

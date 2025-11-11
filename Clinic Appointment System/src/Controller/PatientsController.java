@@ -9,7 +9,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -231,7 +230,7 @@ public class PatientsController {
     private void updateDateTime() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 
         Date.setText(dateFormatter.format(now));
         Time.setText(timeFormatter.format(now));
@@ -241,7 +240,7 @@ public class PatientsController {
     @FXML
     private void Search() {
         String search = SearchBar.getText().trim();
-
+        String searchLike;
         // Remove "P-" prefix if user includes it
         boolean isIdSearch = false;
         if (search.toUpperCase().startsWith("P-")) {
@@ -262,7 +261,7 @@ public class PatientsController {
         try (
              PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
 
-            String searchLike = "%" + search + "%";
+            searchLike = "%" + search + "%";
 
             // Parameters:
             stmt.setBoolean(1, isIdSearch);   // ? = TRUE if searching by ID
@@ -285,7 +284,7 @@ public class PatientsController {
     //Opens up add patient form
     @FXML
     private void AddPatient(ActionEvent e) throws IOException{
-        SceneManager.onOpenPopup(e,"AddPatient","Add a patient");
+        SceneManager.OpenPopup(e,"AddPatient","Add a patient");
     }
 
 
