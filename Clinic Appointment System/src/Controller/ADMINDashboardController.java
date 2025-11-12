@@ -183,5 +183,8 @@ public class ADMINDashboardController {
         SceneManager.transition(e,"Appointments");
     }
 
+        public void openPaymentScreen(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "PaymentProcessing");
+    }
 
 }
