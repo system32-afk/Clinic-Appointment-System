@@ -266,4 +266,8 @@ public class AppointmentsController {
     public void DashboardScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "ADMINDashboard");
     }
+
+        public void openPaymentScreen(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "PaymentProcessing");
+    }
 }
