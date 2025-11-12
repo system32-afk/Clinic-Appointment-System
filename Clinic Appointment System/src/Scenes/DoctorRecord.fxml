@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line endX="903.0" endY="0.09999847412109375" layoutX="97.0" layoutY="101.0" startX="134.50711059570312" startY="0.3000030517578125" stroke="#00000033" />
+      <Line endX="35.507110595703125" endY="527.0" layoutX="196.0" layoutY="73.0" startX="35.507110595703125" startY="28.800003051757812" stroke="#00000032" />
+      <ImageView fitHeight="198.0" fitWidth="198.0" layoutX="13.0" layoutY="-41.0">
+         <image>
+            <Image url="@../Assets/Medical%20Consultation.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="129.0" layoutX="53.0" layoutY="106.0">
+         <image>
+            <Image url="@../Assets/Dash.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="142.0" layoutX="48.0" layoutY="139.0">
+         <image>
+            <Image url="@../Assets/Patients.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="36.0" fitWidth="146.0" layoutX="47.0" layoutY="177.0">
+         <image>
+            <Image url="@../Assets/Doctors.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="172.0" layoutX="45.0" layoutY="207.0">
+         <image>
+            <Image url="@../Assets/Appointments.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="146.0" layoutX="48.0" layoutY="243.0">
+         <image>
+            <Image url="@../Assets/Diagnoses.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="277.0">
+         <image>
+            <Image url="@../Assets/Prescription.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="146.0" layoutX="50.0" layoutY="314.0">
+         <image>
+            <Image url="@../Assets/Services.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="145.0" layoutX="52.0" layoutY="350.0">
+         <image>
+            <Image url="@../Assets/Payments.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="149.0" layoutX="48.0" layoutY="383.0">
+         <image>
+            <Image url="@../Assets/Reports.png" />
+         </image>
+      </ImageView>
+      <Line endX="173.00709533691406" layoutX="58.0" layoutY="495.0" startX="-100.0" stroke="#0000000c" />
+      <Line endX="156.80001831054688" endY="0.39288330078125" layoutX="74.0" layoutY="101.0" startX="-100.0" stroke="#0000000c" />
+      <Line endX="17.507110595703125" endY="62.30000305175781" layoutX="214.0" layoutY="39.0" startX="18.507110595703125" startY="-39.0" stroke="#0000000c" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="107.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="142.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="177.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="212.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="247.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="282.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="317.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="352.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="28.0" layoutY="387.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Text fill="#00000060" layoutX="256.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="74.4613037109375">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Button layoutX="15.0" layoutY="544.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" text="         Sign Out" textFill="#00000060">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
