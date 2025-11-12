@@ -291,4 +291,8 @@ public class PatientsController {
     public void DashboardScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "Dashboard");
     }
+
+        public void openPaymentScreen(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "PaymentProcessing");
+    }
 }
