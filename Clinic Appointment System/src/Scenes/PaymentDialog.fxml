@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PaymentDialogController">
+    <children>
+        <VBox spacing="20" prefWidth="400" prefHeight="300" style="-fx-padding: 20;">
+            <children>
+                <Text text="Process Payment" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+
+                <GridPane hgap="10" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="120" />
+                        <ColumnConstraints prefWidth="250" />
+                    </columnConstraints>
+
+                    <children>
+                        <Text text="Patient:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                        <Label fx:id="patientLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                        <Text text="Doctor:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                        <Label fx:id="doctorLabel" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                        <Text text="Service:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                        <Label fx:id="serviceLabel" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                        <Text text="Amount Due:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                        <Label fx:id="amountLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #40D0E0; -fx-font-size: 16;" />
+
+                        <Text text="Payment Method:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                        <ComboBox fx:id="paymentMethodCombo" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="200" />
+                    </children>
+                </GridPane>
+
+                <HBox spacing="15" alignment="CENTER_RIGHT">
+                    <children>
+                        <Button fx:id="cancelButton" text="Cancel" onAction="#cancelPayment"
+                                style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 5;" />
+                        <Button fx:id="processButton" text="Process Payment" onAction="#processPayment"
+                                style="-fx-background-color: #40D0E0; -fx-text-fill: white; -fx-background-radius: 5;" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
