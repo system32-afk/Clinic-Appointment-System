@@ -3,9 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DoctorRecordController">
    <children>
       <Line endX="1003.0" endY="0.3000030517578125" layoutX="97.0" layoutY="101.0" startX="134.50711059570312" startY="0.3000030517578125" stroke="#00000033" />
       <Line endX="35.50712585449219" endY="577.0" layoutX="196.0" layoutY="73.0" startX="35.507110595703125" startY="28.800003051757812" stroke="#00000032" />
@@ -82,9 +83,9 @@
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="317.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="352.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
       <Button blendMode="DARKEN" layoutX="28.0" layoutY="387.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Text fill="#00000060" layoutX="256.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="74.4613037109375">
+      <Text fx:id="Date" fill="#00000060" layoutX="246.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="576.8612060546875">
          <font>
-            <Font size="35.0" />
+            <Font size="30.0" />
          </font>
       </Text>
       <Button layoutX="16.0" layoutY="583.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" text="         Sign Out" textFill="#00000060">
@@ -106,32 +107,49 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <SplitPane dividerPositions="0.2058823529411765" layoutX="39.0" layoutY="231.0" orientation="VERTICAL" prefHeight="291.0" prefWidth="776.0" style="-fx-background-color: light gray; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ccc; -fx-border-width: 1;">
+                  <SplitPane dividerPositions="0.2058823529411765" layoutX="39.0" layoutY="231.0" orientation="VERTICAL" prefHeight="291.0" prefWidth="776.0" style="-fx-background-color: lightgray; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ccc; -fx-border-width: 1;">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
+                              <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="508.0" layoutY="-2.0" onMouseClicked="#Search">
+                                 <image>
+                                    <Image url="@../Assets/magnifying.png" />
+                                 </image>
+                              </ImageView>
                               <Text layoutX="27.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Doctors">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Text>
-                              <TextField layoutX="559.0" layoutY="7.0" prefHeight="37.0" prefWidth="180.0" promptText="Search by name, ID, or specialization" styleClass="search-bar" />
-                              <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="508.0" layoutY="-4.0">
-                                 <image>
-                                    <Image url="@../Assets/magnifying.png" />
-                                 </image>
-                              </ImageView>
-                              <Button layoutX="295.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="+   Doctor" textFill="#4ab1b5e6">
+                              <TextField fx:id="SearchBar" layoutX="560.0" layoutY="9.0" prefHeight="37.0" prefWidth="180.0" promptText="Search by name, ID, or specialization" styleClass="search-bar" />
+                              <Button layoutX="295.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddDoctor" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="+   Doctor" textFill="#4ab1b5e6">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Button>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="445.0" layoutY="16.0">
+                                 <image>
+                                    <Image url="@../Assets/Refresh.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="445.0" layoutY="-2.0" mnemonicParsing="false" onAction="#reloadData" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: transparent;" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="774.0">
                            <children>
                               <ListView layoutX="-2.0" layoutY="-5.0" prefHeight="234.0" prefWidth="776.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                              <ScrollBar layoutX="760.0" orientation="VERTICAL" prefHeight="227.2" prefWidth="14.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="760.0" AnchorPane.topAnchor="0.0" />
+                              <TableView fx:id="DoctorTable" layoutX="-2.0" layoutY="-1.0" prefHeight="226.0" prefWidth="774.0">
+                                <columns>
+                                  <TableColumn fx:id="DoctorIDColumn" prefWidth="70.39998853206635" text="Doctor ID" />
+                                  <TableColumn fx:id="NameColumn" prefWidth="102.39997100830078" text="Name" />
+                                    <TableColumn fx:id="SexColumn" prefWidth="61.60005187988281" text="Sex" />
+                                    <TableColumn fx:id="SpecializationColumn" prefWidth="140.00003051757812" text="Specialization" />
+                                    <TableColumn fx:id="ContactColumn" prefWidth="99.199951171875" text="Contact" />
+                                    <TableColumn fx:id="PatientsColumn" prefWidth="97.60000610351562" text="Patients" />
+                                    <TableColumn fx:id="ProfileColumn" prefWidth="88.0" text="Profile" />
+                                    <TableColumn fx:id="ActionColumn" prefWidth="112.800048828125" text="Action" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                     </items>
@@ -225,5 +243,10 @@
             <Image url="@../Assets/ExitIcon.png" />
          </image>
       </ImageView>
+      <Text fx:id="Time" fill="#00000060" layoutX="248.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" wrappingWidth="576.8612060546875">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
