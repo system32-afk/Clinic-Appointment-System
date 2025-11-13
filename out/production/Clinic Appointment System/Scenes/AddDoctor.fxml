@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddDoctorController">
+   <children>
+      <Line endX="599.0" layoutX="101.0" layoutY="69.0" startX="-100.0" stroke="#4ab1b5bf" />
+      <Text layoutX="98.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full Name *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="#4ab1b5b2" layoutX="27.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Doctor">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fullNameField" alignment="CENTER" layoutX="14.0" layoutY="118.0" prefHeight="33.0" prefWidth="124.0" promptText="First Name" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: text;">
+         <font>
+            <Font size="15.0" />
+         </font></TextField>
+      <TextField fx:id="fullNameField1" alignment="CENTER" layoutX="159.0" layoutY="118.0" prefHeight="33.0" prefWidth="124.0" promptText="Last Name" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ageField" layoutX="408.0" layoutY="118.0" prefHeight="33.0" prefWidth="169.0" promptText="99" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <font>
+            <Font size="15.0" />
+         </font></TextField>
+      <ComboBox fx:id="genderComboBox" layoutX="68.0" layoutY="218.0" prefHeight="33.0" prefWidth="169.0" promptText="   -- Gender At Birth --" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;" />
+      <TextField fx:id="contactField" layoutX="408.0" layoutY="218.0" prefHeight="33.0" prefWidth="169.0" promptText="0912 345 6789" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="specializationComboBox" layoutX="68.0" layoutY="318.0" prefHeight="33.0" prefWidth="169.0" promptText="     -- Specialization --" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;" />
+      <TextField fx:id="emailField" layoutX="408.0" layoutY="318.0" prefHeight="33.0" prefWidth="169.0" promptText="example@example.com" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Text layoutX="408.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="68.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="408.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="68.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="408.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email *">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="408.0" layoutY="418.0" mnemonicParsing="false" onAction="#saveDoctor" prefHeight="33.0" prefWidth="80.0" style="-fx-background-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;" text="Save" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="508.0" layoutY="418.0" mnemonicParsing="false" onAction="#cancel" prefHeight="33.0" prefWidth="80.0" style="-fx-background-color: #dc3545; -fx-background-radius: 8; -fx-border-radius: 8;" text="Cancel" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
