@@ -25,12 +25,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class PatientsController {
 
@@ -258,25 +260,11 @@ public class PatientsController {
                         "OR (? = FALSE AND (FirstName LIKE ? OR LastName LIKE ? OR ContactNumber LIKE ?))";
 
 
-        try (
-             PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
 
-            searchLike = "%" + search + "%";
 
-            // Parameters:
-            stmt.setBoolean(1, isIdSearch);   // ? = TRUE if searching by ID
-            stmt.setString(2, search);        // PatientID = ?
-            stmt.setBoolean(3, isIdSearch);   // ? = FALSE when not ID search
-            stmt.setString(4, searchLike);    // FirstName LIKE ?
-            stmt.setString(5, searchLike);    // LastName LIKE ?
-            stmt.setString(6, searchLike);    // ContactNumber LIKE ?
+               searchLike = "%" + search + "%";
+        loadData(Objects.requireNonNull(Database.query(query, isIdSearch, search, isIdSearch, searchLike, searchLike, searchLike)));
 
-            ResultSet PatientsData = stmt.executeQuery();
-            loadData(PatientsData);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 

@@ -174,7 +174,7 @@
                   </Button>
                   <ImageView fitHeight="44.0" fitWidth="64.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Assets/doctor (1).png" />
+                        <Image url="/Assets/doctor (1).png" />
                      </image>
                   </ImageView>
                </children>
