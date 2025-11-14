@@ -98,12 +98,13 @@ public class AddDoctorController {
             }
 
             // Insert doctor into database
-            String insertQuery = "INSERT INTO doctor (FirstName, LastName, Sex, SpecializationID) VALUES (?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO doctor (FirstName, LastName, Sex, SpecializationID, Contact) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = Database.getConnection().prepareStatement(insertQuery);
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
             stmt.setString(3, sex);
             stmt.setInt(4, specializationID);
+            stmt.setString(5, contact);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {

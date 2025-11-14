@@ -4,17 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Doctor Record">
-      <change afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/DoctorRecordController.java" afterDir="false" />
+    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Doctor Record functional">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Assets/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Assets/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Assets/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ADMINDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ADMINDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/DoctorRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/DoctorRecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ADMINDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ADMINDashboard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorRecord.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinicDB NEW.sql" beforeDir="false" afterPath="$PROJECT_DIR$/clinicDB NEW.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Assets/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Assets/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ADMINDashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ADMINDashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddDoctorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddDoctorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController$Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController$Doctor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ADMINDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ADMINDashboard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorRecord.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +196,7 @@
       <workItem from="1762939788129" duration="313000" />
       <workItem from="1762940190863" duration="1118000" />
       <workItem from="1762941335139" duration="880000" />
-      <workItem from="1762942237082" duration="24005000" />
+      <workItem from="1762942237082" duration="29576000" />
     </task>
     <task id="LOCAL-00001" summary="Z-deleted">
       <option name="closed" value="true" />
@@ -220,7 +222,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763039737876</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Doctor Record functional">
+      <option name="closed" value="true" />
+      <created>1763066151731</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763066151731</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Doctor Record functional">
+      <option name="closed" value="true" />
+      <created>1763066314581</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763066314581</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,6 +270,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Z-deleted" />
     <MESSAGE value="Doctor Record" />
-    <option name="LAST_COMMIT_MESSAGE" value="Doctor Record" />
+    <MESSAGE value="Doctor Record functional" />
+    <option name="LAST_COMMIT_MESSAGE" value="Doctor Record functional" />
   </component>
 </project>

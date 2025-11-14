@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -26,6 +27,9 @@ public class DoctorRecordController {
 
     @FXML
     private Text Date;
+
+    @FXML
+    private Text Time;
 
     @FXML
     private Label CompletedAppointments; // Total Doctors
@@ -67,19 +71,122 @@ public class DoctorRecordController {
     private TableColumn<Doctor, Button> ProfileColumn;
 
     @FXML
-    private TableColumn<Doctor, Button> ActionColumn;
+    private TableColumn<Doctor, HBox> ActionColumn;
 
     @FXML
     public void initialize() {
         // Set up table columns
         DoctorIDColumn.setCellValueFactory(new PropertyValueFactory<>("doctorID"));
+        DoctorIDColumn.setCellFactory(column -> new TableCell<Doctor, Integer>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText("DR" + String.format("%03d", item));
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        NameColumn.setCellFactory(column -> new TableCell<Doctor, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         SexColumn.setCellValueFactory(new PropertyValueFactory<>("sex"));
+        SexColumn.setCellFactory(column -> new TableCell<Doctor, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         SpecializationColumn.setCellValueFactory(new PropertyValueFactory<>("specialization"));
+        SpecializationColumn.setCellFactory(column -> new TableCell<Doctor, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         ContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        ContactColumn.setCellFactory(column -> new TableCell<Doctor, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("N/A");
+                } else {
+                    setText(item);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         PatientsColumn.setCellValueFactory(new PropertyValueFactory<>("patients"));
+        PatientsColumn.setCellFactory(column -> new TableCell<Doctor, Integer>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         ProfileColumn.setCellValueFactory(new PropertyValueFactory<>("profileButton"));
-        ActionColumn.setCellValueFactory(new PropertyValueFactory<>("actionButton"));
+        ProfileColumn.setCellFactory(column -> new TableCell<Doctor, Button>() {
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
+        ActionColumn.setCellValueFactory(new PropertyValueFactory<>("actionHBox"));
+        ActionColumn.setCellFactory(column -> new TableCell<Doctor, HBox>() {
+            @Override
+            protected void updateItem(HBox item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
 
         // Load initial data
         loadData();
@@ -117,13 +224,19 @@ public class DoctorRecordController {
 
                     // Create buttons for Profile and Action
                     Button profileButton = new Button("View");
-                    Button actionButton = new Button("Edit");
+                    Button editButton = new Button("Edit");
+                    Button deleteButton = new Button("Delete");
 
                     // Add action handlers
                     profileButton.setOnAction(e -> viewDoctorProfile(doctorID));
-                    actionButton.setOnAction(e -> editDoctor(doctorID));
+                    editButton.setOnAction(e -> editDoctor(doctorID));
+                    deleteButton.setOnAction(e -> deleteDoctor(doctorID));
 
-                    Doctor doctor = new Doctor(doctorID, name, sex, specialization, contact, patients, profileButton, actionButton);
+                    // Create HBox for action buttons
+                    HBox actionHBox = new HBox(10, profileButton, editButton, deleteButton);
+                    actionHBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+                    Doctor doctor = new Doctor(doctorID, name, sex, specialization, contact, patients, profileButton, actionHBox);
                     doctors.add(doctor);
                 }
             }
@@ -167,8 +280,12 @@ public class DoctorRecordController {
 
     private void updateDateTime() {
         LocalDateTime now = LocalDateTime.now();
+
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+
         Date.setText(dateFormatter.format(now));
+        Time.setText(timeFormatter.format(now));
     }
 
     @FXML
@@ -205,11 +322,17 @@ public class DoctorRecordController {
                 int patients = rs.getInt("Patients");
 
                 Button profileButton = new Button("View");
-                Button actionButton = new Button("Edit");
+                Button editButton = new Button("Edit");
+                Button deleteButton = new Button("Delete");
                 profileButton.setOnAction(e -> viewDoctorProfile(doctorID));
-                actionButton.setOnAction(e -> editDoctor(doctorID));
+                editButton.setOnAction(e -> editDoctor(doctorID));
+                deleteButton.setOnAction(e -> deleteDoctor(doctorID));
 
-                Doctor doctor = new Doctor(doctorID, name, sex, specialization, rs.getString("Contact"), patients, profileButton, actionButton);
+                // Create HBox for action buttons
+                HBox actionHBox = new HBox(10, profileButton, editButton, deleteButton);
+                actionHBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+                Doctor doctor = new Doctor(doctorID, name, sex, specialization, rs.getString("Contact"), patients, profileButton, actionHBox);
                 doctors.add(doctor);
             }
         } catch (SQLException e) {
@@ -239,6 +362,21 @@ public class DoctorRecordController {
         Alerts.Info("Edit doctor ID: " + doctorID);
     }
 
+    private void deleteDoctor(int doctorID) {
+        boolean confirm = Alerts.Confirmation("Are you sure you want to delete this doctor? This action cannot be undone.");
+        if (confirm) {
+            try {
+                Database.update("DELETE FROM doctor WHERE DoctorID = ?", doctorID);
+                Alerts.Info("Doctor deleted successfully!");
+                loadData(); // Refresh the table
+                updateStatistics(); // Update statistics after deletion
+            } catch (Exception e) { // catch any exception thrown by Database.update
+                e.printStackTrace();
+                Alerts.Warning("Failed to delete doctor: " + e.getMessage());
+            }
+        }
+    }
+
     // Inner class for Doctor data
     public static class Doctor {
         private final int doctorID;
@@ -248,9 +386,9 @@ public class DoctorRecordController {
         private final String contact;
         private final int patients;
         private final Button profileButton;
-        private final Button actionButton;
+        private final HBox actionHBox;
 
-        public Doctor(int doctorID, String name, String sex, String specialization, String contact, int patients, Button profileButton, Button actionButton) {
+        public Doctor(int doctorID, String name, String sex, String specialization, String contact, int patients, Button profileButton, HBox actionHBox) {
             this.doctorID = doctorID;
             this.name = name;
             this.sex = sex;
@@ -258,7 +396,7 @@ public class DoctorRecordController {
             this.contact = contact;
             this.patients = patients;
             this.profileButton = profileButton;
-            this.actionButton = actionButton;
+            this.actionHBox = actionHBox;
         }
 
         // Getters
@@ -269,6 +407,6 @@ public class DoctorRecordController {
         public String getContact() { return contact; }
         public int getPatients() { return patients; }
         public Button getProfileButton() { return profileButton; }
-        public Button getActionButton() { return actionButton; }
+        public HBox getActionHBox() { return actionHBox; }
     }
 }

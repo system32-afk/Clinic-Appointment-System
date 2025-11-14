@@ -183,8 +183,12 @@ public class ADMINDashboardController {
         SceneManager.transition(e,"Appointments");
     }
 
-        public void openPaymentScreen(ActionEvent e) throws IOException {
+    public void openPaymentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
+    }
+
+    public void openDoctorRecord(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "DoctorRecord");
     }
 
 }
