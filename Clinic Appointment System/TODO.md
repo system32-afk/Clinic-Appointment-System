@@ -1,6 +1,0 @@
-- [x] Add onAction="#openDoctorRecord" to the Doctors' Workload button in ADMINDashboard.fxml
-- [x] Add openDoctorRecord method in ADMINDashboardController.java to transition to DoctorRecord scene
-- [ ] Fix contact not showing in table (check query and data)
-- [ ] Add remove button in Action column alongside Edit
-- [ ] Center align text in Doctor ID, Name, Sex, Specialization, Contact, Patients columns
-- [ ] Center align Profile button
