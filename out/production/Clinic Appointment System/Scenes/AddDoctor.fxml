@@ -41,7 +41,7 @@
          </font>
       </TextField>
       <ComboBox fx:id="specializationComboBox" layoutX="68.0" layoutY="318.0" prefHeight="33.0" prefWidth="169.0" promptText="     -- Specialization --" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;" />
-      <TextField fx:id="emailField" layoutX="408.0" layoutY="318.0" prefHeight="33.0" prefWidth="169.0" promptText="example@example.com" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;">
+      <TextField fx:id="emailField" editable="false" layoutX="408.0" layoutY="318.0" prefHeight="33.0" prefWidth="169.0" promptText="example@example.com" style="-fx-border-color: #4ab3b7; -fx-background-radius: 8; -fx-border-radius: 8;">
          <font>
             <Font size="15.0" />
          </font>
@@ -66,7 +66,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="408.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email *">
+      <Text layoutX="408.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
          <font>
             <Font size="20.0" />
          </font>

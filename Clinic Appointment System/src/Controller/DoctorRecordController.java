@@ -10,10 +10,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -192,6 +196,11 @@ public class DoctorRecordController {
         loadData();
         updateStatistics();
 
+        // Add search functionality to SearchBar
+        SearchBar.setOnKeyReleased(event -> {
+            Search();
+        });
+
         // Update date and time
         updateDateTime();
         Timeline clock = new Timeline(
@@ -304,7 +313,7 @@ public class DoctorRecordController {
                       "FROM doctor d " +
                       "LEFT JOIN specialization s ON d.SpecializationID = s.SpecializationID " +
                       "LEFT JOIN appointment a ON d.DoctorID = a.DoctorID " +
-                      "WHERE d.FirstName LIKE ? OR d.LastName LIKE ? OR s.SpecializationName LIKE ? " +
+                      "WHERE d.FirstName LIKE ? OR d.LastName LIKE ? OR s.SpecializationName LIKE ? OR CAST(d.DoctorID AS CHAR) LIKE ? " +
                       "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, s.SpecializationName, d.Contact";
 
         try (PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
@@ -312,6 +321,7 @@ public class DoctorRecordController {
             stmt.setString(1, searchLike);
             stmt.setString(2, searchLike);
             stmt.setString(3, searchLike);
+            stmt.setString(4, searchLike);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -355,11 +365,43 @@ public class DoctorRecordController {
     }
 
     private void viewDoctorProfile(int doctorID) {
-        Alerts.Info("View profile for Doctor ID: " + doctorID);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/ViewProfile.fxml"));
+            Parent root = loader.load();
+
+            ViewProfileController controller = loader.getController();
+            controller.setDoctorData(doctorID);
+
+            Stage stage = new Stage();
+            stage.setTitle("Doctor Profile");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alerts.Warning("Failed to load doctor profile: " + e.getMessage());
+        }
     }
 
     private void editDoctor(int doctorID) {
-        Alerts.Info("Edit doctor ID: " + doctorID);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditDoctor.fxml"));
+            Parent root = loader.load();
+
+            EditDoctorController controller = loader.getController();
+            controller.setDoctorData(doctorID);
+
+            Stage stage = new Stage();
+            stage.setTitle("Edit Doctor");
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // Use showAndWait to wait for the edit window to close
+
+            // Refresh the table after editing
+            loadData();
+            updateStatistics();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alerts.Warning("Failed to load edit doctor form: " + e.getMessage());
+        }
     }
 
     private void deleteDoctor(int doctorID) {

@@ -2,6 +2,7 @@ package Controller;
 
 import Util.Alerts;
 import Util.Database;
+import Util.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,16 +15,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AddDoctorController {
+public class EditDoctorController {
 
     @FXML
     private TextField fullNameField;
 
     @FXML
     private TextField fullNameField1;
-
-    @FXML
-    private TextField ageField;
 
     @FXML
     private ComboBox<String> genderComboBox;
@@ -34,8 +32,7 @@ public class AddDoctorController {
     @FXML
     private ComboBox<String> specializationComboBox;
 
-    @FXML
-    private TextField emailField;
+    private int doctorID;
 
     @FXML
     public void initialize() {
@@ -43,22 +40,8 @@ public class AddDoctorController {
         ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
         genderComboBox.setItems(genders);
 
-        // Define specialization list
-        String[] specializationNames = {
-            "Cardiology", "Neurology", "Oncology", "Pediatrics", "Orthopedics",
-            "Dermatology", "Psychiatry", "Radiology", "Anesthesiology", "Endocrinology"
-        };
-
-        // Insert specializations into database if not exists
-        for (String name : specializationNames) {
-            Database.update("INSERT IGNORE INTO specialization (SpecializationName) VALUES (?)", name);
-        }
-
         // Populate specialization combo box from database
         loadSpecializations();
-
-        // Generate initial email
-        generateEmail();
     }
 
     private void loadSpecializations() {
@@ -76,8 +59,34 @@ public class AddDoctorController {
         specializationComboBox.setItems(specializations);
     }
 
+    public void setDoctorData(int doctorID) {
+        this.doctorID = doctorID;
+
+        try {
+            PreparedStatement stmt = Database.getConnection().prepareStatement(
+                "SELECT d.FirstName, d.LastName, d.Sex, s.SpecializationName, d.Contact " +
+                "FROM doctor d " +
+                "LEFT JOIN specialization s ON d.SpecializationID = s.SpecializationID " +
+                "WHERE d.DoctorID = ?"
+            );
+            stmt.setInt(1, doctorID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                fullNameField.setText(rs.getString("FirstName"));
+                fullNameField1.setText(rs.getString("LastName"));
+                genderComboBox.setValue(rs.getString("Sex"));
+                contactField.setText(rs.getString("Contact"));
+                specializationComboBox.setValue(rs.getString("SpecializationName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alerts.Warning("Failed to load doctor data: " + e.getMessage());
+        }
+    }
+
     @FXML
-    private void saveDoctor(ActionEvent event) {
+    private void updateDoctor(ActionEvent event) {
         // Validate required fields
         if (!validateFields()) {
             return;
@@ -91,7 +100,6 @@ public class AddDoctorController {
             String sex = genderComboBox.getValue();
             String contact = contactField.getText().trim();
             String specializationName = specializationComboBox.getValue();
-            String email = emailField.getText().trim();
 
             // Get specialization ID
             int specializationID = getSpecializationID(specializationName);
@@ -100,24 +108,24 @@ public class AddDoctorController {
                 return;
             }
 
-            // Insert doctor into database
-            String insertQuery = "INSERT INTO doctor (FirstName, LastName, Sex, SpecializationID, Contact) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement stmt = Database.getConnection().prepareStatement(insertQuery);
+            // Update doctor in database
+            String updateQuery = "UPDATE doctor SET FirstName = ?, LastName = ?, Sex = ?, SpecializationID = ?, Contact = ? WHERE DoctorID = ?";
+            PreparedStatement stmt = Database.getConnection().prepareStatement(updateQuery);
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
             stmt.setString(3, sex);
             stmt.setInt(4, specializationID);
             stmt.setString(5, contact);
+            stmt.setInt(6, doctorID);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                Alerts.Info("Doctor added successfully!");
-                clearFields();
+                Alerts.Info("Doctor updated successfully!");
                 // Close the popup
                 Stage stage = (Stage) fullNameField.getScene().getWindow();
                 stage.close();
             } else {
-                Alerts.Warning("Failed to add doctor.");
+                Alerts.Warning("Failed to update doctor.");
             }
 
         } catch (SQLException e) {
@@ -128,23 +136,12 @@ public class AddDoctorController {
 
     private boolean validateFields() {
         if (fullNameField.getText().trim().isEmpty()) {
-            Alerts.Warning("Full name is required.");
+            Alerts.Warning("First name is required.");
             return false;
         }
 
-        if (ageField.getText().trim().isEmpty()) {
-            Alerts.Warning("Age is required.");
-            return false;
-        }
-
-        try {
-            int age = Integer.parseInt(ageField.getText().trim());
-            if (age < 0 || age > 150) {
-                Alerts.Warning("Please enter a valid age.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            Alerts.Warning("Age must be a valid number.");
+        if (fullNameField1.getText().trim().isEmpty()) {
+            Alerts.Warning("Last name is required.");
             return false;
         }
 
@@ -160,17 +157,6 @@ public class AddDoctorController {
 
         if (specializationComboBox.getValue() == null) {
             Alerts.Warning("Specialization is required.");
-            return false;
-        }
-
-        if (emailField.getText().trim().isEmpty()) {
-            Alerts.Warning("Email is required.");
-            return false;
-        }
-
-        // Basic email validation
-        if (!emailField.getText().trim().contains("@")) {
-            Alerts.Warning("Please enter a valid email address.");
             return false;
         }
 
@@ -194,17 +180,6 @@ public class AddDoctorController {
         return -1;
     }
 
-    private void clearFields() {
-        fullNameField.clear();
-        fullNameField1.clear();
-        ageField.clear();
-        genderComboBox.setValue(null);
-        contactField.clear();
-        specializationComboBox.setValue(null);
-        emailField.clear();
-        generateEmail();
-    }
-
     @FXML
     private void cancel(ActionEvent event) {
         Stage stage = (Stage) fullNameField.getScene().getWindow();
@@ -216,21 +191,5 @@ public class AddDoctorController {
             return name;
         }
         return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-    }
-
-    private void generateEmail() {
-        try {
-            // Get the next doctor ID
-            ResultSet rs = Database.query("SELECT MAX(DoctorID) AS maxID FROM doctor");
-            int nextID = 1;
-            if (rs != null && rs.next()) {
-                nextID = rs.getInt("maxID") + 1;
-            }
-            String email = "dr" + String.format("%03d", nextID) + "@doctor.com";
-            emailField.setText(email);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            emailField.setText("dr001@doctor.com");
-        }
     }
 }
