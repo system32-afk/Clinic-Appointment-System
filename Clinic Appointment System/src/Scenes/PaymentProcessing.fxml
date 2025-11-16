@@ -136,6 +136,21 @@
 
                 <Pane prefHeight="74.0" prefWidth="200.0">
                     <children>
+                        <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMedicalHistory" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Medical History">
+                            <font>
+                                <Font name="Arial" size="13.0" />
+                            </font>
+                        </Button>
+                        <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Assets/medical-history.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+
+                <Pane prefHeight="74.0" prefWidth="200.0">
+                    <children>
                         <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Process Payment">
                             <font>
                                 <Font name="Arial" size="15.0" />
