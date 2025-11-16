@@ -143,7 +143,7 @@
                         </Button>
                         <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../Assets/dollar.png" />
+                                <Image url="@../Assets/credit-card.png" />
                             </image>
                         </ImageView>
                     </children>
