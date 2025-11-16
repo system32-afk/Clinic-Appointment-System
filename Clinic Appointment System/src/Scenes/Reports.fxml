@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -200,42 +200,27 @@
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #e8f5f5; -fx-background-radius: 10; -fx-border-radius: 10;">
                            <children>
-                              <Text layoutX="22.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Prescriptions">
+                              <Text layoutX="22.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Demand Trends by Specialization">
                                  <font>
                                     <Font name="Arial" size="18.0" />
                                  </font>
                               </Text>
-                              <TextField layoutX="546.0" layoutY="9.0" prefHeight="34.0" prefWidth="198.0" promptText="Search Patient, Doctor, or Medicine" style="-fx-background-color: #ebf5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
-                              <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="496.0" layoutY="-2.0">
-                                 <image>
-                                    <Image url="@../Assets/magnifying.png" />
-                                 </image>
-                              </ImageView>
                            </children>
                         </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="774.0">
                            <children>
-                              <TableView layoutY="4.0" prefHeight="230.0" prefWidth="778.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
-                                 <columns>
-                                    <TableColumn prefWidth="98.3999565243721" text="Prescription ID" />
-                                    <TableColumn prefWidth="128.00001525878906" text="Patient" />
-                                    <TableColumn minWidth="0.0" prefWidth="133.59999084472656" text="Doctor" />
-                                    <TableColumn prefWidth="84.800048828125" text="Illness" />
-                                    <TableColumn prefWidth="70.39996337890625" text="Medicine" />
-                                    <TableColumn prefWidth="86.4000244140625" text="Dosage" />
-                                    <TableColumn prefWidth="73.5999755859375" text="Status" />
-                                    <TableColumn prefWidth="96.00003662109373" text="Action" />
-                                 </columns>
-                              </TableView>
+                              <LineChart layoutX="1.0" layoutY="3.0" prefHeight="331.0" prefWidth="770.0">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
                            </children>
                         </AnchorPane>
                      </items>
                   </SplitPane>
-                  <Button layoutX="644.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="+   Create Prescription">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
                </children>
             </AnchorPane>
          </content>

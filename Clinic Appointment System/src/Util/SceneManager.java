@@ -50,3 +50,5 @@ public class SceneManager {
         stage.showAndWait(); // use showAndWait to block until closed
     }
 }
+
+
