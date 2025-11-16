@@ -270,4 +270,8 @@ public class AppointmentsController {
         public void openPaymentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
     }
+
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
 }
