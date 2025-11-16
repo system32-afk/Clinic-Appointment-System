@@ -51,22 +51,32 @@
             <Image url="@../Assets/Diagnoses.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="277.0">
+      <ImageView fitHeight="51.0" fitWidth="145.0" layoutX="66.0" layoutY="273.0">
+         <image>
+            <Image url="@../Assets/Location.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="312.0">
          <image>
             <Image url="@../Assets/Prescription.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="146.0" layoutX="50.0" layoutY="314.0">
+      <ImageView fitHeight="60.0" fitWidth="120.0" layoutX="64.0" layoutY="338.0">
+         <image>
+            <Image url="@../Assets/Procedure.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="146.0" layoutX="50.0" layoutY="384.0">
          <image>
             <Image url="@../Assets/Services.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="145.0" layoutX="52.0" layoutY="350.0">
+      <ImageView fitHeight="37.0" fitWidth="145.0" layoutX="52.0" layoutY="421.0">
          <image>
             <Image url="@../Assets/Payments.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="149.0" layoutX="48.0" layoutY="383.0">
+      <ImageView fitHeight="42.0" fitWidth="149.0" layoutX="48.0" layoutY="453.0">
          <image>
             <Image url="@../Assets/Reports.png" />
          </image>
@@ -83,6 +93,8 @@
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="317.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="352.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Button blendMode="DARKEN" layoutX="28.0" layoutY="387.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="29.0" layoutY="422.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="29.0" layoutY="457.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Text fx:id="Date" fill="#00000060" layoutX="246.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="576.8612060546875">
          <font>
             <Font size="30.0" />
@@ -250,12 +262,12 @@
       </Text>
       <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="1008.0" layoutY="20.0">
          <image>
-            <Image url="@../Assets/icons.png" />
+            <Image url="@../Assets/Admin.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="8.0" layoutY="509.0">
          <image>
-            <Image url="@../Assets/icons.png" />
+            <Image url="@../Assets/Admin.png" />
          </image>
       </ImageView>
       <Text layoutX="83.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin User">

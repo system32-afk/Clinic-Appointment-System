@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": ["Clinic Appointment System/src"],
+    "java.project.outputPath": "Clinic Appointment System/out/production/Clinic Appointment System",
+    "java.project.referencedLibraries": [
+        "lib/javafx/lib/**/*.jar",
+        "Clinic Appointment System/Drivers/mysql-connector-j-9.5.0/mysql-connector-j-9.5.0.jar"
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
+}

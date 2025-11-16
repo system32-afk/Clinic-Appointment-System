@@ -168,9 +168,16 @@
                         </Pane>
                      </children>
                   </HBox>
-                  <SplitPane dividerPositions="0.225609756097561" layoutX="40.0" layoutY="233.0" orientation="VERTICAL" prefHeight="292.0" prefWidth="774.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
+                  <SplitPane dividerPositions="0.18715469613259672" layoutX="40.0" layoutY="230.0" orientation="VERTICAL" prefHeight="291.0" prefWidth="776.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #e8f5f5; -fx-background-radius: 10; -fx-border-radius: 10;">
+                           <children>
+                              <Text layoutX="22.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Prescriptions">
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                              </Text>
+                           </children></AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                     </items>
                   </SplitPane>
