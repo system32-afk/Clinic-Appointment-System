@@ -241,7 +241,16 @@ public class EditDoctorController {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        String[] words = name.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalized.append(word.substring(0, 1).toUpperCase())
+                           .append(word.substring(1).toLowerCase())
+                           .append(" ");
+            }
+        }
+        return capitalized.toString().trim();
     }
 
     @FXML

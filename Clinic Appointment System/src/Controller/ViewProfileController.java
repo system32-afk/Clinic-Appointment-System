@@ -66,7 +66,7 @@ public class ViewProfileController {
             // Properly format name with title
             String firstName = rs.getString("FirstName");
             String lastName = rs.getString("LastName");
-            String fullName = "DR. " + firstName + " " + lastName;
+            String fullName = "Dr. " + firstName + " " + lastName;
             nameText.setText(fullName);
 
             // Set other fields

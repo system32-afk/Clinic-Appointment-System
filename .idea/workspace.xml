@@ -4,30 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Doctor Record complete / functional">
+    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Doctor Record Complete, no deletion, multiple specilaization allowed, sign out not yet functioning. Prescription fxml ongoing.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/insert_specializations.sql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/DoctorRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/DoctorRecordController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/EditDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/EditDoctorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ViewProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ViewProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorRecord.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/EditDoctor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/EditDoctor.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ViewProfile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ViewProfile.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add_email.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinicDB NEW.sql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddDoctorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddDoctorController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController$Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController$Doctor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DoctorRecordController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/EditDoctorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/EditDoctorController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ViewProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ViewProfileController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorRecord.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/EditDoctor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/EditDoctor.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ViewProfile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ViewProfile.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Util/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Util/Database.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +194,7 @@
       <workItem from="1762939788129" duration="313000" />
       <workItem from="1762940190863" duration="1118000" />
       <workItem from="1762941335139" duration="880000" />
-      <workItem from="1762942237082" duration="58098000" />
+      <workItem from="1762942237082" duration="58853000" />
     </task>
     <task id="LOCAL-00001" summary="Z-deleted">
       <option name="closed" value="true" />
@@ -275,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763142273773</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Doctor Record Complete, no deletion, multiple specilaization allowed, sign out not yet functioning. Prescription fxml ongoing.">
+      <option name="closed" value="true" />
+      <created>1763307403787</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1763307403787</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,6 +303,7 @@
     <MESSAGE value="Doctor Record functional" />
     <MESSAGE value="Doctor Record contact visible" />
     <MESSAGE value="Doctor Record complete / functional" />
-    <option name="LAST_COMMIT_MESSAGE" value="Doctor Record complete / functional" />
+    <MESSAGE value="Doctor Record Complete, no deletion, multiple specilaization allowed, sign out not yet functioning. Prescription fxml ongoing." />
+    <option name="LAST_COMMIT_MESSAGE" value="Doctor Record Complete, no deletion, multiple specilaization allowed, sign out not yet functioning. Prescription fxml ongoing." />
   </component>
 </project>
