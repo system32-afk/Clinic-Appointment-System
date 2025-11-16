@@ -91,29 +91,10 @@ public class SpecializationController {
                 idLabel.setPrefWidth(100);
                 nameLabel.setPrefWidth(200);
 
-                Image deleteImg = new Image(getClass().getResourceAsStream("/Assets/Delete.png"));
-                ImageView deleteIcon = new ImageView(deleteImg);
-                deleteIcon.setFitWidth(16);
-                deleteIcon.setFitHeight(16);
-
-                Button deleteButton = new Button();
-                deleteButton.setGraphic(deleteIcon);
-                deleteButton.setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
-
-                deleteButton.setOnAction(e -> {
-                    try {
-                        Database.update("DELETE FROM specialization WHERE SpecializationID = ?", SpecializationID);
-                        SpecializationRows.getChildren().remove(row);
-                    } catch(Exception ex) {
-                        ex.printStackTrace();
-                    }
-
-                });
-
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                row.getChildren().addAll(idLabel, nameLabel, spacer, deleteButton);
+                row.getChildren().addAll(idLabel, nameLabel, spacer);
 
                 // === Add separator line below each row ===
                 Separator separator = new Separator();

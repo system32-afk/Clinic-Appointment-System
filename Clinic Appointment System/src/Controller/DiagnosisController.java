@@ -13,7 +13,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -24,7 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class IllnessController {
+public class DiagnosisController {
 
     @FXML
     private Text Date;
@@ -33,16 +36,16 @@ public class IllnessController {
     private Text Time;
 
     @FXML
-    private VBox IllnessRows;
+    private VBox DiagnosisRows;
 
     @FXML
     private ScrollPane scrollPane;
 
     @FXML
-    private Button addIllnessButton;
+    private Button addDiagnosisButton;
 
     @FXML
-    private Label TotalIllnessCount;
+    private Label TotalDiagnosisCount;
 
     @FXML
     public void initialize() {
@@ -59,21 +62,32 @@ public class IllnessController {
 
     private void loadData() {
         try {
-            ResultSet IllnessData = Database.query(
+            ResultSet DiagnosisData = Database.query(
                     "SELECT " +
-                            "i.IllnessID, " +
-                            "i.IllnessName " +
-                            "FROM illness i"
+                            "d.DiagnosisID, " +
+                            "d.AppointmentID, " +
+                            "CONCAT(p.FirstName, ' ', p.LastName) AS PatientName, " +
+                            "i.IllnessName, " +
+                            "d.DateDiagnosed " +
+                            "FROM diagnosis d " +
+                            "JOIN appointment a ON d.AppointmentID=a.AppointmentID " +
+                            "JOIN patient p ON a.PatientID=p.PatientID " +
+                            "JOIN illness i ON d.IllnessID=i.IllnessID " +
+                            "ORDER BY d.DiagnosisID"
             );
 
-            IllnessRows.getChildren().clear();
+            DiagnosisRows.getChildren().clear();
             scrollPane.setFitToWidth(true);
             int rowIndex = 0;
 
-            while (IllnessData.next()) {
+            while (DiagnosisData.next()) {
 
-                int IllnessID = IllnessData.getInt("IllnessID");
-                String IllnessName = IllnessData.getString("IllnessName");
+                int DiagnosisID = DiagnosisData.getInt("DiagnosisID");
+                int AppointmentID = DiagnosisData.getInt("AppointmentID");
+                String PatientName = DiagnosisData.getString("PatientName");
+                String IllnessName = DiagnosisData.getString("IllnessName");
+                String DateDiagnosed = DiagnosisData.getString("DateDiagnosed");
+
 
                 // HBox for each row
                 HBox row = new HBox(40);
@@ -81,28 +95,34 @@ public class IllnessController {
                 row.setAlignment(Pos.BASELINE_LEFT);
 
                 // === Add cells ===
-                Label idLabel = new Label(String.valueOf(IllnessID));
-                Label nameLabel = new Label(IllnessName);
+                Label diagnosisLabel = new Label(String.valueOf(DiagnosisID));
+                Label appointmentLabel = new Label(String.valueOf(AppointmentID));
+                Label patientLabel = new Label(PatientName);
+                Label illnessLabel = new Label(IllnessName);
+                Label dateLabel = new Label(DateDiagnosed);
 
                 // Adjust margins
-                idLabel.setPrefWidth(100);
-                nameLabel.setPrefWidth(200);
+                diagnosisLabel.setPrefWidth(100);
+                appointmentLabel.setPrefWidth(100);
+                patientLabel.setPrefWidth(100);
+                illnessLabel.setPrefWidth(100);
+                dateLabel.setPrefWidth(200);
 
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                row.getChildren().addAll(idLabel, nameLabel, spacer);
+                row.getChildren().addAll(diagnosisLabel, appointmentLabel, patientLabel, illnessLabel, dateLabel, spacer);
 
                 // === Add separator line below each row ===
                 Separator separator = new Separator();
-                separator.prefWidthProperty().bind(IllnessRows.widthProperty());
+                separator.prefWidthProperty().bind(DiagnosisRows.widthProperty());
 
-                IllnessRows.getChildren().addAll(row, separator);
+                DiagnosisRows.getChildren().addAll(row, separator);
 
                 rowIndex++;
             }
 
-            TotalIllnessCount.setText(String.valueOf(rowIndex));
+            TotalDiagnosisCount.setText(String.valueOf(rowIndex));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,35 +143,9 @@ public class IllnessController {
     private Label statusLabel;
 
     @FXML
-    private void AddIllness(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Add new Illness");
-        dialog.setHeaderText("Enter the Illness Name");
-        dialog.setContentText("Illness Name:");
-
-        Optional<String> result = dialog.showAndWait();
-
-        result.ifPresent(illnessName -> {
-            if(illnessName.trim().isEmpty()) {
-                statusLabel.setText("Illness name cannot be empty");
-                statusLabel.setStyle("-fx-text-fill: red;");
-                return;
-            }
-
-            String query = "INSERT INTO illness (IllnessName) VALUES (?)";
-            Database.update(query, illnessName);
-
-            loadData();
-            statusLabel.setText("Illness added successfully");
-            statusLabel.setStyle("-fx-text-fill: green;");
-
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(e-> statusLabel.setVisible(false));
-            pause.play();
-        });
+    private void AddDiagnosis(ActionEvent event) {
 
     }
-
 
     public void DashboardScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "ADMINDashboard");
