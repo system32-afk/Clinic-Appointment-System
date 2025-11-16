@@ -266,8 +266,4 @@ public class MedicalHistoryController implements Initializable {
         SceneManager.transition(e, "PaymentProcessing");
     }
 
-    public void openMedicalHistory(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicalHistory");
-    }
-
 }
