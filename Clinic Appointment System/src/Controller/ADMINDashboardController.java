@@ -191,4 +191,7 @@ public class ADMINDashboardController {
         SceneManager.transition(e, "DoctorRecord");
     }
 
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
 }
