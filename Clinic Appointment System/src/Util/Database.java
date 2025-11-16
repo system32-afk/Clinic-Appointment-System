@@ -17,6 +17,9 @@ public class Database {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 System.out.println("Database connected!");
+
+                // Ensure required tables and data exist
+                initializeDatabase();
             } catch (ClassNotFoundException e) {
                 System.out.println("MySQL JDBC Driver not found!");
                 e.printStackTrace();
@@ -26,6 +29,28 @@ public class Database {
             }
         }
         return connection;
+    }
+
+    private static void initializeDatabase() throws SQLException {
+        try (Statement stmt = connection.createStatement()) {
+            // Create doctor_specialization table if not exists
+            stmt.execute("CREATE TABLE IF NOT EXISTS doctor_specialization (" +
+                "DoctorID INT NOT NULL, " +
+                "SpecializationID INT NOT NULL, " +
+                "PRIMARY KEY (DoctorID, SpecializationID), " +
+                "FOREIGN KEY (DoctorID) REFERENCES doctor(DoctorID) ON DELETE CASCADE, " +
+                "FOREIGN KEY (SpecializationID) REFERENCES specialization(SpecializationID) ON DELETE CASCADE" +
+            ")");
+
+            // Insert specializations if not exist
+            stmt.execute("INSERT IGNORE INTO specialization (SpecializationName) VALUES " +
+                "('Cardiology'), ('Neurology'), ('Oncology'), ('Pediatrics'), ('Orthopedics'), " +
+                "('Dermatology'), ('Psychiatry'), ('Radiology'), ('Anesthesiology'), ('Endocrinology')");
+
+            // Migrate existing data from doctor table to junction table
+            stmt.execute("INSERT IGNORE INTO doctor_specialization (DoctorID, SpecializationID) " +
+                "SELECT DoctorID, SpecializationID FROM doctor WHERE SpecializationID IS NOT NULL");
+        }
     }
 
     public static ResultSet query(String sql, Object... params) {
