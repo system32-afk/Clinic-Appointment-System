@@ -206,4 +206,8 @@ public class MedicineManagementController implements Initializable {
     public void openPaymentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
     }
+
+    public void openMedicalHistory(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicalHistory");
+    }
 }
