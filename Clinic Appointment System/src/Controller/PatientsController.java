@@ -85,11 +85,7 @@ public class PatientsController {
 
     private void loadData(ResultSet PatientsData) {
         try {
-
-
             PatientRows.getChildren().clear();
-
-
             int rowIndex = 0;
 
             while (PatientsData.next()) {
@@ -282,5 +278,13 @@ public class PatientsController {
 
         public void openPaymentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
+    }
+
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+
+    public void openMedicalHistory(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicalHistory");
     }
 }

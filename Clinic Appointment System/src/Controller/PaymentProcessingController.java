@@ -66,25 +66,25 @@ public class PaymentProcessingController implements Initializable {
     private void loadUnpaidProcedures() {
         try {
             String sql = """
-                SELECT 
-                    pr.ProcedureID,
-                    pr.ProcedureDate,
-                    s.ServiceName,
-                    s.Price,
-                    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
-                    CONCAT('Dr. ', d.FirstName, ' ', d.LastName) AS DoctorName,
-                    a.AppointmentID
-                FROM procedurerequest pr
-                JOIN service s ON pr.ServiceID = s.ServiceID
-                JOIN appointment a ON pr.AppointmentID = a.AppointmentID
-                JOIN patient p ON a.PatientID = p.PatientID
-                JOIN doctor d ON a.DoctorID = d.DoctorID
-                WHERE NOT EXISTS (
-                    SELECT 1 FROM payment pm WHERE pm.ProcedureID = pr.ProcedureID
-                )
-                ORDER BY pr.ProcedureDate DESC
-            """;
-
+            SELECT 
+                pr.ProcedureID,
+                pr.ProcedureDate,
+                s.ServiceName,
+                s.Price,
+                CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+                CONCAT('Dr. ', d.FirstName, ' ', d.LastName) AS DoctorName,
+                a.AppointmentID
+            FROM procedurerequest pr
+            JOIN service s ON pr.ServiceID = s.ServiceID
+            JOIN appointment a ON pr.AppointmentID = a.AppointmentID
+            JOIN patient p ON a.PatientID = p.PatientID
+            JOIN doctor d ON a.DoctorID = d.DoctorID
+            WHERE NOT EXISTS (
+                SELECT 1 FROM payment pm WHERE pm.ProcedureID = pr.ProcedureID
+            )
+            ORDER BY pr.ProcedureDate DESC
+        """;
+            
             ResultSet rs = Database.query(sql);
             procedureList.getChildren().clear();
 
@@ -182,5 +182,13 @@ public class PaymentProcessingController implements Initializable {
 
     public void AppointmentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "Appointments");
+    }
+
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+
+    public void openMedicalHistory(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicalHistory");
     }
 }

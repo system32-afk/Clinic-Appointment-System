@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PaymentProcessingController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MedicineManagementController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="706.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="83.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
@@ -25,7 +25,7 @@
             </font>
         </Text>
 
-        <Text fontSmoothingType="LCD" layoutX="240.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Processing" wrappingWidth="323.635">
+        <Text fontSmoothingType="LCD" layoutX="240.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine Management" wrappingWidth="323.635">
             <font>
                 <Font name="Arial" size="27.0" />
             </font>
@@ -33,10 +33,16 @@
 
         <ScrollPane layoutX="240.0" layoutY="200.0" prefHeight="450.0" prefWidth="973.0" style="-fx-background-radius: 31; -fx-border-radius: 31; -fx-background-color: #ffffff;">
             <content>
-                <VBox fx:id="paymentContainer" prefHeight="450.0" prefWidth="950.0" style="-fx-padding: 20; -fx-spacing: 15;">
+                <VBox fx:id="medicineContainer" prefHeight="450.0" prefWidth="950.0" style="-fx-padding: 20; -fx-spacing: 15;">
                     <children>
-                        <Text text="Unpaid Procedures" style="-fx-font-size: 20; -fx-font-weight: bold;" />
-                        <VBox fx:id="procedureList" prefWidth="900.0" style="-fx-spacing: 10;" />
+                        <HBox spacing="20" alignment="CENTER_LEFT">
+                            <children>
+                                <Text text="Medicine Inventory" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+                                <Button fx:id="addMedicineBtn" text="+ Add New Medicine" onAction="#openAddMedicineDialog"
+                                        style="-fx-background-color: #40D0E0; -fx-text-fill: white; -fx-background-radius: 5;" />
+                            </children>
+                        </HBox>
+                        <VBox fx:id="medicineList" prefWidth="900.0" style="-fx-spacing: 10;" />
                     </children>
                 </VBox>
             </content>
@@ -119,20 +125,20 @@
                     </children>
                 </Pane>
 
-             <Pane prefHeight="74.0" prefWidth="200.0">
-                 <children>
-                     <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMedicineManagement" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Medicine Management">
-                         <font>
-                             <Font name="Arial" size="13.0" />
-                         </font>
-                     </Button>
-                     <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-                         <image>
-                             <Image url="@../Assets/medicine.png" />
-                         </image>
-                     </ImageView>
-                 </children>
-             </Pane>
+                <Pane prefHeight="74.0" prefWidth="200.0">
+                    <children>
+                        <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMedicineManagement" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Medicine Management">
+                            <font>
+                                <Font name="Arial" size="13.0" />
+                            </font>
+                        </Button>
+                        <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Assets/medicine.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
 
                 <Pane prefHeight="74.0" prefWidth="200.0">
                     <children>
@@ -151,14 +157,14 @@
 
                 <Pane prefHeight="74.0" prefWidth="200.0">
                     <children>
-                        <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Process Payment">
+                        <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openPaymentScreen" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Process Payment">
                             <font>
                                 <Font name="Arial" size="15.0" />
                             </font>
                         </Button>
                         <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../Assets/credit-card.png" />
+                                <Image url="@../Assets/dollar.png" />
                             </image>
                         </ImageView>
                     </children>

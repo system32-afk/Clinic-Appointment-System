@@ -16,7 +16,6 @@ public class Driver extends Application {
         if(connection != null){
             launch(args);
         }
-
     }
 
     @Override
