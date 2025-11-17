@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -281,10 +282,23 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
+
       <Button cache="true" cacheHint="QUALITY" layoutX="1008.0" layoutY="96.0" mnemonicParsing="false" onAction="#openScheduleAppointment" prefHeight="28.0" prefWidth="170.0" style="-fx-background-color: #40D0E0; -fx-background-radius: 15;" text="+   New Appointment" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
+      <Button fx:id="Refresh" layoutX="703.0" layoutY="341.0" mnemonicParsing="false" onAction="#initialize" prefHeight="30.0" prefWidth="44.0" style="-fx-background-color: white;">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/Refresh.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
+      <TextField fx:id="SearchBar" layoutX="771.0" layoutY="342.0" prefHeight="38.0" prefWidth="296.0" promptText="Search by patient name or appointment ID" />
+      <Button fx:id="SearchButton" layoutX="1078.0" layoutY="343.0" mnemonicParsing="false" onAction="#Search" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #40D0E0; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
    </children>
 </AnchorPane>

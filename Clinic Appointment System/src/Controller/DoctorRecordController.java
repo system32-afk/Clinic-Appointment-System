@@ -214,12 +214,12 @@ public class DoctorRecordController {
         ObservableList<Doctor> doctors = FXCollections.observableArrayList();
 
         String query = "SELECT d.DoctorID, CONCAT(d.FirstName, ' ', d.LastName) AS Name, d.Sex, " +
-                      "s.SpecializationName, d.Contact, " +
+                      "s.SpecializationName, d.ContactNumber, " +
                       "COUNT(DISTINCT a.PatientID) AS Patients " +
                       "FROM doctor d " +
-                      "LEFT JOIN specialization s ON d.SpecializationID = s.SpecializationID " +
+                      "LEFT JOIN ref_specialization s ON d.SpecializationID = s.SpecializationID " +
                       "LEFT JOIN appointment a ON d.DoctorID = a.DoctorID " +
-                      "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, s.SpecializationName, d.Contact";
+                      "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, s.SpecializationName, d.ContactNumber";
 
         try (ResultSet rs = Database.query(query)) {
             if (rs != null) {
@@ -228,7 +228,7 @@ public class DoctorRecordController {
                     String name = rs.getString("Name");
                     String sex = rs.getString("Sex");
                     String specialization = rs.getString("SpecializationName");
-                    String contact = rs.getString("Contact");
+                    String contact = rs.getString("ContactNumber");
                     int patients = rs.getInt("Patients");
 
                     // Create buttons for Profile and Action

@@ -16,12 +16,11 @@ public class Driver extends Application {
         if(connection != null){
             launch(args);
         }
-
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Services.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Patients.fxml"));
         primaryStage.setTitle("Clinic Appointment System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
