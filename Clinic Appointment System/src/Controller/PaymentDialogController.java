@@ -60,23 +60,12 @@ public class PaymentDialogController implements Initializable {
         }
 
         try {
-            // Check if payment already exists
-            String checkSql = "SELECT COUNT(*) as count FROM payment WHERE ProcedureID = ?";
-            ResultSet checkRs = Database.query(checkSql, procedureID);
-
-            if (checkRs != null && checkRs.next() && checkRs.getInt("count") > 0) {
-                Alerts.Warning("Payment for this procedure has already been processed");
-                return;
-            }
-
-            // Insert payment record
             String sql = "INSERT INTO payment (ProcedureID, PaymentDate, AmountDue, ModeOfPayment) VALUES (?, ?, ?, ?)";
             int result = Database.update(sql, procedureID, LocalDate.now(), amount, paymentMethod);
 
             if (result > 0) {
                 Alerts.Info("Payment processed successfully!");
 
-                // Refresh parent controller data
                 if (parentController != null) {
                     parentController.refreshData();
                 }
