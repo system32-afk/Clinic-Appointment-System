@@ -61,21 +61,30 @@ public class AddServiceController {
         //if this edits the record @ServiceID has a valid value
         if(this.ServiceID != -1){
             String sql = "UPDATE service SET serviceName = ?, price = ? WHERE serviceID = ?";
-            Database.update(sql, serviceName, price, this.ServiceID);
-            Alerts.Info("Service record edited successfully!");
-            Stage stage = (Stage) AddService.getScene().getWindow();
-            stage.close();
+            try {
+                Database.update(sql, serviceName, price, this.ServiceID);
+                Alerts.Info("Service record edited successfully!");
+                Stage stage = (Stage) AddService.getScene().getWindow();
+                stage.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alerts.Warning("Error updating service record.");
+            }
             return;
         }
 
 
         // If all good, proceed to insert
         String sql = "INSERT INTO service (serviceName, price) VALUES (?, ?)";
-        Database.update(sql, serviceName, price);
-
-        Alerts.Info("Service added successfully!");
-        Stage stage = (Stage) AddService.getScene().getWindow();
-        stage.close();
+        try {
+            Database.update(sql, serviceName, price);
+            Alerts.Info("Service added successfully!");
+            Stage stage = (Stage) AddService.getScene().getWindow();
+            stage.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alerts.Warning("Error adding service.");
+        }
 
     }
 
@@ -89,14 +98,15 @@ public class AddServiceController {
     //this loads the data of the selected service for editing.
     //this is probably more efficient than having multiple duplicates of fxml for editing lol. will implement to all if I have time lol
     public void LoadData(){
-        ResultSet data = Database.query("SELECT * FROM service WHERE serviceID= ?",this.ServiceID);
-        try{
+        try {
+            ResultSet data = Database.query("SELECT * FROM service WHERE serviceID= ?",this.ServiceID);
             while(data.next()){
                 ServiceNameField.setText(data.getString("serviceName"));
                 PriceField.setText(String.valueOf(data.getFloat("price")));
 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             Alerts.Warning("There was an error loading service data.");
         }
     }

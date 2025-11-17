@@ -2,7 +2,7 @@ package Controller;
 
 import Util.Alerts;
 import Util.Database;
-import com.mysql.cj.protocol.Resultset;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -67,53 +67,38 @@ public class Database {
         }
     }
 
-    public static ResultSet query(String sql, Object... params) {
-        try {
-            PreparedStatement pst = getConnection().prepareStatement(sql);
+    public static ResultSet query(String sql, Object... params) throws SQLException {
+        PreparedStatement pst = getConnection().prepareStatement(sql);
 
-            // Set all parameters
-            for (int i = 0; i < params.length; i++) {
-                pst.setObject(i + 1, params[i]);
-            }
-
-            return pst.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+        // Set all parameters
+        for (int i = 0; i < params.length; i++) {
+            pst.setObject(i + 1, params[i]);
         }
+
+        return pst.executeQuery();
     }
 
     // Run INSERT, UPDATE, DELETE
-    public static int update(String sql, Object... params) {
-        try {
-            PreparedStatement pst = getConnection().prepareStatement(sql);
-            for (int i = 0; i < params.length; i++) {
-                pst.setObject(i + 1, params[i]);
-            }
-            return pst.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
+    public static int update(String sql, Object... params) throws SQLException {
+        PreparedStatement pst = getConnection().prepareStatement(sql);
+        for (int i = 0; i < params.length; i++) {
+            pst.setObject(i + 1, params[i]);
         }
+        return pst.executeUpdate();
     }
 
     // Run INSERT and return generated key
-    public static int insertAndGetKey(String sql, Object... params) {
-        try {
-            PreparedStatement pst = getConnection().prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
-            for (int i = 0; i < params.length; i++) {
-                pst.setObject(i + 1, params[i]);
-            }
-            pst.executeUpdate();
-            ResultSet rs = pst.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-            return 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
+    public static int insertAndGetKey(String sql, Object... params) throws SQLException {
+        PreparedStatement pst = getConnection().prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+        for (int i = 0; i < params.length; i++) {
+            pst.setObject(i + 1, params[i]);
         }
+        pst.executeUpdate();
+        ResultSet rs = pst.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
 }

@@ -157,11 +157,15 @@ public class EditPatientRecordController {
             """;
 
 
-        Database.update(Update,FirstName, LastName, Age, Sex, ContactNumber, BuildingNo, Street, BarangayNo, city, province,patientID);
-
-        Alerts.Info("Patient Record Updated!");
-        Stage stage = (Stage) EditPatient.getScene().getWindow();
-        stage.close();
+        try {
+            Database.update(Update,FirstName, LastName, Age, Sex, ContactNumber, BuildingNo, Street, BarangayNo, city, province,patientID);
+            Alerts.Info("Patient Record Updated!");
+            Stage stage = (Stage) EditPatient.getScene().getWindow();
+            stage.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alerts.Warning("Error updating patient record: " + e.getMessage());
+        }
 
 
     }

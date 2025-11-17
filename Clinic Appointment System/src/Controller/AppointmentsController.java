@@ -195,7 +195,11 @@ public class AppointmentsController {
                 statusDropdown.setOnAction(e -> {
                     String newStatus = statusDropdown.getValue();
                     updateDropdownColor(statusDropdown, newStatus);
-                    Database.update("UPDATE Appointment SET Status = '" + newStatus + "' WHERE AppointmentID = " + appointmentID);
+                    try {
+                        Database.update("UPDATE Appointment SET Status = '" + newStatus + "' WHERE AppointmentID = " + appointmentID);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 });
 
                 // Add to GridPane

@@ -3,7 +3,7 @@ package Controller;
 import Util.Alerts;
 import Util.Database;
 import Util.SceneManager;
-import com.mysql.cj.protocol.Resultset;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -71,10 +71,14 @@ public class ServicesController {
         clock.play();
 
         //Default Select statement when screen loads
-        ResultSet InitialData = Database.query(
-                "SELECT * FROM service"
-        );
-        loadData(InitialData);
+        try {
+            ResultSet InitialData = Database.query(
+                    "SELECT * FROM service"
+            );
+            loadData(InitialData);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -224,8 +228,12 @@ public class ServicesController {
 
         if (search.isEmpty()) {
             // Reload all services if search bar is empty
-            ResultSet rs = Database.query("SELECT * FROM service");
-            loadData(rs);
+            try {
+                ResultSet rs = Database.query("SELECT * FROM service");
+                loadData(rs);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return;
         }
 
@@ -246,15 +254,19 @@ public class ServicesController {
         String searchLike = "%" + search + "%";
 
         String query = """
-        SELECT * 
+        SELECT *
         FROM service
-        WHERE 
+        WHERE
             (? = TRUE AND serviceID = ?)
             OR (? = FALSE AND serviceName LIKE ?)
         """;
 
-        ResultSet services = Database.query(query, isIdSearch, idValue, isIdSearch, searchLike);
-        loadData(services);
+        try {
+            ResultSet services = Database.query(query, isIdSearch, idValue, isIdSearch, searchLike);
+            loadData(services);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

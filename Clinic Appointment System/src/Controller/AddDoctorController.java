@@ -64,8 +64,12 @@ public class AddDoctorController {
         };
 
         // Insert specializations into database if not exists
-        for (String name : specializationNames) {
-            Database.update("INSERT IGNORE INTO specialization (SpecializationName) VALUES (?)", name);
+        try {
+            for (String name : specializationNames) {
+                Database.update("INSERT IGNORE INTO specialization (SpecializationName) VALUES (?)", name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         // Populate specialization combo box with only the predefined specializations

@@ -71,12 +71,16 @@ public class PatientsController {
             clock.play();
 
             //Default Select statement when screen loads
-            ResultSet InitialData = Database.query(
-                    "SELECT p.PatientID, CONCAT(p.LastName, ', ',p.FirstName) CompleteName," +
-                            "p.Sex, p.Age, p.ContactNumber, CONCAT(p.BuildingNo,' ',p.Street,' ',p.BarangayNo,' ',p.City," +
-                            "' ',p.Province) AS Address FROM Patient p"
-            );
-            loadData(InitialData);
+            try {
+                ResultSet InitialData = Database.query(
+                        "SELECT p.PatientID, CONCAT(p.LastName, ', ',p.FirstName) CompleteName," +
+                                "p.Sex, p.Age, p.ContactNumber, CONCAT(p.BuildingNo,' ',p.Street,' ',p.BarangayNo,' ',p.City," +
+                                "' ',p.Province) AS Address FROM Patient p"
+                );
+                loadData(InitialData);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         } catch (IOException e) {
             e.printStackTrace(); // Or show an alert if you want
@@ -191,9 +195,14 @@ public class PatientsController {
 
                 Delete.setOnAction(event -> {
                     if(Alerts.Confirmation("Are you sure you want to delete this patient?")){
-                        Database.update("DELETE FROM patient WHERE Patientid = ?", patientID);
-                        Alerts.Info("Patient deleted successfully!");
-                        initialize(); // refresh the screen
+                        try {
+                            Database.update("DELETE FROM patient WHERE Patientid = ?", patientID);
+                            Alerts.Info("Patient deleted successfully!");
+                            initialize(); // refresh the screen
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            Alerts.Warning("Error deleting patient: " + e.getMessage());
+                        }
                     }
                 });
 
@@ -263,7 +272,11 @@ public class PatientsController {
 
 
                searchLike = "%" + search + "%";
-        loadData(Objects.requireNonNull(Database.query(query, isIdSearch, search, isIdSearch, searchLike, searchLike, searchLike)));
+        try {
+            loadData(Objects.requireNonNull(Database.query(query, isIdSearch, search, isIdSearch, searchLike, searchLike, searchLike)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

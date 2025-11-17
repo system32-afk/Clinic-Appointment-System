@@ -4,16 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Finished report for Specialization. Doctor and Admin scene for Prescription and Procedure.">
+    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="AdminProcedures and DoctorProcedures done datas are on sync">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddDoctorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AppointmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AppointmentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/EditPatientRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/EditPatientRecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/PatientsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/RequestProcedureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/RequestProcedureController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ScheduleAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ScheduleAppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServicesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServicesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/AdminProcedures.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/AdminProcedures.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorProcedures.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorProcedures.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/AdminPrescription.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/AdminPrescription.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorPrescription.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/DoctorPrescription.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.zip" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddDoctorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddDoctorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddServiceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AddServiceController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AppointmentsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/AppointmentsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/EditPatientRecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/EditPatientRecordController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/PatientsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/PatientsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController$Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController$Doctor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController$Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController$Patient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController$Service.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController$Service.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/RequestProcedureController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ServicesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ServicesController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/AdminProcedures.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/AdminProcedures.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/AdminPrescription.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/AdminPrescription.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorPrescription.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorPrescription.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorProcedures.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorProcedures.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Util/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Util/Database.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -197,7 +215,7 @@
       <workItem from="1762940190863" duration="1118000" />
       <workItem from="1762941335139" duration="880000" />
       <workItem from="1762942237082" duration="59703000" />
-      <workItem from="1763310745124" duration="17891000" />
+      <workItem from="1763310745124" duration="29265000" />
     </task>
     <task id="LOCAL-00001" summary="Z-deleted">
       <option name="closed" value="true" />
@@ -303,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763360367098</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="AdminProcedures and DoctorProcedures done datas are on sync">
+      <option name="closed" value="true" />
+      <created>1763396800120</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763396800120</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,6 +369,7 @@
     <MESSAGE value="Prescriptions, procedures, and reports ui" />
     <MESSAGE value="Reports" />
     <MESSAGE value="Finished report for Specialization. Doctor and Admin scene for Prescription and Procedure." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished report for Specialization. Doctor and Admin scene for Prescription and Procedure." />
+    <MESSAGE value="AdminProcedures and DoctorProcedures done datas are on sync" />
+    <option name="LAST_COMMIT_MESSAGE" value="AdminProcedures and DoctorProcedures done datas are on sync" />
   </component>
 </project>
