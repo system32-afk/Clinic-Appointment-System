@@ -84,11 +84,7 @@ public class PatientsController {
 
     private void loadData(ResultSet PatientsData) {
         try {
-
-
             PatientRows.getChildren().clear();
-
-
             int rowIndex = 0;
 
             while (PatientsData.next()) {

@@ -15,6 +15,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+<<<<<<< Updated upstream
+=======
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+>>>>>>> Stashed changes
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -23,11 +29,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class AppointmentsController {
 
@@ -52,6 +60,9 @@ public class AppointmentsController {
     @FXML
     private VBox AppointmentRows; // this VBox will contain multiple GridPanes (rows)
 
+    @FXML
+    private TextField SearchBar;
+
 
     @FXML
     public void initialize() {
@@ -63,11 +74,23 @@ public class AppointmentsController {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
-        loadData();
+        ResultSet initialdata = Database.query(
+                "SELECT " +
+                        "a.appointmentID, p.patientID, " +
+                        "CONCAT('Dr. ', d.FirstName, ' ', d.LastName) AS DoctorName, " +
+                        "CONCAT(p.FirstName, ' ', p.LastName) AS PatientName, " +
+                        "a.Status, a.Time, a.Date, a.ReasonForVisit " +  // removed the trailing comma
+                        "FROM appointment a " +
+                        "JOIN patient p ON a.patientID = p.patientID " +
+                        "JOIN doctor d ON a.doctorID = d.doctorID"
+        );
+
+        loadData(initialdata);
     }
 
-    private void loadData() {
+    private void loadData(ResultSet data) {
         try {
+<<<<<<< Updated upstream
             ResultSet AppointmentData = Database.query(
                     "SELECT " +
                             "a.AppointmentID, " +
@@ -81,27 +104,34 @@ public class AppointmentsController {
                             "JOIN patient p ON a.PatientID = p.PatientID " +
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
             );
+=======
+>>>>>>> Stashed changes
 
             AppointmentRows.getChildren().clear();
 
+            ResultSet statistics = Database.query("SELECT COUNT(*) OVER() AS TotalAppointment, " +
+                    "SUM(CASE WHEN a.Status = 'Completed' THEN 1 ELSE 0 END) OVER() AS CompletedAppointments, " +
+                    "SUM(CASE WHEN a.Status = 'Pending' THEN 1 ELSE 0 END) OVER() AS PendingAppointments FROM appointment a" );
             boolean statsSet = false;
             int rowIndex = 0;
 
-            while (AppointmentData.next()) {
+            while(statistics.next()){
                 if (!statsSet) {
-                    AppointmentCount.setText(String.valueOf(AppointmentData.getInt("TotalAppointment")));
-                    CompletedAppointments.setText(String.valueOf(AppointmentData.getInt("CompletedAppointments")));
-                    PendingAppointments.setText(String.valueOf(AppointmentData.getInt("PendingAppointments")));
+                    AppointmentCount.setText(String.valueOf(statistics.getInt("TotalAppointment")));
+                    CompletedAppointments.setText(String.valueOf(statistics.getInt("CompletedAppointments")));
+                    PendingAppointments.setText(String.valueOf(statistics.getInt("PendingAppointments")));
                     statsSet = true;
                 }
+            }
+            while (data.next()) {
 
-                int appointmentID = AppointmentData.getInt("AppointmentID");
-                String DoctorName = AppointmentData.getString("DoctorName");
-                String PatientName = AppointmentData.getString("PatientName");
-                String Status = AppointmentData.getString("Status");
-                String Time = AppointmentData.getString("Time");
-                String Date = AppointmentData.getString("Date");
-                String Reason = AppointmentData.getString("ReasonForVisit");
+                int appointmentID = data.getInt("AppointmentID");
+                String DoctorName = data.getString("DoctorName");
+                String PatientName = data.getString("PatientName");
+                String Status = data.getString("Status");
+                String Time = data.getString("Time");
+                String Date = data.getString("Date");
+                String Reason = data.getString("ReasonForVisit");
 
                 // === Create the GridPane row ===
                 GridPane grid = new GridPane();
@@ -112,6 +142,7 @@ public class AppointmentsController {
                 grid.setStyle("-fx-background-color: #FFFFFF;");
 
                 // Define column widths
+<<<<<<< Updated upstream
                 ColumnConstraints col1 = new ColumnConstraints(160);  // ID
                 ColumnConstraints col2 = new ColumnConstraints(120);  // Patient
                 ColumnConstraints col3 = new ColumnConstraints(140);  // Doctor
@@ -119,9 +150,19 @@ public class AppointmentsController {
                 ColumnConstraints col5 = new ColumnConstraints(120);  // Reason
                 ColumnConstraints col6 = new ColumnConstraints(120);  // Status
                 grid.getColumnConstraints().addAll(col1, col2, col3, col4, col5, col6);
+=======
+                ColumnConstraints col1 = new ColumnConstraints(80);  // ID
+                ColumnConstraints col2 = new ColumnConstraints(130);  // Patient
+                ColumnConstraints col3 = new ColumnConstraints(100);  // Doctor
+                ColumnConstraints col4 = new ColumnConstraints(140);  // Date & Time
+                ColumnConstraints col5 = new ColumnConstraints(130);  // Reason
+                ColumnConstraints col6 = new ColumnConstraints(150);  // Status
+                ColumnConstraints col7 = new ColumnConstraints(0);  // Update button
+                grid.getColumnConstraints().addAll(col1, col2, col3, col4, col5, col6,col7);
+>>>>>>> Stashed changes
 
                 // === Add cells ===
-                Label idLabel = new Label(String.valueOf(appointmentID));
+                Label idLabel = new Label("AP-"+String.valueOf(appointmentID));
                 Label patientLabel = new Label(PatientName);
                 Label doctorLabel = new Label(DoctorName);
                 Label dateTimeLabel = new Label(Time + " " + Date);
@@ -206,4 +247,43 @@ public class AppointmentsController {
     public void DashboardScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "ADMINDashboard");
     }
+<<<<<<< Updated upstream
+=======
+
+        public void openPaymentScreen(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "PaymentProcessing");
+    }
+
+    @FXML
+    private void Search() {
+        String search = SearchBar.getText().trim();
+        boolean isIdSearch = false;
+
+        if (search.toUpperCase().startsWith("AP-")) {
+            search = search.substring(3);
+            isIdSearch = true;
+        }
+
+        String sql = "SELECT " +
+                "a.AppointmentID, p.PatientID, " +
+                "CONCAT('Dr. ', d.FirstName, ' ', d.LastName) AS DoctorName, " +
+                "CONCAT(p.FirstName, ' ', p.LastName) AS PatientName, " +
+                "a.Status, a.Time, a.Date, a.ReasonForVisit " +  // removed trailing comma
+                "FROM appointment a " +
+                "JOIN patient p ON a.PatientID = p.PatientID " +
+                "JOIN doctor d ON a.DoctorID = d.DoctorID " + // <-- added space
+                "WHERE " + (isIdSearch
+                ? "a.AppointmentID = ?"
+                : "p.FirstName LIKE ? OR p.LastName LIKE ? OR p.ContactNumber LIKE ?");
+
+        if (isIdSearch) {
+            loadData(Database.query(sql, search));
+        } else {
+            String searchLike = "%" + search + "%";
+            loadData(Database.query(sql, searchLike, searchLike, searchLike));
+        }
+    }
+
+
+>>>>>>> Stashed changes
 }
