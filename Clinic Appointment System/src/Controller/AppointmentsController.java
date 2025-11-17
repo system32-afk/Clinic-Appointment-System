@@ -13,18 +13,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-<<<<<<< Updated upstream
-=======
-import javafx.scene.control.TextField;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
->>>>>>> Stashed changes
+
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -90,10 +90,9 @@ public class AppointmentsController {
 
     private void loadData(ResultSet data) {
         try {
-<<<<<<< Updated upstream
             ResultSet AppointmentData = Database.query(
                     "SELECT " +
-                            "a.AppointmentID, " +
+                            "a.AppointmentID, p.PatientID, " +
                             "CONCAT('Dr. ', d.FirstName, ' ', d.LastName) AS DoctorName, " +
                             "CONCAT(p.FirstName, ' ', p.LastName) AS PatientName, " +
                             "a.Status, a.Time, a.Date, a.ReasonForVisit, " +
@@ -104,8 +103,6 @@ public class AppointmentsController {
                             "JOIN patient p ON a.PatientID = p.PatientID " +
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
             );
-=======
->>>>>>> Stashed changes
 
             AppointmentRows.getChildren().clear();
 
@@ -133,6 +130,7 @@ public class AppointmentsController {
                 String Date = data.getString("Date");
                 String Reason = data.getString("ReasonForVisit");
 
+
                 // === Create the GridPane row ===
                 GridPane grid = new GridPane();
                 grid.setPadding(new Insets(8, 20, 8, 20));
@@ -142,7 +140,6 @@ public class AppointmentsController {
                 grid.setStyle("-fx-background-color: #FFFFFF;");
 
                 // Define column widths
-<<<<<<< Updated upstream
                 ColumnConstraints col1 = new ColumnConstraints(160);  // ID
                 ColumnConstraints col2 = new ColumnConstraints(120);  // Patient
                 ColumnConstraints col3 = new ColumnConstraints(140);  // Doctor
@@ -150,16 +147,6 @@ public class AppointmentsController {
                 ColumnConstraints col5 = new ColumnConstraints(120);  // Reason
                 ColumnConstraints col6 = new ColumnConstraints(120);  // Status
                 grid.getColumnConstraints().addAll(col1, col2, col3, col4, col5, col6);
-=======
-                ColumnConstraints col1 = new ColumnConstraints(80);  // ID
-                ColumnConstraints col2 = new ColumnConstraints(130);  // Patient
-                ColumnConstraints col3 = new ColumnConstraints(100);  // Doctor
-                ColumnConstraints col4 = new ColumnConstraints(140);  // Date & Time
-                ColumnConstraints col5 = new ColumnConstraints(130);  // Reason
-                ColumnConstraints col6 = new ColumnConstraints(150);  // Status
-                ColumnConstraints col7 = new ColumnConstraints(0);  // Update button
-                grid.getColumnConstraints().addAll(col1, col2, col3, col4, col5, col6,col7);
->>>>>>> Stashed changes
 
                 // === Add cells ===
                 Label idLabel = new Label("AP-"+String.valueOf(appointmentID));
@@ -167,11 +154,64 @@ public class AppointmentsController {
                 Label doctorLabel = new Label(DoctorName);
                 Label dateTimeLabel = new Label(Time + " " + Date);
                 Label reasonLabel = new Label(Reason);
+                reasonLabel.setMinHeight(Region.USE_PREF_SIZE);
+                reasonLabel.setWrapText(true);
+                reasonLabel.setTextAlignment(TextAlignment.LEFT);
+                reasonLabel.setAlignment(Pos.CENTER_LEFT);
 
                 ComboBox<String> statusDropdown = new ComboBox<>();
                 statusDropdown.getItems().addAll("Pending", "In-Progress", "Completed", "Canceled");
                 statusDropdown.setValue(Status);
                 updateDropdownColor(statusDropdown, Status);
+
+
+                Button Update = new Button();
+//                Button Delete = new Button();
+
+                //set images
+                Image updateImg = new Image(getClass().getResourceAsStream("/Assets/Update.png"));
+//                Image deleteImg = new Image(getClass().getResourceAsStream("/Assets/Delete.png"));
+
+                //put images in ImageView
+                ImageView updateIcon = new ImageView(updateImg);
+//                ImageView deleteIcon = new ImageView(deleteImg);
+
+                //resize buttons
+                updateIcon.setFitWidth(16);
+                updateIcon.setFitHeight(16);
+//                deleteIcon.setFitWidth(16);
+//                deleteIcon.setFitHeight(16);
+
+                //set the images as graphic in the buttons
+                Update.setGraphic(updateIcon);
+//                Delete.setGraphic(deleteIcon);
+
+
+                //edit appointment record
+                Update.setOnAction(event -> {
+                    try {
+                        // Load EditPatient.fxml dynamically
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditAppointment.fxml"));
+                        Parent root = loader.load();
+
+                        // Get the EditPatient controller
+                        EditAppointmentController controller = loader.getController();
+
+                        // Pass the selected PatientID
+                        controller.setAPPID(appointmentID);
+
+                        // Create a new stage for editing
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                            stage.setTitle("Edit Appointment");
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
 
                 // Handle dropdown changes
                 statusDropdown.setOnAction(e -> {
@@ -187,11 +227,12 @@ public class AppointmentsController {
                 grid.add(dateTimeLabel, 3, 0);
                 grid.add(reasonLabel, 4, 0);
                 grid.add(statusDropdown, 5, 0);
+                grid.add(Update,6,0);
 
                 GridPane.setHalignment(statusDropdown, HPos.CENTER);
 
                 // === Add separator line below each row ===
-                Line line = new Line(0, 0, 1000, 0);
+                Line line = new Line(0, 0, 920, 0);
                 line.setStroke(Color.LIGHTGRAY);
                 line.setStrokeWidth(1);
 
@@ -247,12 +288,11 @@ public class AppointmentsController {
     public void DashboardScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "ADMINDashboard");
     }
-<<<<<<< Updated upstream
-=======
 
         public void openPaymentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
     }
+
 
     @FXML
     private void Search() {
@@ -285,5 +325,13 @@ public class AppointmentsController {
     }
 
 
->>>>>>> Stashed changes
+
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+
+    public void openMedicalHistory(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicalHistory");
+    }
+
 }

@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `medical_consultation_system` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `medical_consultation_system`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: medical_consultation_system
@@ -24,32 +26,19 @@ DROP TABLE IF EXISTS `appointment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `appointment` (
   `AppointmentID` int NOT NULL AUTO_INCREMENT,
-  `PatientID` int DEFAULT NULL,
-  `DoctorID` int DEFAULT NULL,
-  `ReasonForVisit` text,
-  `ServiceNeeded` int DEFAULT NULL,
-  `Date` date DEFAULT NULL,
-  `Time` time DEFAULT NULL,
+  `PatientID` int NOT NULL,
+  `DoctorID` int NOT NULL,
+  `ReasonForVisit` varchar(255) DEFAULT NULL,
+  `Date` date NOT NULL,
+  `Time` time NOT NULL,
   `Status` enum('Pending','In-Progress','Completed','Canceled') DEFAULT 'Pending',
   PRIMARY KEY (`AppointmentID`),
-  KEY `PatientID` (`PatientID`),
-  KEY `DoctorID` (`DoctorID`),
-  KEY `ServiceNeeded` (`ServiceNeeded`),
-  CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`),
-  CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`),
-  CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`ServiceNeeded`) REFERENCES `service` (`ServiceID`)
+  KEY `fk_appointment_patient` (`PatientID`),
+  KEY `fk_appointment_doctor` (`DoctorID`),
+  CONSTRAINT `fk_appointment_doctor` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_appointment_patient` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `appointment`
---
-
-LOCK TABLES `appointment` WRITE;
-/*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (1,1,1,'Regular check-up',1,'2025-11-01','09:00:00','Completed');
-/*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `diagnosis`
@@ -60,31 +49,16 @@ DROP TABLE IF EXISTS `diagnosis`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `diagnosis` (
   `DiagnosisID` int NOT NULL AUTO_INCREMENT,
-  `AppointmentID` int DEFAULT NULL,
-  `PatientID` int DEFAULT NULL,
-  `DoctorID` int DEFAULT NULL,
-  `IllnessID` int DEFAULT NULL,
-  `DateDiagnosed` date DEFAULT NULL,
+  `AppointmentID` int NOT NULL,
+  `IllnessID` int NOT NULL,
+  `DateDiagnosed` date NOT NULL,
   PRIMARY KEY (`DiagnosisID`),
-  KEY `AppointmentID` (`AppointmentID`),
-  KEY `PatientID` (`PatientID`),
-  KEY `DoctorID` (`DoctorID`),
-  KEY `IllnessID` (`IllnessID`),
-  CONSTRAINT `diagnosis_ibfk_1` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`),
-  CONSTRAINT `diagnosis_ibfk_2` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`),
-  CONSTRAINT `diagnosis_ibfk_3` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`),
-  CONSTRAINT `diagnosis_ibfk_4` FOREIGN KEY (`IllnessID`) REFERENCES `illness` (`IllnessID`)
+  KEY `fk_diagnosis_appointment` (`AppointmentID`),
+  KEY `fk_diagnosis_illness` (`IllnessID`),
+  CONSTRAINT `fk_diagnosis_appointment` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_diagnosis_illness` FOREIGN KEY (`IllnessID`) REFERENCES `illness` (`IllnessID`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `diagnosis`
---
-
-LOCK TABLES `diagnosis` WRITE;
-/*!40000 ALTER TABLE `diagnosis` DISABLE KEYS */;
-/*!40000 ALTER TABLE `diagnosis` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `doctor`
@@ -99,21 +73,12 @@ CREATE TABLE `doctor` (
   `LastName` varchar(50) DEFAULT NULL,
   `Sex` enum('Male','Female','Other') DEFAULT NULL,
   `SpecializationID` int DEFAULT NULL,
+  `Contact` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`DoctorID`),
   KEY `SpecializationID` (`SpecializationID`),
   CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`SpecializationID`) REFERENCES `specialization` (`SpecializationID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `doctor`
---
-
-LOCK TABLES `doctor` WRITE;
-/*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (1,'Ramon','Torres','Male',1),(2,'Liza','Mendoza','Female',2),(3,'Alberto','Gomez','Male',3),(4,'Sofia','Villanueva','Female',4),(5,'Henry','Ong','Male',5);
-/*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `illness`
@@ -128,16 +93,6 @@ CREATE TABLE `illness` (
   PRIMARY KEY (`IllnessID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `illness`
---
-
-LOCK TABLES `illness` WRITE;
-/*!40000 ALTER TABLE `illness` DISABLE KEYS */;
-INSERT INTO `illness` VALUES (1,'Common Cold'),(2,'Influenza'),(3,'Hypertension'),(4,'Diabetes Mellitus'),(5,'Skin Allergy'),(6,'Asthma');
-/*!40000 ALTER TABLE `illness` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `medicalhistory`
@@ -161,15 +116,6 @@ CREATE TABLE `medicalhistory` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `medicalhistory`
---
-
-LOCK TABLES `medicalhistory` WRITE;
-/*!40000 ALTER TABLE `medicalhistory` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medicalhistory` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `medicine`
 --
 
@@ -182,16 +128,6 @@ CREATE TABLE `medicine` (
   PRIMARY KEY (`MedicineID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `medicine`
---
-
-LOCK TABLES `medicine` WRITE;
-/*!40000 ALTER TABLE `medicine` DISABLE KEYS */;
-INSERT INTO `medicine` VALUES (1,'Paracetamol'),(2,'Amoxicillin'),(3,'Metformin'),(4,'Cetirizine'),(5,'Atorvastatin');
-/*!40000 ALTER TABLE `medicine` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `patient`
@@ -207,19 +143,15 @@ CREATE TABLE `patient` (
   `Age` int DEFAULT NULL,
   `Sex` enum('Male','Female','Other') DEFAULT NULL,
   `ContactNumber` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`PatientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `BuildingNo` varchar(45) DEFAULT NULL,
+  `Street` varchar(100) DEFAULT NULL,
+  `BarangayNo` varchar(45) DEFAULT NULL,
+  `City` varchar(100) DEFAULT NULL,
+  `Province` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`PatientID`),
+  UNIQUE KEY `unique_patient` (`FirstName`,`LastName`,`ContactNumber`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `patient`
---
-
-LOCK TABLES `patient` WRITE;
-/*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (1,'John','Cruz',28,'Male','09171234567'),(2,'Maria','Santos',34,'Female','09981234567'),(3,'Carlos','Dela Cruz',45,'Male','09182345678'),(4,'Angela','Reyes',22,'Female','09273456789'),(5,'Mark','Lim',30,'Male','09563457890');
-/*!40000 ALTER TABLE `patient` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `payment`
@@ -230,32 +162,15 @@ DROP TABLE IF EXISTS `payment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
   `PaymentID` int NOT NULL AUTO_INCREMENT,
-  `AppointmentID` int DEFAULT NULL,
-  `PatientID` int DEFAULT NULL,
-  `DoctorID` int DEFAULT NULL,
-  `ServiceAvailed` int DEFAULT NULL,
-  `PaymentDate` date DEFAULT NULL,
-  `AmountDue` decimal(10,2) DEFAULT NULL,
+  `ProcedureID` int NOT NULL,
+  `PaymentDate` date NOT NULL,
+  `AmountDue` decimal(10,2) NOT NULL,
+  `ModeOfPayment` enum('Cash','Credit Card','Debit Card','Insurance','Other') NOT NULL,
   PRIMARY KEY (`PaymentID`),
-  KEY `AppointmentID` (`AppointmentID`),
-  KEY `PatientID` (`PatientID`),
-  KEY `DoctorID` (`DoctorID`),
-  KEY `ServiceAvailed` (`ServiceAvailed`),
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`),
-  CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`),
-  CONSTRAINT `payment_ibfk_3` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`),
-  CONSTRAINT `payment_ibfk_4` FOREIGN KEY (`ServiceAvailed`) REFERENCES `service` (`ServiceID`)
+  KEY `fk_payment_procedure` (`ProcedureID`),
+  CONSTRAINT `fk_payment_procedure` FOREIGN KEY (`ProcedureID`) REFERENCES `procedurerequest` (`ProcedureID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `payment`
---
-
-LOCK TABLES `payment` WRITE;
-/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `prescription`
@@ -266,34 +181,19 @@ DROP TABLE IF EXISTS `prescription`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prescription` (
   `PrescriptionID` int NOT NULL AUTO_INCREMENT,
-  `AppointmentID` int DEFAULT NULL,
-  `PatientID` int DEFAULT NULL,
-  `DoctorID` int DEFAULT NULL,
-  `IllnessID` int DEFAULT NULL,
-  `MedicineID` int DEFAULT NULL,
+  `AppointmentID` int NOT NULL,
+  `IllnessID` int NOT NULL,
+  `MedicineID` int NOT NULL,
   `Dosage` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`PrescriptionID`),
-  KEY `AppointmentID` (`AppointmentID`),
-  KEY `PatientID` (`PatientID`),
-  KEY `DoctorID` (`DoctorID`),
-  KEY `IllnessID` (`IllnessID`),
-  KEY `MedicineID` (`MedicineID`),
-  CONSTRAINT `prescription_ibfk_1` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`),
-  CONSTRAINT `prescription_ibfk_2` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`),
-  CONSTRAINT `prescription_ibfk_3` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`),
-  CONSTRAINT `prescription_ibfk_4` FOREIGN KEY (`IllnessID`) REFERENCES `illness` (`IllnessID`),
-  CONSTRAINT `prescription_ibfk_5` FOREIGN KEY (`MedicineID`) REFERENCES `medicine` (`MedicineID`)
+  KEY `fk_prescription_appointment` (`AppointmentID`),
+  KEY `fk_prescription_illness` (`IllnessID`),
+  KEY `fk_prescription_medicine` (`MedicineID`),
+  CONSTRAINT `fk_prescription_appointment` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_prescription_illness` FOREIGN KEY (`IllnessID`) REFERENCES `illness` (`IllnessID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_prescription_medicine` FOREIGN KEY (`MedicineID`) REFERENCES `medicine` (`MedicineID`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `prescription`
---
-
-LOCK TABLES `prescription` WRITE;
-/*!40000 ALTER TABLE `prescription` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prescription` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `procedurerequest`
@@ -304,31 +204,16 @@ DROP TABLE IF EXISTS `procedurerequest`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `procedurerequest` (
   `ProcedureID` int NOT NULL AUTO_INCREMENT,
-  `AppointmentID` int DEFAULT NULL,
-  `PatientID` int DEFAULT NULL,
-  `DoctorID` int DEFAULT NULL,
-  `ServiceID` int DEFAULT NULL,
-  `ProcedureDate` date DEFAULT NULL,
+  `AppointmentID` int NOT NULL,
+  `ServiceID` int NOT NULL,
+  `ProcedureDate` date NOT NULL,
   PRIMARY KEY (`ProcedureID`),
-  KEY `AppointmentID` (`AppointmentID`),
-  KEY `PatientID` (`PatientID`),
-  KEY `DoctorID` (`DoctorID`),
-  KEY `ServiceID` (`ServiceID`),
-  CONSTRAINT `procedurerequest_ibfk_1` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`),
-  CONSTRAINT `procedurerequest_ibfk_2` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`),
-  CONSTRAINT `procedurerequest_ibfk_3` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`),
-  CONSTRAINT `procedurerequest_ibfk_4` FOREIGN KEY (`ServiceID`) REFERENCES `service` (`ServiceID`)
+  KEY `fk_procedure_appointment` (`AppointmentID`),
+  KEY `fk_procedure_service` (`ServiceID`),
+  CONSTRAINT `fk_procedure_appointment` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_procedure_service` FOREIGN KEY (`ServiceID`) REFERENCES `service` (`ServiceID`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `procedurerequest`
---
-
-LOCK TABLES `procedurerequest` WRITE;
-/*!40000 ALTER TABLE `procedurerequest` DISABLE KEYS */;
-/*!40000 ALTER TABLE `procedurerequest` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `service`
@@ -346,16 +231,6 @@ CREATE TABLE `service` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `service`
---
-
-LOCK TABLES `service` WRITE;
-/*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'General Consultation',500.00),(2,'Blood Test',800.00),(3,'ECG',1000.00),(4,'Skin Treatment',1200.00),(5,'X-Ray',1500.00);
-/*!40000 ALTER TABLE `service` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `specialization`
 --
 
@@ -365,19 +240,10 @@ DROP TABLE IF EXISTS `specialization`;
 CREATE TABLE `specialization` (
   `SpecializationID` int NOT NULL AUTO_INCREMENT,
   `SpecializationName` varchar(100) NOT NULL,
-  PRIMARY KEY (`SpecializationID`)
+  PRIMARY KEY (`SpecializationID`),
+  UNIQUE KEY `unique_specialization` (`SpecializationName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `specialization`
---
-
-LOCK TABLES `specialization` WRITE;
-/*!40000 ALTER TABLE `specialization` DISABLE KEYS */;
-INSERT INTO `specialization` VALUES (1,'General Medicine'),(2,'Pediatrics'),(3,'Cardiology'),(4,'Dermatology'),(5,'Endocrinology');
-/*!40000 ALTER TABLE `specialization` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -388,4 +254,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-05 15:12:36
+-- Dump completed on 2025-11-12  0:40:11

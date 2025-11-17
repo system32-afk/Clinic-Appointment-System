@@ -20,11 +20,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-<<<<<<< Updated upstream
         Parent root = FXMLLoader.load(getClass().getResource("/Scenes/Patients.fxml"));
-=======
-        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/IllnessReport.fxml"));
->>>>>>> Stashed changes
         primaryStage.setTitle("Clinic Appointment System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

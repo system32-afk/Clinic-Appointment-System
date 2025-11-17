@@ -9,7 +9,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -26,12 +25,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class PatientsController {
 
@@ -227,7 +228,7 @@ public class PatientsController {
     private void updateDateTime() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 
         Date.setText(dateFormatter.format(now));
         Time.setText(timeFormatter.format(now));
@@ -237,7 +238,7 @@ public class PatientsController {
     @FXML
     private void Search() {
         String search = SearchBar.getText().trim();
-
+        String searchLike;
         // Remove "P-" prefix if user includes it
         boolean isIdSearch = false;
         if (search.toUpperCase().startsWith("P-")) {
@@ -255,25 +256,11 @@ public class PatientsController {
                         "OR (? = FALSE AND (FirstName LIKE ? OR LastName LIKE ? OR ContactNumber LIKE ?))";
 
 
-        try (
-             PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
 
-            String searchLike = "%" + search + "%";
 
-            // Parameters:
-            stmt.setBoolean(1, isIdSearch);   // ? = TRUE if searching by ID
-            stmt.setString(2, search);        // PatientID = ?
-            stmt.setBoolean(3, isIdSearch);   // ? = FALSE when not ID search
-            stmt.setString(4, searchLike);    // FirstName LIKE ?
-            stmt.setString(5, searchLike);    // LastName LIKE ?
-            stmt.setString(6, searchLike);    // ContactNumber LIKE ?
+               searchLike = "%" + search + "%";
+        loadData(Objects.requireNonNull(Database.query(query, isIdSearch, search, isIdSearch, searchLike, searchLike, searchLike)));
 
-            ResultSet PatientsData = stmt.executeQuery();
-            loadData(PatientsData);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -281,11 +268,23 @@ public class PatientsController {
     //Opens up add patient form
     @FXML
     private void AddPatient(ActionEvent e) throws IOException{
-        SceneManager.onOpenPopup(e,"AddPatient","Add a patient");
+        SceneManager.OpenPopup(e,"AddPatient","Add a patient");
     }
 
 
     public void DashboardScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "Dashboard");
+    }
+
+        public void openPaymentScreen(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "PaymentProcessing");
+    }
+
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+
+    public void openMedicalHistory(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicalHistory");
     }
 }
