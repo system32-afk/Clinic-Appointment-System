@@ -1,0 +1,6 @@
+- Change procedure ID format from "PR000" to "PROC000" in AdminProceduresController.java and DoctorProceduresController.java
+- Implement viewProcedure method in AdminProceduresController.java to show procedure details in an alert
+- Implement editProcedure method in AdminProceduresController.java to allow editing notes via dialog
+- Implement viewProcedure method in DoctorProceduresController.java to show procedure details in an alert
+- Implement editProcedure method in DoctorProceduresController.java to allow editing notes via dialog
+- Add necessary imports for TextInputDialog and Optional in both controllers

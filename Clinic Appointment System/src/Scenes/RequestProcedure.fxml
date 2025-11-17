@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RequestProcedureController">
+   <children>
+      <AnchorPane layoutY="-1.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #ebf5f5; -fx-background-radius: 20; -fx-border-radius: 20;">
+         <children>
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="PatientComboBox" layoutX="50.0" layoutY="178.0" prefHeight="30.0" prefWidth="300.0" promptText="Select Patient" style="-fx-background-color: white; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+            <Text fill="#4ab3b7" layoutX="403.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requesting Doctor">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="DoctorComboBox" layoutX="400.0" layoutY="178.0" prefHeight="30.0" prefWidth="300.0" promptText="Select Doctor" style="-fx-background-color: white; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service/Procedure">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="ServiceComboBox" layoutX="50.0" layoutY="269.0" prefHeight="30.0" prefWidth="300.0" promptText="Select Service" style="-fx-background-color: white; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+            <Text fill="#4ab3b7" layoutX="403.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procedure Date">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <DatePicker fx:id="ProcedureDatePicker" layoutX="400.0" layoutY="269.0" prefHeight="30.0" prefWidth="200.0" promptText="Select Date" style="-fx-background-color: white; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+            <Text fill="#4ab3b7" layoutX="54.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="NotesTextArea" layoutX="50.0" layoutY="371.0" prefHeight="100.0" prefWidth="650.0" promptText="Enter notes here..." style="-fx-background-color: white; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" wrapText="true" />
+            <Button fx:id="SubmitButton" layoutX="384.0" layoutY="534.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="Submit Request" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="CancelButton" layoutX="560.0" layoutY="534.0" mnemonicParsing="false" onAction="#cancelRequest" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #ff6b6b; -fx-background-radius: 10; -fx-border-radius: 10;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Button>
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request Procedure">
+               <font>
+                  <Font name="Arial" size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="Date" fill="#4ab3b7" layoutX="510.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="180.6766357421875">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="Time" fill="#4ab3b7" layoutX="510.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" wrappingWidth="200.0">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

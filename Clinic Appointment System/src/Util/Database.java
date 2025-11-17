@@ -47,6 +47,20 @@ public class Database {
                 "('Cardiology'), ('Neurology'), ('Oncology'), ('Pediatrics'), ('Orthopedics'), " +
                 "('Dermatology'), ('Psychiatry'), ('Radiology'), ('Anesthesiology'), ('Endocrinology')");
 
+            // Add Notes column to procedurerequest if not exists
+            try {
+                stmt.execute("ALTER TABLE procedurerequest ADD COLUMN Notes TEXT");
+            } catch (SQLException e) {
+                // Column might already exist, ignore
+            }
+
+            // Add Status column to procedurerequest if not exists
+            try {
+                stmt.execute("ALTER TABLE procedurerequest ADD COLUMN Status ENUM('Pending','In-Progress','Completed','Canceled') DEFAULT 'Pending'");
+            } catch (SQLException e) {
+                // Column might already exist, ignore
+            }
+
             // Migrate existing data from doctor table to junction table
             stmt.execute("INSERT IGNORE INTO doctor_specialization (DoctorID, SpecializationID) " +
                 "SELECT DoctorID, SpecializationID FROM doctor WHERE SpecializationID IS NOT NULL");
@@ -77,6 +91,25 @@ public class Database {
                 pst.setObject(i + 1, params[i]);
             }
             return pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    // Run INSERT and return generated key
+    public static int insertAndGetKey(String sql, Object... params) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+            for (int i = 0; i < params.length; i++) {
+                pst.setObject(i + 1, params[i]);
+            }
+            pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
