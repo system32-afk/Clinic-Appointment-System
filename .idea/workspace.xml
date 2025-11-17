@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Prescriptions, procedures, and reports ui">
-      <change afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/AddServiceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServicesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/AddService.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Services.fxml" afterDir="false" />
+    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Reports">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/PatientsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ADMINDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ADMINDashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Prescription.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Procedures.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Reports.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Reports.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Util/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Util/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Assets/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/PatientsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/PatientsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ADMINDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ADMINDashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/DoctorRecord.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/Prescription.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +62,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging Zhupin",
+    "git-widget-placeholder": "Zhupin",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/CCINFOM/Clinic-Appointment-System",
     "node.js.detected.package.eslint": "true",
@@ -197,7 +198,7 @@
       <workItem from="1762940190863" duration="1118000" />
       <workItem from="1762941335139" duration="880000" />
       <workItem from="1762942237082" duration="59703000" />
-      <workItem from="1763310745124" duration="3456000" />
+      <workItem from="1763310745124" duration="9089000" />
     </task>
     <task id="LOCAL-00001" summary="Z-deleted">
       <option name="closed" value="true" />
@@ -287,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763328457889</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Reports">
+      <option name="closed" value="true" />
+      <created>1763329491765</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763329491765</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,6 +334,7 @@
     <MESSAGE value="Doctor Record Complete, no deletion, multiple specilaization allowed, sign out not yet functioning. Prescription fxml ongoing." />
     <MESSAGE value="Doctor Record some OCD addition" />
     <MESSAGE value="Prescriptions, procedures, and reports ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="Prescriptions, procedures, and reports ui" />
+    <MESSAGE value="Reports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reports" />
   </component>
 </project>

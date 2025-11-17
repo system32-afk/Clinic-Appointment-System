@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.AreaChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DoctorRecordController">
    <children>
       <Line endX="1003.0" endY="0.3000030517578125" layoutX="97.0" layoutY="101.0" startX="134.50711059570312" startY="0.3000030517578125" stroke="#00000033" />
       <Line endX="35.50712585449219" endY="577.0" layoutX="196.0" layoutY="73.0" startX="35.507110595703125" startY="28.800003051757812" stroke="#00000032" />
@@ -25,61 +25,36 @@
             <Image url="@../Assets/Medical%20Consultation.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="35.0" fitWidth="129.0" layoutX="53.0" layoutY="106.0">
-         <image>
-            <Image url="@../Assets/Dash.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="39.0" fitWidth="142.0" layoutX="48.0" layoutY="139.0">
-         <image>
-            <Image url="@../Assets/Patients.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="36.0" fitWidth="146.0" layoutX="47.0" layoutY="177.0">
-         <image>
-            <Image url="@../Assets/Doctors.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="172.0" layoutX="45.0" layoutY="207.0">
-         <image>
-            <Image url="@../Assets/Appointments.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="39.0" fitWidth="146.0" layoutX="48.0" layoutY="243.0">
-         <image>
-            <Image url="@../Assets/Diagnoses.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="51.0" fitWidth="145.0" layoutX="66.0" layoutY="273.0">
-         <image>
-            <Image url="@../Assets/Location.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="312.0">
-         <image>
-            <Image url="@../Assets/Prescription.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="60.0" fitWidth="120.0" layoutX="64.0" layoutY="338.0">
-         <image>
-            <Image url="@../Assets/Procedure.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="146.0" layoutX="50.0" layoutY="384.0">
-         <image>
-            <Image url="@../Assets/Services.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="145.0" layoutX="52.0" layoutY="421.0">
-         <image>
-            <Image url="@../Assets/Payments.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="149.0" layoutX="48.0" layoutY="453.0">
-         <image>
-            <Image url="@../Assets/Reports.png" />
-         </image>
-      </ImageView>
+       <ImageView fitHeight="35.0" fitWidth="129.0" layoutX="53.0" layoutY="106.0">
+           <image>
+               <Image url="@../Assets/Dash.png" />
+           </image>
+       </ImageView>
+       <ImageView fitHeight="39.0" fitWidth="142.0" layoutX="48.0" layoutY="139.0">
+           <image>
+               <Image url="@../Assets/Patients.png" />
+           </image>
+       </ImageView>
+       <ImageView fitHeight="42.0" fitWidth="172.0" layoutX="45.0" layoutY="172.0">
+           <image>
+               <Image url="@../Assets/Appointments.png" />
+           </image>
+       </ImageView>
+       <ImageView fitHeight="39.0" fitWidth="146.0" layoutX="48.0" layoutY="208.0">
+           <image>
+               <Image url="@../Assets/Diagnoses.png" />
+           </image>
+       </ImageView>
+       <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="241.0">
+           <image>
+               <Image url="@../Assets/Prescription.png" />
+           </image>
+       </ImageView>
+       <ImageView fitHeight="60.0" fitWidth="120.0" layoutX="64.0" layoutY="268.0">
+           <image>
+               <Image url="@../Assets/Procedure.png" />
+           </image>
+       </ImageView>
       <Line endX="175.8000030517578" layoutX="55.0" layoutY="504.0" startX="-100.0" stroke="#0000000c" />
       <Line endX="156.80001831054688" endY="0.39288330078125" layoutX="74.0" layoutY="101.0" startX="-100.0" stroke="#0000000c" />
       <Line endX="17.507110595703125" endY="62.30000305175781" layoutX="214.0" layoutY="39.0" startX="18.507110595703125" startY="-39.0" stroke="#0000000c" />
@@ -89,9 +64,6 @@
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="212.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="247.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Button blendMode="DARKEN" layoutX="27.0" layoutY="282.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="317.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="352.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
-      <Button blendMode="DARKEN" layoutX="28.0" layoutY="387.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Text fx:id="Date" fill="#00000060" layoutX="246.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="576.8612060546875">
          <font>
             <Font size="30.0" />
@@ -106,12 +78,12 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="548.0" prefWidth="852.0">
                <children>
-                  <Text fill="#4ab3b7" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Demand Report" wrappingWidth="385.80006408691406">
+                  <Text fill="#4ab3b7" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prescription Management" wrappingWidth="385.80006408691406">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text fill="#4ab1b580" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track appointment demand across medical specializations" wrappingWidth="418.16595458984375">
+                  <Text fill="#4ab1b580" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create and manage patient prescriptions" wrappingWidth="340.56597900390625">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -120,76 +92,76 @@
                      <children>
                         <Pane prefHeight="133.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 22; -fx-border-color: #525252; -fx-border-radius: 22;">
                            <children>
-                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Appointments" wrappingWidth="120.43503662109376">
+                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Prescriptions" wrappingWidth="120.43503662109376">
                                  <font>
                                     <Font name="Arial" size="18.0" />
                                  </font>
                               </Text>
-                              <Label fx:id="completedAppointments" layoutX="79.0" layoutY="79.0" text="0" textAlignment="CENTER">
+                              <Label fx:id="CompletedAppointments" layoutX="79.0" layoutY="79.0" text="0" textAlignment="CENTER">
                                  <font>
                                     <Font name="Arial" size="42.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="120.0" layoutY="8.0">
+                              <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="112.0" layoutY="6.0">
                                  <image>
-                                    <Image url="@../Assets/TotalAppointments.png" />
+                                    <Image url="@../Assets/Prescription1.png" />
                                  </image>
                               </ImageView>
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 22; -fx-border-color: #525252; -fx-border-radius: 22;">
                            <children>
-                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top Specialization" wrappingWidth="120.0">
+                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Prescriptions" wrappingWidth="155.63498779296876">
                                  <font>
                                     <Font name="Arial" size="18.0" />
                                  </font>
                               </Text>
-                              <Label fx:id="topSpecialization" layoutX="12.0" layoutY="78.0" prefHeight="42.0" prefWidth="162.0" text="General Medicine" wrapText="true">
-                                 <font>
-                                    <Font name="Arial" size="20.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="114.0" layoutY="5.0">
-                                 <image>
-                                    <Image url="@../Assets/TopSpecialization.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 22; -fx-border-color: #525252; -fx-border-radius: 22;">
-                           <children>
-                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fastest Growing" wrappingWidth="120.0">
-                                 <font>
-                                    <Font name="Arial" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Label fx:id="fastestGrowing" layoutX="34.0" layoutY="86.0" text="Dermatology" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="Arial" size="20.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="113.0" layoutY="6.0">
-                                 <image>
-                                    <Image url="@../Assets/Growing.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 22; -fx-border-color: #525252; -fx-border-radius: 22;">
-                           <children>
-                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Specializations" wrappingWidth="129.00000000000006">
-                                 <font>
-                                    <Font name="Arial" size="17.0" />
-                                 </font>
-                              </Text>
-                              <Label fx:id="activeSpecializations" layoutX="79.0" layoutY="79.0" text="0" textAlignment="CENTER">
+                              <Label fx:id="InProgressAppointments" layoutX="79.0" layoutY="78.0" text="0" textAlignment="CENTER">
                                  <font>
                                     <Font name="Arial" size="42.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="118.0" layoutY="5.0">
+                              <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="114.0" layoutY="4.0">
                                  <image>
-                                    <Image url="@../Assets/ActiveSpecializations.png" />
+                                    <Image url="@../Assets/Drugs.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 22; -fx-border-color: #525252; -fx-border-radius: 22;">
+                           <children>
+                              <Text layoutX="8.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patients" wrappingWidth="155.635048828125">
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Label fx:id="CanceledAppointments" layoutX="79.0" layoutY="80.0" text="0" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Arial" size="42.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="113.0" layoutY="4.0">
+                                 <image>
+                                    <Image url="@../Assets/ActvPaxIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 22; -fx-border-color: #525252; -fx-border-radius: 22;">
+                           <children>
+                              <Text layoutX="8.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prescribing Doctors" wrappingWidth="117.23502441406251">
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Label fx:id="InProgressAppointments1" layoutX="79.0" layoutY="79.0" text="0" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Arial" size="42.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="114.0" layoutY="6.0">
+                                 <image>
+                                    <Image url="@../Assets/DocIcon.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -197,34 +169,43 @@
                      </children>
                   </HBox>
                   <SplitPane dividerPositions="0.18715469613259672" layoutX="40.0" layoutY="230.0" orientation="VERTICAL" prefHeight="291.0" prefWidth="776.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
-                     <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #e8f5f5; -fx-background-radius: 10; -fx-border-radius: 10;">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #e8f5f5; -fx-background-radius: 10; -fx-border-radius: 10;">
                            <children>
-                              <Text layoutX="22.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monthly Demand Trends by Specialization">
+                              <Text layoutX="22.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Prescriptions">
                                  <font>
                                     <Font name="Arial" size="18.0" />
                                  </font>
                               </Text>
-                           </children>
-                        </AnchorPane>
-                        <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" prefHeight="289.0" prefWidth="774.0">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="770.0">
-                                 <children>
-                                    <AreaChart fx:id="lineChart" layoutX="1.0" layoutY="3.0" prefHeight="331.0" prefWidth="770.0">
-                                      <xAxis>
-                                        <CategoryAxis fx:id="xAxis" side="BOTTOM" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis fx:id="yAxis" side="LEFT" />
-                                      </yAxis>
-                                    </AreaChart>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </ScrollPane>
-                     </items>
+                              <TextField layoutX="546.0" layoutY="9.0" prefHeight="34.0" prefWidth="198.0" promptText="Search Patient, Doctor, or Medicine" style="-fx-background-color: #ebf5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+                              <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="496.0" layoutY="-2.0">
+                                 <image>
+                                    <Image url="@../Assets/magnifying.png" />
+                                 </image>
+                              </ImageView>
+                           </children></AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TableView layoutY="4.0" prefHeight="230.0" prefWidth="778.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
+                                <columns>
+                                  <TableColumn prefWidth="98.3999565243721" text="Prescription ID" />
+                                  <TableColumn prefWidth="128.00001525878906" text="Patient" />
+                                    <TableColumn minWidth="0.0" prefWidth="133.59999084472656" text="Doctor" />
+                                    <TableColumn prefWidth="84.800048828125" text="Illness" />
+                                    <TableColumn prefWidth="70.39996337890625" text="Medicine" />
+                                    <TableColumn prefWidth="86.4000244140625" text="Dosage" />
+                                    <TableColumn prefWidth="73.5999755859375" text="Status" />
+                                    <TableColumn prefWidth="96.00003662109373" text="Action" />
+                                </columns>
+                              </TableView>
+                           </children></AnchorPane>
+                    </items>
                   </SplitPane>
+                  <Button layoutX="644.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="+   Create Prescription">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </content>
@@ -241,29 +222,27 @@
       </Text>
       <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="1008.0" layoutY="20.0">
          <image>
-            <Image url="@../Assets/Admin.png" />
+            <Image url="@../Assets/Doctor.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="8.0" layoutY="509.0">
          <image>
-            <Image url="@../Assets/Admin.png" />
+            <Image url="@../Assets/Doctor.png" />
          </image>
       </ImageView>
-      <Text layoutX="83.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin User">
+      <Text layoutX="83.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dr. Smith">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <Pane layoutX="83.0" layoutY="545.0" prefHeight="17.0" prefWidth="76.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;">
+      <Pane layoutX="83.0" layoutY="545.0" prefHeight="17.0" prefWidth="45.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <Text fill="#4ab3b7" layoutX="9.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrator">
+            <Text fill="#4ab3b7" layoutX="9.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor">
                <font>
                   <Font name="Arial" size="10.0" />
                </font>
             </Text>
          </children>
       </Pane>
-      <Button blendMode="DARKEN" layoutX="29.0" layoutY="422.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
-      <Button blendMode="DARKEN" layoutX="29.0" layoutY="457.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
    </children>
 </Pane>
