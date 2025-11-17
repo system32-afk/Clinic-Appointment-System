@@ -183,4 +183,12 @@ public class PaymentProcessingController implements Initializable {
     public void AppointmentScreen(ActionEvent e) throws IOException {
         SceneManager.transition(e, "Appointments");
     }
+
+    public void openMedicineManagement(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+
+    public void openMedicalHistory(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "MedicalHistory");
+    }
 }
