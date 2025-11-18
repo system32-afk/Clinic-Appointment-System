@@ -35,7 +35,13 @@
             <content>
                 <VBox fx:id="paymentContainer" prefHeight="450.0" prefWidth="950.0" style="-fx-padding: 20; -fx-spacing: 15;">
                     <children>
-                        <Text text="Unpaid Procedures" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+                        <HBox spacing="20" alignment="CENTER_LEFT">
+                            <children>
+                                <Text text="Unpaid Procedures" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+                                <Button fx:id="addProcedureBtn" text="+ Request Procedure" onAction="#openRequestProcedureDialog"
+                                        style="-fx-background-color: #40D0E0; -fx-text-fill: white; -fx-background-radius: 5;" />
+                            </children>
+                        </HBox>
                         <VBox fx:id="procedureList" prefWidth="900.0" style="-fx-spacing: 10;" />
                     </children>
                 </VBox>

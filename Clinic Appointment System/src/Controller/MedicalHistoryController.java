@@ -242,6 +242,35 @@ public class MedicalHistoryController implements Initializable {
         }
     }
 
+    private void createMedicalHistoryRow(ResultSet rs) throws SQLException {
+    int patientID = rs.getInt("PatientID");
+    String patientName = rs.getString("PatientName");
+    
+    String countSql = "SELECT COUNT(*) as recordCount FROM medicalhistory WHERE PatientID = ?";
+    ResultSet countRs = Database.query(countSql, patientID);
+    int recordCount = 0;
+    if (countRs != null && countRs.next()) {
+        recordCount = countRs.getInt("recordCount");
+    }
+
+    HBox row = new HBox(20);
+    row.setAlignment(Pos.CENTER_LEFT);
+    row.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 10;");
+    row.setPrefWidth(900);
+    
+    VBox patientInfo = new VBox(5);
+    Label patientLabel = new Label(patientName);
+    patientLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
+    Label patientIdLabel = new Label("P-" + patientID + " • " + recordCount + " record(s)");
+    patientIdLabel.setStyle("-fx-text-fill: #666; -fx-font-size: 12;");
+    patientInfo.getChildren().addAll(patientLabel, patientIdLabel);
+    
+    Button viewBtn = new Button("View All Records");
+    viewBtn.setStyle("-fx-background-color: #40D0E0; -fx-text-fill: white; -fx-background-radius: 5;");
+    viewBtn.setOnAction(e -> openViewMedicalHistoryDialog(patientID)); 
+    
+}
+
     public void refreshData() {
         loadMedicalHistories();
     }

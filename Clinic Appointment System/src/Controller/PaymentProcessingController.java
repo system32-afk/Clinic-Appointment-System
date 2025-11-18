@@ -172,6 +172,27 @@ public class PaymentProcessingController implements Initializable {
         }
     }
 
+    @FXML
+    private void openRequestProcedureDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/RequestProcedure.fxml"));
+            Parent root = loader.load();
+
+            RequestProcedureController controller = loader.getController();
+            controller.setParentController(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Request Medical Procedure");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alerts.Warning("Error opening procedure request dialog");
+        }
+    }
+
     public void refreshData() {
         loadUnpaidProcedures();
     }
