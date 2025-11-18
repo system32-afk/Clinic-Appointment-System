@@ -484,9 +484,10 @@ public class DoctorRecordController {
         public HBox getActionHBox() { return actionHBox; }
     }
 
+
     /*
-       =============SIDE PANEL FUNCTIONS==========================
-        */
+    =============SIDE PANEL FUNCTIONS==========================
+     */
     @FXML
     public void AppointmentScreen(MouseEvent e) throws IOException{
         SceneManager.transition(e,"Appointments");
@@ -535,13 +536,24 @@ public class DoctorRecordController {
     }
 
     @FXML
-    public void openDashboard(MouseEvent e) throws IOException {
-        SceneManager.transition(e,"ADMINDashboard");
+    public void openServiceRevenue(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ServiceRevenueReport");
     }
+
+    @FXML
+    public void openSpecializationReport(MouseEvent e) throws IOException {
+        //SceneManager.transition(e,"SpecializationReport");
+    }
+
 
 
     @FXML
     public void logout(MouseEvent e) throws IOException {
         SceneManager.transition(e,"login");
+    }
+
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ADMINDashboard");
     }
 }

@@ -282,19 +282,19 @@
                   <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness Management" wrappingWidth="75.73281860351557" />
                </children>
             </Pane>
-            <Pane layoutX="46.0" layoutY="404.0" onMouseClicked="#openSpecializationRecord">
+            <Pane layoutX="-1.0" layoutY="404.0" onMouseClicked="#openSpecializationRecord" prefHeight="60.0" prefWidth="254.0">
                <children>
-                  <ImageView fitHeight="57.0" fitWidth="98.0" layoutX="-41.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="57.0" fitWidth="98.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Assets/stetoscop.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="80.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Management" wrappingWidth="75.73281860351557" />
+                  <Text layoutX="127.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Management" wrappingWidth="75.73281860351557" />
                </children>
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="ReportsManagement" layoutX="198.0" layoutY="155.0" prefHeight="312.0" prefWidth="227.0" style="-fx-background-color: white; -fx-border-color: gray;" visible="false">
+      <Pane fx:id="ReportsManagement" layoutX="198.0" layoutY="155.0" prefHeight="312.0" prefWidth="227.0" style="-fx-background-color: white; -fx-border-color: gray;">
          <children>
             <Pane fx:id="DashboardButton1111" layoutX="-1.0" layoutY="14.0" onMouseClicked="#openAppointmentReport" prefHeight="62.0" prefWidth="227.0">
                <children>
@@ -306,7 +306,7 @@
                   <Text layoutX="114.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Report" wrappingWidth="75.73281860351557" />
                </children>
             </Pane>
-            <Pane fx:id="DashboardButton11111" layoutX="1.0" layoutY="103.0" prefHeight="62.0" prefWidth="227.0">
+            <Pane fx:id="DashboardButton11111" layoutX="1.0" layoutY="103.0" onMouseClicked="#openSpecializationReport" prefHeight="62.0" prefWidth="227.0">
                <children>
                   <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -326,7 +326,7 @@
                   <Text layoutX="114.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness Report" wrappingWidth="86.13284301757807" />
                </children>
             </Pane>
-            <Pane fx:id="DashboardButton1111111" layoutX="1.0" layoutY="236.0" prefHeight="62.0" prefWidth="227.0">
+            <Pane fx:id="DashboardButton1111111" layoutX="1.0" layoutY="236.0" onMouseClicked="#openServiceRevenue" prefHeight="62.0" prefWidth="227.0">
                <children>
                   <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <image>

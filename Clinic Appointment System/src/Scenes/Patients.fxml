@@ -86,60 +86,60 @@
          </content>
       </ScrollPane>
 
-       <VBox fx:id="SidePanel" layoutY="83.0" prefHeight="398.0" prefWidth="200.0" style="-fx-padding: 20; -fx-spacing: 10;">
-           <children>
-               <Pane fx:id="DashboardButton" onMouseClicked="#openDashboard" prefHeight="62.0" prefWidth="142.0">
-                   <children>
-                       <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                               <Image url="@../Assets/dashboard.png" />
-                           </image>
-                       </ImageView>
-                       <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" />
-                   </children>
-               </Pane>
-               <Pane fx:id="RecordsManagementButton" layoutX="25.0" layoutY="25.0" prefHeight="62.0" prefWidth="142.0">
-                   <children>
-                       <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                               <Image url="@../Assets/management.png" />
-                           </image>
-                       </ImageView>
-                       <Text layoutX="85.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Records Management" wrappingWidth="75.73281860351562" />
-                   </children>
-               </Pane>
-               <Pane fx:id="DashboardButton11" layoutX="25.0" layoutY="92.0" onMouseClicked="#AppointmentScreen" prefHeight="62.0" prefWidth="142.0">
-                   <children>
-                       <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                               <Image url="@../Assets/schedule.png" />
-                           </image>
-                       </ImageView>
-                       <Text layoutX="85.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule appointment" wrappingWidth="75.73281860351562" />
-                   </children>
-               </Pane>
-               <Pane fx:id="ReportsButton" layoutX="25.0" layoutY="160.0" prefHeight="62.0" prefWidth="142.0">
-                   <children>
-                       <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                               <Image url="@../Assets/graph.png" />
-                           </image>
-                       </ImageView>
-                       <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports" wrappingWidth="44.0" />
-                   </children>
-               </Pane>
-               <Pane fx:id="DashboardButton1112" layoutX="25.0" layoutY="216.0" onMouseClicked="#openPaymentScreen" prefHeight="62.0" prefWidth="142.0">
-                   <children>
-                       <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                               <Image url="@../Assets/credit-card.png" />
-                           </image>
-                       </ImageView>
-                       <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment" wrappingWidth="56.999999999999886" />
-                   </children>
-               </Pane>
-           </children>
-       </VBox>
+      <VBox fx:id="SidePanel" layoutY="83.0" prefHeight="398.0" prefWidth="200.0" style="-fx-padding: 20; -fx-spacing: 10;">
+         <children>
+            <Pane fx:id="DashboardButton" prefHeight="62.0" prefWidth="142.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/dashboard.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" />
+               </children>
+            </Pane>
+            <Pane fx:id="RecordsManagementButton" layoutX="25.0" layoutY="25.0" prefHeight="62.0" prefWidth="142.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/management.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Records Management" wrappingWidth="75.73281860351562" />
+               </children>
+            </Pane>
+            <Pane fx:id="DashboardButton11" layoutX="25.0" layoutY="92.0" onMouseClicked="#AppointmentScreen" prefHeight="62.0" prefWidth="142.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/schedule.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule appointment" wrappingWidth="75.73281860351562" />
+               </children>
+            </Pane>
+            <Pane fx:id="ReportsButton" layoutX="25.0" layoutY="160.0" prefHeight="62.0" prefWidth="142.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/graph.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports" wrappingWidth="44.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="DashboardButton1112" layoutX="25.0" layoutY="216.0" onMouseClicked="#openPaymentScreen" prefHeight="62.0" prefWidth="142.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/credit-card.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment" wrappingWidth="56.999999999999886" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
 
        <Text fill="#868686" fontSmoothingType="LCD" layoutX="240.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manage Patient Records" wrappingWidth="345.2349755859375">
          <font>
@@ -214,19 +214,19 @@
                        <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness Management" wrappingWidth="75.73281860351557" />
                    </children>
                </Pane>
-               <Pane layoutX="46.0" layoutY="404.0" onMouseClicked="#openSpecializationRecord">
+               <Pane layoutX="-1.0" layoutY="404.0" onMouseClicked="#openSpecializationRecord" prefHeight="60.0" prefWidth="254.0">
                    <children>
-                       <ImageView fitHeight="57.0" fitWidth="98.0" layoutX="-41.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                       <ImageView fitHeight="57.0" fitWidth="98.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                                <Image url="@../Assets/stetoscop.png" />
                            </image>
                        </ImageView>
-                       <Text layoutX="80.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Management" wrappingWidth="75.73281860351557" />
+                       <Text layoutX="127.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Management" wrappingWidth="75.73281860351557" />
                    </children>
                </Pane>
            </children>
        </Pane>
-       <Pane fx:id="ReportsManagement" layoutX="198.0" layoutY="155.0" prefHeight="312.0" prefWidth="227.0" style="-fx-background-color: white; -fx-border-color: gray;" visible="false">
+       <Pane fx:id="ReportsManagement" layoutX="198.0" layoutY="155.0" prefHeight="312.0" prefWidth="227.0" style="-fx-background-color: white; -fx-border-color: gray;">
            <children>
                <Pane fx:id="DashboardButton1111" layoutX="-1.0" layoutY="14.0" onMouseClicked="#openAppointmentReport" prefHeight="62.0" prefWidth="227.0">
                    <children>
@@ -238,7 +238,7 @@
                        <Text layoutX="114.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Report" wrappingWidth="75.73281860351557" />
                    </children>
                </Pane>
-               <Pane fx:id="DashboardButton11111" layoutX="1.0" layoutY="103.0" prefHeight="62.0" prefWidth="227.0">
+               <Pane fx:id="DashboardButton11111" layoutX="1.0" layoutY="103.0" onMouseClicked="#openSpecializationReport" prefHeight="62.0" prefWidth="227.0">
                    <children>
                        <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -258,7 +258,7 @@
                        <Text layoutX="114.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness Report" wrappingWidth="86.13284301757807" />
                    </children>
                </Pane>
-               <Pane fx:id="DashboardButton1111111" layoutX="1.0" layoutY="236.0" prefHeight="62.0" prefWidth="227.0">
+               <Pane fx:id="DashboardButton1111111" layoutX="1.0" layoutY="236.0" onMouseClicked="#openServiceRevenue" prefHeight="62.0" prefWidth="227.0">
                    <children>
                        <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -268,35 +268,6 @@
                        <Text layoutX="114.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service Revenue Report" wrappingWidth="86.13284301757807" />
                    </children>
                </Pane>
-           </children>
-       </Pane>
-
-       <Pane fx:id="logoPane" prefHeight="83.0" prefWidth="207.0">
-           <children>
-               <ImageView fitHeight="83.0" fitWidth="76.0" layoutX="6.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                   <image>
-                       <Image url="@../Assets/DocIcon.png" />
-                   </image>
-               </ImageView>
-               <Text layoutX="93.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clinic Appointment System" wrappingWidth="100.0">
-                   <font>
-                       <Font size="17.0" />
-                   </font>
-               </Text>
-           </children></Pane>
-
-       <Pane layoutY="622.0" onMouseClicked="#logout" prefHeight="83.0" prefWidth="200.0" style="-fx-border-color: gray;">
-           <children>
-               <ImageView fitHeight="57.0" fitWidth="50.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                   <image>
-                       <Image url="@../Assets/logout.png" />
-                   </image>
-               </ImageView>
-               <Text layoutX="100.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logout" wrappingWidth="56.999999999999886">
-                   <font>
-                       <Font size="18.0" />
-                   </font>
-               </Text>
            </children>
        </Pane>
    </children>

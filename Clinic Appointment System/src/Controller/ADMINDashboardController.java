@@ -121,7 +121,7 @@ public class ADMINDashboardController {
                     "SELECT a.AppointmentID, " +
                             "CONCAT(p.LastName, ', ', p.FirstName) AS PatientName, " +
                             "CONCAT('Dr. ', d.LastName) AS DoctorName, " +
-                            "Time, Status " +
+                            "a.Time, a.Status " +
                             "FROM appointment a " +
                             "JOIN patient p ON a.PatientID = p.PatientID " +
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
@@ -261,6 +261,16 @@ public class ADMINDashboardController {
     @FXML
     public void openAppointmentReport(MouseEvent e) throws IOException {
         SceneManager.transition(e,"AppointmentReport");
+    }
+
+    @FXML
+    public void openServiceRevenue(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ServiceRevenueReport");
+    }
+
+    @FXML
+    public void openSpecializationReport(MouseEvent e) throws IOException {
+        //SceneManager.transition(e,"SpecializationReport");
     }
 
 

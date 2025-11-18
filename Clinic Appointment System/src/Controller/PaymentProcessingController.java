@@ -230,8 +230,8 @@ public class PaymentProcessingController implements Initializable {
     }
 
     /*
-       =============SIDE PANEL FUNCTIONS==========================
-        */
+     =============SIDE PANEL FUNCTIONS==========================
+      */
     @FXML
     public void AppointmentScreen(MouseEvent e) throws IOException{
         SceneManager.transition(e,"Appointments");
@@ -280,9 +280,15 @@ public class PaymentProcessingController implements Initializable {
     }
 
     @FXML
-    public void openDashboard(MouseEvent e) throws IOException {
-        SceneManager.transition(e,"ADMINDashboard");
+    public void openServiceRevenue(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ServiceRevenueReport");
     }
+
+    @FXML
+    public void openSpecializationReport(MouseEvent e) throws IOException {
+        //SceneManager.transition(e,"SpecializationReport");
+    }
+
 
 
     @FXML
@@ -290,7 +296,10 @@ public class PaymentProcessingController implements Initializable {
         SceneManager.transition(e,"login");
     }
 
-    public void openAppointmentReport(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "AppointmentReport");
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ADMINDashboard");
     }
+
+
 }

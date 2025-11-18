@@ -61,7 +61,7 @@
                         <Image url="@../Assets/management.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="85.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Records Management" wrappingWidth="75.73281860351562" />
+                  <Text layoutX="85.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Records Management" wrappingWidth="76.0" />
                </children>
             </Pane>
             <Pane fx:id="DashboardButton11" layoutX="25.0" layoutY="92.0" onMouseClicked="#AppointmentScreen" prefHeight="62.0" prefWidth="142.0">
@@ -101,9 +101,9 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <ScrollPane layoutX="200.0" layoutY="175.0" prefHeight="1006.0" prefWidth="1026.0">
+      <ScrollPane layoutX="200.0" layoutY="175.0" prefHeight="546.0" prefWidth="1026.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1074.0" prefWidth="1010.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1120.0" prefWidth="1010.0">
                <children>
                   <BarChart fx:id="casesGraph" layoutX="30.0" layoutY="56.0" prefHeight="398.0" prefWidth="582.0" title="Cases">
                     <xAxis>
@@ -182,5 +182,117 @@
             </Text>
          </children>
       </Pane>
+
+
+
+      <Pane fx:id="ManagementPane" layoutX="200.0" layoutY="79.0" prefHeight="485.0" prefWidth="254.0" style="-fx-background-color: white; -fx-border-color: gray;" visible="false">
+         <children>
+            <Pane layoutY="24.0" onMouseClicked="#openPatientsRecord" prefHeight="62.0" prefWidth="254.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/patient.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patients  Management" wrappingWidth="75.73281860351562" />
+               </children>
+            </Pane>
+            <Pane layoutX="-1.0" layoutY="96.0" onMouseClicked="#openDoctorRecord" prefHeight="62.0" prefWidth="254.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/doctor (1).png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Management" wrappingWidth="75.73281860351562" />
+               </children>
+            </Pane>
+            <Pane layoutX="3.0" layoutY="163.0" onMouseClicked="#openMedicineManagement" prefHeight="62.0" prefWidth="254.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/medicine.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine Management" wrappingWidth="75.73281860351557" />
+               </children>
+            </Pane>
+            <Pane layoutX="3.0" layoutY="243.0" onMouseClicked="#openServicesRecord" prefHeight="62.0" prefWidth="254.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/x-rays.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Services Management" wrappingWidth="75.73281860351557" />
+               </children>
+            </Pane>
+            <Pane layoutX="5.0" layoutY="320.0" onMouseClicked="#openIllnessesRecord" prefHeight="60.0" prefWidth="254.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/mask.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="127.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness Management" wrappingWidth="75.73281860351557" />
+               </children>
+            </Pane>
+            <Pane layoutX="-1.0" layoutY="404.0" onMouseClicked="#openSpecializationRecord" prefHeight="60.0" prefWidth="254.0">
+               <children>
+                  <ImageView fitHeight="57.0" fitWidth="98.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/stetoscop.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="127.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Management" wrappingWidth="75.73281860351557" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="ReportsManagement" layoutX="198.0" layoutY="155.0" prefHeight="312.0" prefWidth="227.0" style="-fx-background-color: white; -fx-border-color: gray;">
+         <children>
+            <Pane fx:id="DashboardButton1111" layoutX="-1.0" layoutY="14.0" onMouseClicked="#openAppointmentReport" prefHeight="62.0" prefWidth="227.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/schedule.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="114.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Report" wrappingWidth="75.73281860351557" />
+               </children>
+            </Pane>
+            <Pane fx:id="DashboardButton11111" layoutX="1.0" layoutY="103.0" onMouseClicked="#openSpecializationReport" prefHeight="62.0" prefWidth="227.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/stetoscop.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="114.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Specialization Report" wrappingWidth="86.13284301757807" />
+               </children>
+            </Pane>
+            <Pane fx:id="DashboardButton111111" layoutX="-1.0" layoutY="165.0" onMouseClicked="#openIllnessReport" prefHeight="62.0" prefWidth="227.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/graph.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="114.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness Report" wrappingWidth="86.13284301757807" />
+               </children>
+            </Pane>
+            <Pane fx:id="DashboardButton1111111" layoutX="1.0" layoutY="236.0" onMouseClicked="#openServiceRevenue" prefHeight="62.0" prefWidth="227.0">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/x-rays.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="114.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service Revenue Report" wrappingWidth="86.13284301757807" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+
    </children>
 </AnchorPane>
