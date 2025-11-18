@@ -78,9 +78,7 @@ public class DoctorPrescriptionController {
     @FXML
     private TableColumn<Prescription, HBox> ActionColumn;
 
-    // Assume logged-in doctor ID is stored somewhere, e.g., in a session or static variable
-    // For now, hardcode or get from login. Let's assume it's 2 for example.
-    private int loggedInDoctorID = 2; // Replace with actual logic to get logged-in doctor ID
+
 
     @FXML
     public void initialize() {
@@ -230,19 +228,16 @@ public class DoctorPrescriptionController {
                       "JOIN patient pt ON a.PatientID = pt.PatientID " +
                       "JOIN doctor d ON a.DoctorID = d.DoctorID " +
                       "JOIN illness i ON p.IllnessID = i.IllnessID " +
-                      "JOIN medicine m ON p.MedicineID = m.MedicineID " +
-                      "WHERE a.DoctorID = ?";
+                      "JOIN medicine m ON p.MedicineID = m.MedicineID";
 
-        try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
-            stmt.setInt(1, loggedInDoctorID);
-            ResultSet rs = stmt.executeQuery();
+        try (ResultSet rs = Database.query(query)) {
             while (rs.next()) {
                 int prescriptionID = rs.getInt("PrescriptionID");
                 String patient = rs.getString("Patient");
                 String doctor = rs.getString("Doctor");
                 String illness = rs.getString("Illness");
                 String medicine = rs.getString("Medicine");
-                String dosage = formatDosage(rs.getString("Dosage"));
+                String dosage = rs.getString("Dosage");
                 String status = rs.getString("Status");
 
                 // Create buttons for Action
@@ -269,26 +264,26 @@ public class DoctorPrescriptionController {
 
     public void updateStatistics() {
         try {
-            // Total Prescriptions for this doctor
-            ResultSet rs = Database.query("SELECT COUNT(*) AS total FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID WHERE a.DoctorID = ?", loggedInDoctorID);
+            // Total Prescriptions
+            ResultSet rs = Database.query("SELECT COUNT(*) AS total FROM prescription");
             if (rs != null && rs.next()) {
                 CompletedAppointments.setText(String.valueOf(rs.getInt("total")));
             }
 
-            // Active Prescriptions
-            rs = Database.query("SELECT COUNT(*) AS active FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID WHERE a.DoctorID = ? AND a.Status = 'Active'", loggedInDoctorID);
+            // Active Prescriptions - count where status is 'In-Progress'
+            rs = Database.query("SELECT COUNT(*) AS active FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID WHERE a.Status = 'In-Progress'");
             if (rs != null && rs.next()) {
                 InProgressAppointments.setText(String.valueOf(rs.getInt("active")));
             }
 
             // Patients
-            rs = Database.query("SELECT COUNT(DISTINCT a.PatientID) AS patients FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID WHERE a.DoctorID = ?", loggedInDoctorID);
+            rs = Database.query("SELECT COUNT(DISTINCT a.PatientID) AS patients FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID");
             if (rs != null && rs.next()) {
                 CanceledAppointments.setText(String.valueOf(rs.getInt("patients")));
             }
 
-            // Prescribing Doctors (only this one, so 1 if has prescriptions)
-            rs = Database.query("SELECT COUNT(DISTINCT a.DoctorID) AS doctors FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID WHERE a.DoctorID = ?", loggedInDoctorID);
+            // Prescribing Doctors
+            rs = Database.query("SELECT COUNT(DISTINCT a.DoctorID) AS doctors FROM prescription p JOIN appointment a ON p.AppointmentID = a.AppointmentID");
             if (rs != null && rs.next()) {
                 InProgressAppointments1.setText(String.valueOf(rs.getInt("doctors")));
             }
@@ -347,17 +342,15 @@ public class DoctorPrescriptionController {
                       "JOIN doctor d ON a.DoctorID = d.DoctorID " +
                       "JOIN illness i ON p.IllnessID = i.IllnessID " +
                       "JOIN medicine m ON p.MedicineID = m.MedicineID " +
-                      "WHERE a.DoctorID = ? AND " +
-                      "(CONCAT(pt.FirstName, ' ', pt.LastName) LIKE ? OR " +
+                      "WHERE CONCAT(pt.FirstName, ' ', pt.LastName) LIKE ? OR " +
                       "CONCAT(d.FirstName, ' ', d.LastName) LIKE ? OR " +
-                      "m.MedicineName LIKE ?)";
+                      "m.MedicineName LIKE ?";
 
         try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
-            stmt.setInt(1, loggedInDoctorID);
             String searchLike = "%" + search + "%";
+            stmt.setString(1, searchLike);
             stmt.setString(2, searchLike);
             stmt.setString(3, searchLike);
-            stmt.setString(4, searchLike);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -414,81 +407,96 @@ public class DoctorPrescriptionController {
     }
 
     private void viewPrescription(int prescriptionID) {
-        // Fetch prescription details
-        String query = "SELECT p.PrescriptionID, CONCAT(pt.FirstName, ' ', pt.LastName) AS Patient, " +
-                      "CONCAT(d.FirstName, ' ', d.LastName) AS Doctor, i.IllnessName AS Illness, " +
-                      "m.MedicineName AS Medicine, p.Dosage, a.Status " +
-                      "FROM prescription p " +
-                      "JOIN appointment a ON p.AppointmentID = a.AppointmentID " +
-                      "JOIN patient pt ON a.PatientID = pt.PatientID " +
-                      "JOIN doctor d ON a.DoctorID = d.DoctorID " +
-                      "JOIN illness i ON p.IllnessID = i.IllnessID " +
-                      "JOIN medicine m ON p.MedicineID = m.MedicineID " +
-                      "WHERE p.PrescriptionID = ?";
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/ViewPrescription.fxml"));
+            Parent root = loader.load();
 
-        try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
-            stmt.setInt(1, prescriptionID);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String details = "Prescription ID: PRE" + String.format("%03d", rs.getInt("PrescriptionID")) + "\n" +
-                                 "Patient: " + rs.getString("Patient") + "\n" +
-                                 "Doctor: " + rs.getString("Doctor") + "\n" +
-                                 "Illness: " + rs.getString("Illness") + "\n" +
-                                 "Medicine: " + rs.getString("Medicine") + "\n" +
-                                 "Dosage: " + formatDosage(rs.getString("Dosage")) + "\n" +
-                                 "Status: " + rs.getString("Status");
+            // Get the controller
+            ViewPrescriptionController controller = loader.getController();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Prescription Details");
-                alert.setHeaderText("Details for Prescription PRE" + String.format("%03d", prescriptionID));
-                alert.setContentText(details);
-                alert.showAndWait();
-            }
-        } catch (SQLException e) {
+            // Set prescription ID in the controller
+            controller.setPrescriptionData(prescriptionID);
+
+            // Create dialog stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("View Prescription");
+            dialogStage.setResizable(false);
+            dialogStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Failed to load prescription details");
-            alert.setContentText("Could not retrieve prescription details: " + e.getMessage());
+            alert.setHeaderText("Failed to load view");
+            alert.setContentText("Could not load the prescription view: " + e.getMessage());
             alert.showAndWait();
         }
     }
 
     private void editPrescription(int prescriptionID) {
-        // Fetch current prescription data
-        String selectQuery = "SELECT p.AppointmentID, p.IllnessID, p.MedicineID, p.Dosage, a.Status, " +
-                            "i.IllnessName, m.MedicineName, " +
-                            "CONCAT(pt.FirstName, ' ', pt.LastName) AS Patient, " +
-                            "CONCAT(d.FirstName, ' ', d.LastName) AS Doctor " +
-                            "FROM prescription p " +
-                            "JOIN appointment a ON p.AppointmentID = a.AppointmentID " +
-                            "JOIN patient pt ON a.PatientID = pt.PatientID " +
-                            "JOIN doctor d ON a.DoctorID = d.DoctorID " +
-                            "JOIN illness i ON p.IllnessID = i.IllnessID " +
-                            "JOIN medicine m ON p.MedicineID = m.MedicineID " +
-                            "WHERE p.PrescriptionID = ?";
-        final int[] currentAppointmentID = new int[1];
-        final String[] currentIllness = new String[1];
-        final String[] currentMedicine = new String[1];
-        final String[] currentDosage = new String[1];
-        final String[] currentStatus = new String[1];
-        try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(selectQuery)) {
-            stmt.setInt(1, prescriptionID);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                currentAppointmentID[0] = rs.getInt("AppointmentID");
-                currentIllness[0] = rs.getString("IllnessName");
-                currentMedicine[0] = rs.getString("MedicineName");
-                currentDosage[0] = rs.getString("Dosage");
-                currentStatus[0] = rs.getString("Status");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Prescription not found");
-                alert.setContentText("Could not find prescription details.");
-                alert.showAndWait();
-                return;
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditPrescription.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller
+            EditPrescriptionController controller = loader.getController();
+            controller.setDoctorParentController(this);
+
+            // Fetch current prescription data
+            String selectQuery = "SELECT p.AppointmentID, p.IllnessID, p.MedicineID, p.Dosage, a.Status, " +
+                                "i.IllnessName, m.MedicineName, " +
+                                "CONCAT(pt.FirstName, ' ', pt.LastName) AS Patient, " +
+                                "CONCAT(d.FirstName, ' ', d.LastName) AS Doctor " +
+                                "FROM prescription p " +
+                                "JOIN appointment a ON p.AppointmentID = a.AppointmentID " +
+                                "JOIN patient pt ON a.PatientID = pt.PatientID " +
+                                "JOIN doctor d ON a.DoctorID = d.DoctorID " +
+                                "JOIN illness i ON p.IllnessID = i.IllnessID " +
+                                "JOIN medicine m ON p.MedicineID = m.MedicineID " +
+                                "WHERE p.PrescriptionID = ?";
+
+            try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(selectQuery)) {
+                stmt.setInt(1, prescriptionID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    String patient = rs.getString("Patient");
+                    String doctor = rs.getString("Doctor");
+                    String illness = rs.getString("IllnessName");
+                    String medicine = rs.getString("MedicineName");
+                    String dosage = rs.getString("Dosage");
+                    String status = rs.getString("Status");
+
+                    // Set data in the controller
+                    controller.setPrescriptionData(prescriptionID, patient, doctor, illness, medicine, dosage, status);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Prescription not found");
+                    alert.setContentText("Could not find prescription details.");
+                    alert.showAndWait();
+                    return;
+                }
             }
+
+            // Create dialog stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Prescription");
+            dialogStage.setResizable(false);
+            dialogStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load edit form");
+            alert.setContentText("Could not load the prescription edit form: " + e.getMessage());
+            alert.showAndWait();
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -496,140 +504,7 @@ public class DoctorPrescriptionController {
             alert.setHeaderText("Failed to load prescription details");
             alert.setContentText("Could not retrieve prescription details: " + e.getMessage());
             alert.showAndWait();
-            return;
         }
-
-        // Create dialog stage
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Edit Prescription");
-        dialogStage.setResizable(false);
-
-        // Create form components
-        Label illnessLabel = new Label("Illness:");
-        ComboBox<String> illnessComboBox = new ComboBox<>();
-        illnessComboBox.setPromptText("Select Illness");
-
-        Label medicineLabel = new Label("Medicine:");
-        ComboBox<String> medicineComboBox = new ComboBox<>();
-        medicineComboBox.setPromptText("Select Medicine");
-
-        Label dosageLabel = new Label("Dosage:");
-        TextField dosageTextField = new TextField();
-
-        Label statusLabel = new Label("Status:");
-        ChoiceBox<String> statusChoiceBox = new ChoiceBox<>();
-        statusChoiceBox.getItems().addAll("Active", "Completed", "Canceled");
-
-        Button saveButton = new Button("Save");
-        Button cancelButton = new Button("Cancel");
-
-        // Populate ComboBoxes
-        try {
-            // Illnesses
-            ResultSet rs = Database.query("SELECT IllnessID, IllnessName FROM illness");
-            while (rs != null && rs.next()) {
-                illnessComboBox.getItems().add(rs.getString("IllnessName"));
-            }
-
-            // Medicines
-            rs = Database.query("SELECT MedicineID, MedicineName FROM medicine");
-            while (rs != null && rs.next()) {
-                medicineComboBox.getItems().add(rs.getString("MedicineName"));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        // Set current values
-        illnessComboBox.setValue(currentIllness[0]);
-        medicineComboBox.setValue(currentMedicine[0]);
-        dosageTextField.setText(currentDosage[0]);
-        statusChoiceBox.setValue(currentStatus[0]);
-
-        // Layout
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new javafx.geometry.Insets(20));
-
-        grid.add(illnessLabel, 0, 0);
-        grid.add(illnessComboBox, 1, 0);
-        grid.add(medicineLabel, 0, 1);
-        grid.add(medicineComboBox, 1, 1);
-        grid.add(dosageLabel, 0, 2);
-        grid.add(dosageTextField, 1, 2);
-        grid.add(statusLabel, 0, 3);
-        grid.add(statusChoiceBox, 1, 3);
-
-        HBox buttonBox = new HBox(10, saveButton, cancelButton);
-        buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
-        grid.add(buttonBox, 1, 4);
-
-        Scene scene = new Scene(grid);
-        dialogStage.setScene(scene);
-
-        // Button actions
-        saveButton.setOnAction(e -> {
-            String selectedIllness = illnessComboBox.getValue();
-            String selectedMedicine = medicineComboBox.getValue();
-            String dosage = dosageTextField.getText();
-            String status = statusChoiceBox.getValue();
-
-            if (selectedIllness == null || selectedMedicine == null || dosage.isEmpty() || status == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Incomplete Data");
-                alert.setHeaderText("Please fill all fields");
-                alert.setContentText("All fields are required.");
-                alert.showAndWait();
-                return;
-            }
-
-            // Get IDs
-            int illnessID = -1, medicineID = -1;
-            try {
-                ResultSet rs = Database.query("SELECT IllnessID FROM illness WHERE IllnessName = ?", selectedIllness);
-                if (rs != null && rs.next()) illnessID = rs.getInt("IllnessID");
-
-                rs = Database.query("SELECT MedicineID FROM medicine WHERE MedicineName = ?", selectedMedicine);
-                if (rs != null && rs.next()) medicineID = rs.getInt("MedicineID");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            // Update database
-            try {
-                String updatePrescriptionQuery = "UPDATE prescription SET IllnessID = ?, MedicineID = ?, Dosage = ? WHERE PrescriptionID = ?";
-                int prescriptionResult = Database.update(updatePrescriptionQuery, illnessID, medicineID, dosage, prescriptionID);
-
-                String updateAppointmentQuery = "UPDATE appointment SET Status = ? WHERE AppointmentID = ?";
-                int appointmentResult = Database.update(updateAppointmentQuery, status, currentAppointmentID[0]);
-
-                if (prescriptionResult > 0 && appointmentResult > 0) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Prescription Updated");
-                    alert.setContentText("The prescription has been updated successfully.");
-                    alert.showAndWait();
-
-                    // Refresh table
-                    loadData();
-                    updateStatistics();
-
-                    dialogStage.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Update Failed");
-                alert.setContentText("Failed to update the prescription: " + ex.getMessage());
-                alert.showAndWait();
-            }
-        });
-
-        cancelButton.setOnAction(e -> dialogStage.close());
-
-        dialogStage.showAndWait();
     }
 
     // Inner class for Prescription data

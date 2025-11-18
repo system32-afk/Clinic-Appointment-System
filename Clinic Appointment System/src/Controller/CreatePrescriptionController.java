@@ -21,22 +21,22 @@ public class CreatePrescriptionController {
     private ComboBox<String> DoctorComboBox;
 
     @FXML
-    private ComboBox<String> ServiceComboBox;
+    private ComboBox<String> ServiceComboBox; // Illness/Diagnosis
 
     @FXML
-    private ComboBox<String> DoctorComboBox1;
+    private ComboBox<String> DoctorComboBox1; // Medicine
+
+    @FXML
+    private ComboBox<String> ServiceComboBox1; // Dosage
+
+    @FXML
+    private ComboBox<String> ServiceComboBox11; // Frequency
+
+    @FXML
+    private ComboBox<String> ServiceComboBox111; // Duration
 
     @FXML
     private TextArea NotesTextArea;
-
-    @FXML
-    private ComboBox<String> DoctorComboBox11;
-
-    @FXML
-    private ComboBox<String> DoctorComboBox111;
-
-    @FXML
-    private ComboBox<String> DoctorComboBox112;
 
     @FXML
     private Button SubmitButton;
@@ -63,7 +63,6 @@ public class CreatePrescriptionController {
 
     @FXML
     public void initialize() {
-        // Populate ComboBoxes
         populateComboBoxes();
         updateDateTime();
     }
@@ -82,26 +81,26 @@ public class CreatePrescriptionController {
                 DoctorComboBox.getItems().add(rs.getString("DoctorName"));
             }
 
-            // Illnesses (ServiceComboBox for Illness/Diagnosis)
+            // Illnesses (ServiceComboBox)
             rs = Database.query("SELECT IllnessID, IllnessName FROM illness");
             while (rs != null && rs.next()) {
                 ServiceComboBox.getItems().add(rs.getString("IllnessName"));
             }
 
-            // Medicines
+            // Medicines (DoctorComboBox1)
             rs = Database.query("SELECT MedicineID, MedicineName FROM medicine");
             while (rs != null && rs.next()) {
                 DoctorComboBox1.getItems().add(rs.getString("MedicineName"));
             }
 
-            // Dosage options (example)
-            DoctorComboBox11.getItems().addAll("1 Tablet", "2 Tablets", "3 Tablets", "1 Capsule", "2 Capsules");
+            // Dosage options
+            ServiceComboBox1.getItems().addAll("1 Tablet", "2 Tablets", "3 Tablets", "1 Capsule", "2 Capsules");
 
-            // Frequency options (example)
-            DoctorComboBox111.getItems().addAll("1x / day", "2x / day", "3x / day", "4x / day");
+            // Frequency options
+            ServiceComboBox11.getItems().addAll("1x / day", "2x / day", "3x / day", "4x / day");
 
-            // Duration options (example)
-            DoctorComboBox112.getItems().addAll("1 week", "2 weeks", "1 month", "2 months");
+            // Duration options
+            ServiceComboBox111.getItems().addAll("1 week", "2 weeks", "1 month", "2 months");
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -122,13 +121,14 @@ public class CreatePrescriptionController {
         String selectedDoctor = DoctorComboBox.getValue();
         String selectedIllness = ServiceComboBox.getValue();
         String selectedMedicine = DoctorComboBox1.getValue();
-        String dosage = DoctorComboBox11.getValue();
-        String frequency = DoctorComboBox111.getValue();
-        String duration = DoctorComboBox112.getValue();
+        String dosage = ServiceComboBox1.getValue();
+        String frequency = ServiceComboBox11.getValue();
+        String duration = ServiceComboBox111.getValue();
         String instructions = NotesTextArea.getText();
 
-        if (selectedPatient == null || selectedDoctor == null || selectedIllness == null || selectedMedicine == null ||
-            dosage == null || frequency == null || duration == null || instructions.isEmpty()) {
+        if (selectedPatient == null || selectedDoctor == null || selectedIllness == null ||
+            selectedMedicine == null || dosage == null || frequency == null || duration == null ||
+            instructions.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Incomplete Data");
             alert.setHeaderText("Please fill all fields");
@@ -155,17 +155,12 @@ public class CreatePrescriptionController {
             ex.printStackTrace();
         }
 
-        // Create appointment if needed or find existing, but for simplicity, assume we need to create a new appointment or use existing
-        // For now, insert directly into prescription assuming appointment exists, but since it's create prescription, perhaps create appointment first
-        // To simplify, let's assume we create a new appointment for this prescription
-
-        // First, create appointment
+        // Create appointment
         int appointmentID = -1;
         try {
-            String insertAppointment = "INSERT INTO appointment (PatientID, DoctorID, ReasonForVisit, Date, Time, Status) VALUES (?, ?, ?, CURDATE(), CURTIME(), 'Completed')";
+            String insertAppointment = "INSERT INTO appointment (PatientID, DoctorID, ReasonForVisit, Date, Time, Status) VALUES (?, ?, ?, CURDATE(), CURTIME(), 'In-Progress')";
             int result = Database.update(insertAppointment, patientID, doctorID, selectedIllness);
             if (result > 0) {
-                // Get the last inserted ID
                 ResultSet rs = Database.query("SELECT LAST_INSERT_ID() AS ID");
                 if (rs != null && rs.next()) {
                     appointmentID = rs.getInt("ID");
@@ -184,8 +179,8 @@ public class CreatePrescriptionController {
             return;
         }
 
-        // Now insert prescription
-        String fullDosage = dosage + ", " + frequency + ", and " + duration + " - " + instructions;
+        // Insert prescription
+        String fullDosage = dosage + ", " + frequency + ", for " + duration + " - " + instructions;
         try {
             String insertQuery = "INSERT INTO prescription (AppointmentID, IllnessID, MedicineID, Dosage) VALUES (?, ?, ?, ?)";
             int result = Database.update(insertQuery, appointmentID, illnessID, medicineID, fullDosage);
@@ -196,7 +191,7 @@ public class CreatePrescriptionController {
                 alert.setContentText("The prescription has been created successfully.");
                 alert.showAndWait();
 
-                // Refresh parent table
+                // Refresh parent tables
                 if (adminParentController != null) {
                     adminParentController.loadData();
                     adminParentController.updateStatistics();

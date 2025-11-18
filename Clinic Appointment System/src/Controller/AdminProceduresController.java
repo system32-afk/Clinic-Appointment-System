@@ -435,225 +435,29 @@ public class AdminProceduresController {
     }
 
     private void editProcedure(int procedureID) {
-        // Fetch current procedure data
-        String selectQuery = "SELECT pr.AppointmentID, pr.ServiceID, pr.ProcedureDate, pr.Notes, pr.Status, " +
-                            "a.PatientID, a.DoctorID " +
-                            "FROM procedurerequest pr " +
-                            "JOIN appointment a ON pr.AppointmentID = a.AppointmentID " +
-                            "WHERE pr.ProcedureID = ?";
-        final int[] appointmentID = {-1};
-        int currentPatientID = -1;
-        int currentDoctorID = -1;
-        int currentServiceID = -1;
-        LocalDate currentDate = null;
-        String currentStatus = "";
-        String currentNotes = "";
-        try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(selectQuery)) {
-            stmt.setInt(1, procedureID);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                appointmentID[0] = rs.getInt("AppointmentID");
-                currentPatientID = rs.getInt("PatientID");
-                currentDoctorID = rs.getInt("DoctorID");
-                currentServiceID = rs.getInt("ServiceID");
-                currentDate = rs.getDate("ProcedureDate").toLocalDate();
-                currentStatus = rs.getString("Status");
-                currentNotes = rs.getString("Notes");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Procedure not found");
-                alert.setContentText("Could not find procedure details.");
-                alert.showAndWait();
-                return;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditProcedure.fxml"));
+            Parent root = loader.load();
+
+            EditProcedureController controller = loader.getController();
+            controller.setProcedureID(procedureID);
+
+            Stage stage = new Stage();
+            stage.setTitle("Edit Procedure");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            // Refresh the table after editing
+            loadData();
+            updateStatistics();
+        } catch (IOException ex) {
+            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Failed to load procedure details");
-            alert.setContentText("Could not retrieve procedure details: " + e.getMessage());
+            alert.setHeaderText("Failed to open edit form");
+            alert.setContentText("Could not load the procedure edit form: " + ex.getMessage());
             alert.showAndWait();
-            return;
         }
-
-        // Create dialog stage
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Edit Procedure");
-        dialogStage.setResizable(false);
-
-        // Create form components
-        Label patientLabel = new Label("Patient:");
-        ComboBox<String> patientComboBox = new ComboBox<>();
-        patientComboBox.setPromptText("Select Patient");
-
-        Label doctorLabel = new Label("Doctor:");
-        ComboBox<String> doctorComboBox = new ComboBox<>();
-        doctorComboBox.setPromptText("Select Doctor");
-
-        Label serviceLabel = new Label("Service:");
-        ComboBox<String> serviceComboBox = new ComboBox<>();
-        serviceComboBox.setPromptText("Select Service");
-
-        Label dateLabel = new Label("Date:");
-        DatePicker datePicker = new DatePicker();
-
-        Label statusLabel = new Label("Status:");
-        ChoiceBox<String> statusChoiceBox = new ChoiceBox<>();
-        statusChoiceBox.getItems().addAll("Pending", "Completed", "Canceled");
-        statusChoiceBox.setValue("Pending");
-
-        Label notesLabel = new Label("Notes:");
-        TextArea notesTextArea = new TextArea();
-
-        Button saveButton = new Button("Save");
-        Button cancelButton = new Button("Cancel");
-
-        // Populate ComboBoxes
-        try {
-            // Patients
-            ResultSet rs = Database.query("SELECT PatientID, CONCAT(FirstName, ' ', LastName) AS Name FROM patient");
-            while (rs != null && rs.next()) {
-                patientComboBox.getItems().add(rs.getString("Name"));
-                if (rs.getInt("PatientID") == currentPatientID) {
-                    patientComboBox.setValue(rs.getString("Name"));
-                }
-            }
-
-            // Doctors
-            rs = Database.query("SELECT DoctorID, CONCAT(FirstName, ' ', LastName) AS Name FROM doctor");
-            while (rs != null && rs.next()) {
-                doctorComboBox.getItems().add(rs.getString("Name"));
-                if (rs.getInt("DoctorID") == currentDoctorID) {
-                    doctorComboBox.setValue(rs.getString("Name"));
-                }
-            }
-
-            // Services
-            rs = Database.query("SELECT ServiceID, ServiceName FROM service");
-            while (rs != null && rs.next()) {
-                serviceComboBox.getItems().add(rs.getString("ServiceName"));
-                if (rs.getInt("ServiceID") == currentServiceID) {
-                    serviceComboBox.setValue(rs.getString("ServiceName"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Set current values
-        datePicker.setValue(currentDate);
-        // Map 'Cancelled' to 'Canceled' to match database ENUM
-        String mappedStatus = currentStatus.equals("Cancelled") ? "Canceled" : currentStatus;
-        statusChoiceBox.setValue(mappedStatus);
-        notesTextArea.setText(currentNotes);
-
-        // Layout
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new javafx.geometry.Insets(20));
-
-        grid.add(patientLabel, 0, 0);
-        grid.add(patientComboBox, 1, 0);
-        grid.add(doctorLabel, 0, 1);
-        grid.add(doctorComboBox, 1, 1);
-        grid.add(serviceLabel, 0, 2);
-        grid.add(serviceComboBox, 1, 2);
-        grid.add(dateLabel, 0, 3);
-        grid.add(datePicker, 1, 3);
-        grid.add(statusLabel, 0, 4);
-        grid.add(statusChoiceBox, 1, 4);
-        grid.add(notesLabel, 0, 5);
-        grid.add(notesTextArea, 1, 5);
-
-        HBox buttonBox = new HBox(10, saveButton, cancelButton);
-        buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
-        grid.add(buttonBox, 1, 6);
-
-        Scene scene = new Scene(grid);
-        dialogStage.setScene(scene);
-
-        // Button actions
-        saveButton.setOnAction(e -> {
-            // Get selected IDs
-            String selectedPatient = patientComboBox.getValue();
-            String selectedDoctor = doctorComboBox.getValue();
-            String selectedService = serviceComboBox.getValue();
-            LocalDate selectedDate = datePicker.getValue();
-            String selectedStatus = statusChoiceBox.getValue();
-            String selectedNotes = notesTextArea.getText();
-
-            if (selectedPatient == null || selectedDoctor == null || selectedService == null || selectedDate == null || selectedStatus == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Incomplete Data");
-                alert.setHeaderText("Please fill all fields");
-                alert.setContentText("All fields are required.");
-                alert.showAndWait();
-                return;
-            }
-
-            // Get IDs from names
-            int patientID = -1, doctorID = -1, serviceID = -1;
-            try {
-                ResultSet rs = Database.query("SELECT PatientID FROM patient WHERE CONCAT(FirstName, ' ', LastName) = ?", selectedPatient);
-                if (rs != null && rs.next()) patientID = rs.getInt("PatientID");
-
-                rs = Database.query("SELECT DoctorID FROM doctor WHERE CONCAT(FirstName, ' ', LastName) = ?", selectedDoctor);
-                if (rs != null && rs.next()) doctorID = rs.getInt("DoctorID");
-
-                rs = Database.query("SELECT ServiceID FROM service WHERE ServiceName = ?", selectedService);
-                if (rs != null && rs.next()) serviceID = rs.getInt("ServiceID");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            // Update database
-            try {
-                // Update appointment
-                String updateAppointment = "UPDATE appointment SET PatientID = ?, DoctorID = ? WHERE AppointmentID = ?";
-                try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(updateAppointment)) {
-                    stmt.setInt(1, patientID);
-                    stmt.setInt(2, doctorID);
-                    stmt.setInt(3, appointmentID[0]);
-                    stmt.executeUpdate();
-                }
-
-                // Update procedurerequest
-                String updateProcedure = "UPDATE procedurerequest SET ServiceID = ?, ProcedureDate = ?, Notes = ?, Status = ? WHERE ProcedureID = ?";
-                try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(updateProcedure)) {
-                    stmt.setInt(1, serviceID);
-                    stmt.setDate(2, java.sql.Date.valueOf(selectedDate));
-                    stmt.setString(3, selectedNotes);
-                    stmt.setString(4, selectedStatus);
-                    stmt.setInt(5, procedureID);
-                    stmt.executeUpdate();
-                }
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Procedure Updated");
-                alert.setContentText("The procedure has been updated successfully.");
-                alert.showAndWait();
-
-                // Refresh table
-                loadData();
-                updateStatistics();
-
-                dialogStage.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Update Failed");
-                alert.setContentText("Failed to update the procedure: " + ex.getMessage());
-                alert.showAndWait();
-            }
-        });
-
-        cancelButton.setOnAction(e -> dialogStage.close());
-
-        dialogStage.showAndWait();
     }
 
     // Inner class for Procedure data
