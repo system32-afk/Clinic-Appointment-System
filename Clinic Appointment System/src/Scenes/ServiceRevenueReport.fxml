@@ -138,5 +138,21 @@
                <TableColumn fx:id="RevenueColumn" prefWidth="450.0" text="Revenue" />
            </columns>
        </TableView>
+      <Rectangle arcHeight="22.0" arcWidth="22.0" fill="#f7f7f7" height="93.0" layoutX="628.0" layoutY="111.0" stroke="#525252" strokeLineCap="ROUND" strokeType="INSIDE" width="223.0" />
+      <Text fontSmoothingType="LCD" layoutX="642.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue Generated" wrappingWidth="394.635">
+         <font>
+            <Font name="Arial" size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="totalRevenueLabel" layoutX="642.0" layoutY="158.0" prefHeight="21.0" prefWidth="200.0" text="Revenue">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button cache="true" cacheHint="QUALITY" layoutX="1016.0" layoutY="178.0" mnemonicParsing="false" onAction="#LineChart" prefHeight="28.0" prefWidth="129.0" style="-fx-background-color: BLACK; -fx-background-radius: 15;" text="View Graph" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

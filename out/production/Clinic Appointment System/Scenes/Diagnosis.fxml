@@ -189,6 +189,8 @@
          </font>
       </Button>
 
+       <TextField fx:id="searchField" promptText="Search by ID, Name, or Illness..." onKeyReleased="#handleSearch"/>
+
        <Label fx:id="statusLabel" layoutX="1006.0" layoutY="380.0" style="-fx-test-fill: green; -fx-font-size: 13px;" text="" />
    </children>
 </AnchorPane>

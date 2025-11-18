@@ -126,6 +126,7 @@ public class ServiceRevenueReportController {
         FilteredData = new FilteredList<>(Data, record -> true);
         RevenueTable.setItems(FilteredData);
 
+        updateTotalRevenue();
     }
 
     private void updateFilter() {
@@ -152,7 +153,7 @@ public class ServiceRevenueReportController {
             total += record.getRevenue();
         }
 
-        totalRevenueLabel.setText(String.format("Total Revenue: ₱%,.2f", total));
+        totalRevenueLabel.setText(String.format("₱%,.2f", total));
 
     }
 
@@ -165,6 +166,10 @@ public class ServiceRevenueReportController {
 
         Date.setText(dateFormatter.format(now));
         Time.setText(timeFormatter.format(now));
+    }
+
+    public void LineChart(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "ServiceRevenueLine");
     }
 
     public void DashboardScreen(ActionEvent e) throws IOException {
