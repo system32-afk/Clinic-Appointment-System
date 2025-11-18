@@ -2,6 +2,7 @@ package Controller;
 
 import Util.Alerts;
 import Util.Database;
+import Util.HoverPopup;
 import Util.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -15,7 +16,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -76,6 +79,18 @@ public class DoctorRecordController {
 
     @FXML
     private TableColumn<Doctor, HBox> ActionColumn;
+
+    @FXML
+    private Pane ManagementPane;
+
+    @FXML
+    private Pane RecordsManagementButton;
+
+    @FXML
+    private Pane ReportsButton;
+
+    @FXML
+    private Pane ReportsManagement;
 
     @FXML
     public void initialize() {
@@ -191,6 +206,23 @@ public class DoctorRecordController {
                 }
             }
         });
+
+
+        /*
+        ======================== HOVER FEATURE =========================
+         */
+        HoverPopup.attachHoverPopup(
+                RecordsManagementButton,
+                ManagementPane,
+                Duration.seconds(0.3)
+        );
+
+        HoverPopup.attachHoverPopup(
+                ReportsButton,
+                ReportsManagement,
+                Duration.seconds(0.3)
+        );
+
 
         // Load initial data
         loadData();
@@ -450,5 +482,66 @@ public class DoctorRecordController {
         public int getPatients() { return patients; }
         public Button getProfileButton() { return profileButton; }
         public HBox getActionHBox() { return actionHBox; }
+    }
+
+    /*
+       =============SIDE PANEL FUNCTIONS==========================
+        */
+    @FXML
+    public void AppointmentScreen(MouseEvent e) throws IOException{
+        SceneManager.transition(e,"Appointments");
+    }
+    @FXML
+    public void openPaymentScreen(MouseEvent e) throws IOException {
+        SceneManager.transition(e, "PaymentProcessing");
+    }
+    @FXML
+    public void openDoctorRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e, "DoctorRecord");
+    }
+    @FXML
+    public void openMedicineManagement(MouseEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+    @FXML
+    public void openPatientsRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Patients");
+    }
+
+    @FXML
+    public void openServicesRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Services");
+    }
+
+
+    @FXML
+    public void openIllnessesRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Illness");
+    }
+
+    @FXML
+    public void openSpecializationRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"SpecializationRecord");
+    }
+
+    @FXML
+    public void openIllnessReport(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"IllnessReport");
+    }
+
+    @FXML
+    public void openAppointmentReport(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"AppointmentReport");
+    }
+
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ADMINDashboard");
+    }
+
+
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
     }
 }
