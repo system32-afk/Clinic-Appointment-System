@@ -73,22 +73,18 @@ public class AppointmentReportController implements Initializable {
     }
 
     private void setupFilters() {
-        // Setup period options
         periodCombo.setItems(FXCollections.observableArrayList(
                 "Today", "This Week", "This Month", "This Year", "Custom Range", "All Time"
         ));
         periodCombo.setValue("This Month");
 
-        // Setup status options
         statusCombo.setItems(FXCollections.observableArrayList(
                 "All", "Pending", "In-Progress", "Completed", "Canceled"
         ));
         statusCombo.setValue("All");
 
-        // Load doctors
         loadDoctors();
 
-        // Setup period combo listener
         periodCombo.setOnAction(e -> {
             if ("Custom Range".equals(periodCombo.getValue())) {
                 dateRangeBox.setVisible(true);
@@ -97,7 +93,6 @@ public class AppointmentReportController implements Initializable {
             }
         });
 
-        // Set default dates
         fromDatePicker.setValue(LocalDate.now().minusMonths(1));
         toDatePicker.setValue(LocalDate.now());
     }
@@ -134,7 +129,6 @@ public class AppointmentReportController implements Initializable {
 
             int doctorID = doctorMap.get(doctorFilter);
 
-            // Build SQL query based on filters
             StringBuilder sql = new StringBuilder("""
                 SELECT 
                     a.AppointmentID,
@@ -152,17 +146,14 @@ public class AppointmentReportController implements Initializable {
                 WHERE 1=1
             """);
 
-            // Add doctor filter
             if (doctorID != 0) {
                 sql.append(" AND a.DoctorID = ").append(doctorID);
             }
 
-            // Add status filter
             if (!"All".equals(statusFilter)) {
                 sql.append(" AND a.Status = '").append(statusFilter).append("'");
             }
 
-            // Add date filter based on period
             if ("Today".equals(period)) {
                 sql.append(" AND a.Date = CURDATE()");
             } else if ("This Week".equals(period)) {
@@ -196,7 +187,6 @@ public class AppointmentReportController implements Initializable {
     private void displayAppointmentReport(ResultSet rs) throws SQLException {
         appointmentList.getChildren().clear();
 
-        // Header row
         HBox headerRow = new HBox(20);
         headerRow.setAlignment(Pos.CENTER_LEFT);
         headerRow.setStyle("-fx-background-color: #e9ecef; -fx-padding: 10; -fx-background-radius: 5;");
@@ -235,25 +225,20 @@ public class AppointmentReportController implements Initializable {
             String doctorName = rs.getString("DoctorName");
             String specialization = rs.getString("SpecializationName");
 
-            // Create appointment row
             HBox row = new HBox(20);
             row.setAlignment(Pos.CENTER_LEFT);
             row.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-background-radius: 5;");
             row.setPrefWidth(900);
 
-            // Appointment ID
             Label idLabel = new Label("A-" + appointmentID);
             idLabel.setStyle("-fx-min-width: 100;");
 
-            // Date & Time
             Label dateTimeLabel = new Label(date + " " + time);
             dateTimeLabel.setStyle("-fx-min-width: 150;");
 
-            // Patient
             Label patientLabel = new Label(patientName);
             patientLabel.setStyle("-fx-min-width: 150;");
 
-            // Doctor
             VBox doctorInfo = new VBox(2);
             Label doctorLabel = new Label(doctorName);
             Label specLabel = new Label(specialization);
@@ -261,16 +246,13 @@ public class AppointmentReportController implements Initializable {
             doctorInfo.getChildren().addAll(doctorLabel, specLabel);
             doctorInfo.setStyle("-fx-min-width: 150;");
 
-            // Reason
             Label reasonLabel = new Label(reason);
             reasonLabel.setStyle("-fx-min-width: 200; -fx-wrap-text: true;");
 
-            // Status with color coding
             Label statusLabel = new Label(status);
             statusLabel.setPadding(new Insets(5, 10, 5, 10));
             statusLabel.setStyle("-fx-font-weight: bold; -fx-background-radius: 10; -fx-min-width: 100;");
 
-            // Set status color
             switch (status) {
                 case "Completed" -> statusLabel.setStyle(statusLabel.getStyle() + "-fx-background-color: #9DFFAF;");
                 case "Pending" -> statusLabel.setStyle(statusLabel.getStyle() + "-fx-background-color: #FCFF9D;");
@@ -280,7 +262,6 @@ public class AppointmentReportController implements Initializable {
 
             row.getChildren().addAll(idLabel, dateTimeLabel, patientLabel, doctorInfo, reasonLabel, statusLabel);
 
-            // Add separator
             Line separator = new Line(0, 0, 900, 0);
             separator.setStroke(Color.LIGHTGRAY);
             separator.setStrokeWidth(1);
@@ -316,7 +297,7 @@ public class AppointmentReportController implements Initializable {
                     case "Completed" -> completed = count;
                     case "Pending" -> pending = count;
                     case "Canceled" -> canceled = count;
-                    case "In-Progress" -> pending += count; // Include in-progress in pending
+                    case "In-Progress" -> pending += count;
                 }
             }
 
