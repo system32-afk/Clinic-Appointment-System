@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class IllnessController {
+public class SpecializationController {
 
     @FXML
     private Text Date;
@@ -35,16 +35,16 @@ public class IllnessController {
     private Text Time;
 
     @FXML
-    private VBox IllnessRows;
+    private VBox SpecializationRows;
 
     @FXML
     private ScrollPane scrollPane;
 
     @FXML
-    private Button addIllnessButton;
+    private Button addSpecializationButton;
 
     @FXML
-    private Label TotalIllnessCount;
+    private Label TotalSpecializationCount;
 
     @FXML
     private Pane ManagementPane;
@@ -68,8 +68,6 @@ public class IllnessController {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
-
-
         /*
         ======================== HOVER FEATURE =========================
          */
@@ -86,26 +84,27 @@ public class IllnessController {
         );
 
 
+
         loadData();
     }
 
     private void loadData() {
         try {
-            ResultSet IllnessData = Database.query(
+            ResultSet SpecializationData = Database.query(
                     "SELECT " +
-                            "i.IllnessID, " +
-                            "i.IllnessName " +
-                            "FROM illness i"
+                            "s.SpecializationID, " +
+                            "s.SpecializationName " +
+                            "FROM ref_specialization s"
             );
 
-            IllnessRows.getChildren().clear();
+            SpecializationRows.getChildren().clear();
             scrollPane.setFitToWidth(true);
             int rowIndex = 0;
 
-            while (IllnessData.next()) {
+            while (SpecializationData.next()) {
 
-                int IllnessID = IllnessData.getInt("IllnessID");
-                String IllnessName = IllnessData.getString("IllnessName");
+                int SpecializationID = SpecializationData.getInt("SpecializationID");
+                String SpecializationName = SpecializationData.getString("SpecializationName");
 
                 // HBox for each row
                 HBox row = new HBox(40);
@@ -113,8 +112,8 @@ public class IllnessController {
                 row.setAlignment(Pos.BASELINE_LEFT);
 
                 // === Add cells ===
-                Label idLabel = new Label(String.valueOf(IllnessID));
-                Label nameLabel = new Label(IllnessName);
+                Label idLabel = new Label(String.valueOf(SpecializationID));
+                Label nameLabel = new Label(SpecializationName);
 
                 // Adjust margins
                 idLabel.setPrefWidth(100);
@@ -127,14 +126,14 @@ public class IllnessController {
 
                 // === Add separator line below each row ===
                 Separator separator = new Separator();
-                separator.prefWidthProperty().bind(IllnessRows.widthProperty());
+                separator.prefWidthProperty().bind(SpecializationRows.widthProperty());
 
-                IllnessRows.getChildren().addAll(row, separator);
+                SpecializationRows.getChildren().addAll(row, separator);
 
                 rowIndex++;
             }
 
-            TotalIllnessCount.setText(String.valueOf(rowIndex));
+            TotalSpecializationCount.setText(String.valueOf(rowIndex));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,50 +154,31 @@ public class IllnessController {
     private Label statusLabel;
 
     @FXML
-    private void AddIllness(ActionEvent event) {
+    private void AddSpecialization(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Add new Illness");
-        dialog.setHeaderText("Enter the Illness Name");
-        dialog.setContentText("Illness Name:");
+        dialog.setTitle("Add new Specialization");
+        dialog.setHeaderText("Enter the Specialization Name");
+        dialog.setContentText("Specialization Name:");
 
         Optional<String> result = dialog.showAndWait();
 
-        result.ifPresent(illnessName -> {
-            illnessName = illnessName.trim();
-
-            if(illnessName.isEmpty()) {
-                statusLabel.setText("Illness name cannot be empty");
+        result.ifPresent(specializationName -> {
+            if(specializationName.trim().isEmpty()) {
+                statusLabel.setText("Specialization name cannot be empty");
                 statusLabel.setStyle("-fx-text-fill: red;");
                 return;
             }
 
-            String checkQuery = "SELECT * FROM illness WHERE illnessName = ?";
-            ResultSet rs = Database.query(checkQuery, illnessName);
+            String query = "INSERT INTO ref_specialization (SpecializationName) VALUES (?)";
+            Database.update(query, specializationName);
 
-            try{
-                if(rs.next()) {
-                    statusLabel.setText("Illness already exists");
-                    statusLabel.setStyle("-fx-text-fill: red;");
-                } else {
+            loadData();
+            statusLabel.setText("Specialization added successfully");
+            statusLabel.setStyle("-fx-text-fill: green;");
 
-                    String query = "INSERT INTO illness (IllnessName) VALUES (?)";
-                    Database.update(query, illnessName);
-
-                    loadData();
-                    statusLabel.setText("Illness added successfully");
-                    statusLabel.setStyle("-fx-text-fill: green;");
-
-                    PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                    pause.setOnFinished(e-> statusLabel.setVisible(false));
-                    pause.play();
-                }
-
-            } catch (Exception e) {
-                statusLabel.setText("Database error: could not add Illness");
-                statusLabel.setStyle("-fx-text-fill: red;");
-                e.printStackTrace();
-            }
-
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(e-> statusLabel.setVisible(false));
+            pause.play();
         });
 
     }

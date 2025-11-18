@@ -2,6 +2,7 @@ package Controller;
 
 import Util.Alerts;
 import Util.Database;
+import Util.HoverPopup;
 import Util.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -16,7 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -39,7 +42,17 @@ public class MedicineManagementController implements Initializable {
     @FXML private Text Time;
     @FXML private VBox medicineList;
     @FXML private Button addMedicineBtn;
+    @FXML
+    private Pane ManagementPane;
 
+    @FXML
+    private Pane RecordsManagementButton;
+
+    @FXML
+    private Pane ReportsButton;
+
+    @FXML
+    private Pane ReportsManagement;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateDateTime();
@@ -49,6 +62,20 @@ public class MedicineManagementController implements Initializable {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+/*
+        ======================== HOVER FEATURE =========================
+         */
+        HoverPopup.attachHoverPopup(
+                RecordsManagementButton,
+                ManagementPane,
+                Duration.seconds(0.3)
+        );
+
+        HoverPopup.attachHoverPopup(
+                ReportsButton,
+                ReportsManagement,
+                Duration.seconds(0.3)
+        );
 
         loadMedicines();
     }
@@ -192,26 +219,75 @@ public class MedicineManagementController implements Initializable {
         loadMedicines();
     }
 
-    public void DashboardScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "ADMINDashboard");
+    /*
+    =============SIDE PANEL FUNCTIONS==========================
+     */
+    @FXML
+    public void AppointmentScreen(MouseEvent e) throws IOException{
+        SceneManager.transition(e,"Appointments");
     }
-
-    public void AppointmentScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "Appointments");
-    }
-
-    public void openMedicineManagement(ActionEvent e) throws IOException {
-    }
-
-    public void openPaymentScreen(ActionEvent e) throws IOException {
+    @FXML
+    public void openPaymentScreen(MouseEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
     }
-
-    public void openMedicalHistory(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicalHistory");
+    @FXML
+    public void openDoctorRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e, "DoctorRecord");
+    }
+    @FXML
+    public void openMedicineManagement(MouseEvent e) throws IOException {
+        SceneManager.transition(e, "MedicineManagement");
+    }
+    @FXML
+    public void openPatientsRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Patients");
     }
 
-    public void openAppointmentReport(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "AppointmentReport");
+    @FXML
+    public void openServicesRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Services");
+    }
+
+
+    @FXML
+    public void openIllnessesRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Illness");
+    }
+
+    @FXML
+    public void openSpecializationRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"SpecializationRecord");
+    }
+
+    @FXML
+    public void openIllnessReport(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"IllnessReport");
+    }
+
+    @FXML
+    public void openAppointmentReport(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"AppointmentReport");
+    }
+
+    @FXML
+    public void openServiceRevenue(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ServiceRevenueReport");
+    }
+
+    @FXML
+    public void openSpecializationReport(MouseEvent e) throws IOException {
+        //SceneManager.transition(e,"SpecializationReport");
+    }
+
+
+
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
+    }
+
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ADMINDashboard");
     }
 }

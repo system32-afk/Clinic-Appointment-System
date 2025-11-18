@@ -18,8 +18,10 @@ import Util.SceneManager;
 
 public class LoginController {
 
-    private final String email = "Admin@email.com";
-    private final String password = "Admin123";
+    private final String adminEmail = "Admin@email.com";
+    private final String adminPassword = "Admin123";
+    private final String doctorEmail = "Doctor@email.com";
+    private final String doctorPassword = "Doctor123";
 
     @FXML
     private TextField emailField;
@@ -34,11 +36,11 @@ public class LoginController {
         String inputEmail = emailField.getText();
         String inputPassword = passwordField.getText();
 
-        if (inputEmail.equals(email) && inputPassword.equals(password)) {
-            System.out.println("LOGIN SUCCESSFUL");
+        if (inputEmail.equalsIgnoreCase(adminEmail) && inputPassword.equals(adminPassword)) {
+            SceneManager.transition(event,"ADMINDashboard");
 
-            SceneManager.transition(event,"Dashboard");
-
+        } else if (inputEmail.equalsIgnoreCase(doctorEmail) && inputPassword.equals(doctorPassword)) {
+            SceneManager.transition(event,"DOCTORDashboard");
         } else {
             manipulate.setText("INVALID CREDENTIALS");
         }
