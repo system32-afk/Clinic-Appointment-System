@@ -132,22 +132,41 @@ public class IllnessController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(illnessName -> {
-            if(illnessName.trim().isEmpty()) {
+            illnessName = illnessName.trim();
+
+            if(illnessName.isEmpty()) {
                 statusLabel.setText("Illness name cannot be empty");
                 statusLabel.setStyle("-fx-text-fill: red;");
                 return;
             }
 
-            String query = "INSERT INTO illness (IllnessName) VALUES (?)";
-            Database.update(query, illnessName);
+            String checkQuery = "SELECT * FROM illness WHERE illnessName = ?";
+            ResultSet rs = Database.query(checkQuery, illnessName);
 
-            loadData();
-            statusLabel.setText("Illness added successfully");
-            statusLabel.setStyle("-fx-text-fill: green;");
+            try{
+                if(rs.next()) {
+                    statusLabel.setText("Illness already exists");
+                    statusLabel.setStyle("-fx-text-fill: red;");
+                } else {
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(e-> statusLabel.setVisible(false));
-            pause.play();
+                    String query = "INSERT INTO illness (IllnessName) VALUES (?)";
+                    Database.update(query, illnessName);
+
+                    loadData();
+                    statusLabel.setText("Illness added successfully");
+                    statusLabel.setStyle("-fx-text-fill: green;");
+
+                    PauseTransition pause = new PauseTransition(Duration.seconds(3));
+                    pause.setOnFinished(e-> statusLabel.setVisible(false));
+                    pause.play();
+                }
+
+            } catch (Exception e) {
+                statusLabel.setText("Database error: could not add Illness");
+                statusLabel.setStyle("-fx-text-fill: red;");
+                e.printStackTrace();
+            }
+
         });
 
     }

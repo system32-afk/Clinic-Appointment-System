@@ -123,19 +123,19 @@
          </font>
       </Text>
 
-       <HBox layoutX="240.0" layoutY="178.0" spacing="10">
+       <HBox layoutX="263.0" layoutY="179.0" spacing="10">
            <Label text="Filter by:" />
            <ComboBox fx:id="yearFilter" promptText="Year" />
            <ComboBox fx:id="monthFilter" promptText="Month" />
            <ComboBox fx:id="serviceFilter" promptText="Service" />
        </HBox>
 
-       <TableView fx:id="RevenueTable" layoutX="235.0" layoutY="217.0" prefHeight="400.0" prefWidth="700.0">
+       <TableView fx:id="RevenueTable" layoutX="256.0" layoutY="220.0" prefHeight="393.0" prefWidth="899.0">
            <columns>
-               <TableColumn fx:id="YearColumn" prefWidth="100" text="Year" />
-               <TableColumn fx:id="MonthColumn" prefWidth="100" text="Month" />
-               <TableColumn fx:id="ServiceColumn" prefWidth="200" text="Service" />
-               <TableColumn fx:id="RevenueColumn" prefWidth="150" text="Revenue" />
+               <TableColumn fx:id="YearColumn" prefWidth="100.0" text="Year" />
+               <TableColumn fx:id="MonthColumn" prefWidth="109.0" text="Month" />
+               <TableColumn fx:id="ServiceColumn" prefWidth="239.0" text="Service" />
+               <TableColumn fx:id="RevenueColumn" prefWidth="450.0" text="Revenue" />
            </columns>
        </TableView>
    </children>

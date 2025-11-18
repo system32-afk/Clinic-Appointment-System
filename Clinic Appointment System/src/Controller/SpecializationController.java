@@ -135,22 +135,43 @@ public class SpecializationController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(specializationName -> {
-            if(specializationName.trim().isEmpty()) {
+            specializationName = specializationName.trim();
+
+            if(specializationName.isEmpty()) {
                 statusLabel.setText("Specialization name cannot be empty");
                 statusLabel.setStyle("-fx-text-fill: red;");
                 return;
             }
 
-            String query = "INSERT INTO specialization (SpecializationName) VALUES (?)";
-            Database.update(query, specializationName);
+            String checkQuery = "SELECT * FROM ref_specialization WHERE SpecializationName = ?";
+            ResultSet rs = Database.query(checkQuery, specializationName);
 
-            loadData();
-            statusLabel.setText("Specialization added successfully");
-            statusLabel.setStyle("-fx-text-fill: green;");
+            try {
+                if(rs.next()) {
+                    statusLabel.setText("Specialization already exists");
+                    statusLabel.setStyle("-fx-text-fill: red;");
+                } else {
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(e-> statusLabel.setVisible(false));
-            pause.play();
+                    String query = "INSERT INTO ref_specialization (SpecializationName) VALUES (?)";
+                    Database.update(query, specializationName);
+
+                    loadData();
+                    statusLabel.setText("Specialization added successfully");
+                    statusLabel.setStyle("-fx-text-fill: green;");
+
+                    PauseTransition pause = new PauseTransition(Duration.seconds(3));
+                    pause.setOnFinished(e-> statusLabel.setVisible(false));
+                    pause.play();
+
+                }
+
+            } catch (Exception e) {
+                statusLabel.setText("Database error: could not add Specialization");
+                statusLabel.setStyle("-fx-text-fill: red;");
+                e.printStackTrace();
+            }
+
+
         });
 
     }
