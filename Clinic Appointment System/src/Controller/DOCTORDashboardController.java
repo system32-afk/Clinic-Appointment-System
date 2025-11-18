@@ -194,4 +194,8 @@ public class DOCTORDashboardController {
     public void openMedicalHistory(ActionEvent e) throws IOException {
         SceneManager.transition(e, "MedicalHistory");
     }
+
+    public void openAppointmentReport(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "AppointmentReport");
+    }
 }

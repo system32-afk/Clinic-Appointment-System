@@ -289,4 +289,8 @@ public class PaymentProcessingController implements Initializable {
     public void logout(MouseEvent e) throws IOException {
         SceneManager.transition(e,"login");
     }
+
+    public void openAppointmentReport(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "AppointmentReport");
+    }
 }
