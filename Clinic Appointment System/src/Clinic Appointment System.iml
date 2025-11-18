@@ -10,5 +10,14 @@
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="Protobuf" level="project" />
     <orderEntry type="library" name="mysql-connector-j-9.5.0" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../Drivers/pdfbox/pdfbox-app-3.0.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

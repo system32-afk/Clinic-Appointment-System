@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddEditMedicalHistoryController">
+    <children>
+        <ScrollPane layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="600.0">
+            <content>
+                <VBox spacing="20" prefWidth="580" prefHeight="480" style="-fx-padding: 20;">
+                    <children>
+                        <Text fx:id="dialogTitle" text="Add Medical History" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+                        <GridPane hgap="10" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="150" />
+                                <ColumnConstraints prefWidth="400" />
+                            </columnConstraints>
+
+                            <children>
+                                <Text text="Patient:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="patientCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300" />
+
+                                <Text text="Blood Type:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="bloodTypeCombo" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200" />
+
+                                <Text text="Height (cm):" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="heightField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="200" />
+
+                                <Text text="Allergies:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextArea fx:id="allergiesField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="400" prefHeight="80"
+                                          promptText="List any allergies (e.g., Penicillin, Peanuts, Dust)"/>
+
+                                <Text text="Medical Conditions:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextArea fx:id="conditionsField" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="400" prefHeight="80"
+                                          promptText="Chronic conditions (e.g., Diabetes, Hypertension, Asthma)"/>
+
+                                <Text text="Past Surgeries:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <TextArea fx:id="pastSurgeriesField" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="400" prefHeight="80"
+                                          promptText="Previous surgeries and procedures"/>
+                            </children>
+                        </GridPane>
+
+                        <HBox spacing="15" alignment="CENTER_RIGHT">
+                            <children>
+                                <Button fx:id="cancelButton" text="Cancel" onAction="#cancel"
+                                        style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 5;" />
+                                <Button fx:id="saveButton" text="Save Medical History" onAction="#saveMedicalHistory"
+                                        style="-fx-background-color: #40D0E0; -fx-text-fill: white; -fx-background-radius: 5;" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SpecializationController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SpecializationRecordController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="706.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="83.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
@@ -48,7 +48,7 @@
                               <Font size="13.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Name" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization Name" textAlignment="CENTER" wrappingWidth="152.80780029296875">
                            <font>
                               <Font size="13.0" />
                            </font>
