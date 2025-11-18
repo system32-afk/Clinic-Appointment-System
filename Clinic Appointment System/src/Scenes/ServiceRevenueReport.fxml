@@ -138,10 +138,5 @@
                <TableColumn fx:id="RevenueColumn" prefWidth="150" text="Revenue" />
            </columns>
        </TableView>
-      <Button fx:id="ScheduleAppointment" layoutX="1049.0" layoutY="179.0" mnemonicParsing="false" onAction="#AddAppointment" style="-fx-background-color: #40D0E0; -fx-background-radius: 10;" text="Export to PDF" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
