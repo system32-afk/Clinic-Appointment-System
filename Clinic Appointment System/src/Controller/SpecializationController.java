@@ -66,7 +66,7 @@ public class SpecializationController {
                     "SELECT " +
                             "s.SpecializationID, " +
                             "s.SpecializationName " +
-                            "FROM specialization s"
+                            "FROM ref_specialization s"
             );
 
             SpecializationRows.getChildren().clear();

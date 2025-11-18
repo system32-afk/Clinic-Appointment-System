@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -224,6 +225,36 @@
                </children>
             </Pane>
 
+             <Pane prefHeight="74.0" prefWidth="200.0">
+                 <children>
+                     <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMedicineManagement" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Medicine Management">
+                         <font>
+                             <Font name="Arial" size="13.0" />
+                         </font>
+                     </Button>
+                     <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@../Assets/medicine.png" />
+                         </image>
+                     </ImageView>
+                 </children>
+             </Pane>
+
+                <Pane prefHeight="74.0" prefWidth="200.0">
+                    <children>
+                        <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMedicalHistory" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Medical History">
+                            <font>
+                                <Font name="Arial" size="13.0" />
+                            </font>
+                        </Button>
+                        <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Assets/medical-history.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+
             <Pane prefHeight="74.0" prefWidth="200.0">
                  <children>
                      <Button layoutX="-18.0" layoutY="13.0" mnemonicParsing="false" onAction="#openPaymentScreen" prefHeight="48.0" prefWidth="190.0" style="-fx-background-color: white;" text="          Process Payment">
@@ -233,7 +264,7 @@
                      </Button>
                      <ImageView fitHeight="48.0" fitWidth="44.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                          <image>
-                             <Image url="@../Assets/dollar.png" />
+                             <Image url="@../Assets/credit-card.png" />
                          </image>
                      </ImageView>
                  </children>
@@ -251,10 +282,23 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
+
       <Button cache="true" cacheHint="QUALITY" layoutX="1008.0" layoutY="96.0" mnemonicParsing="false" onAction="#openScheduleAppointment" prefHeight="28.0" prefWidth="170.0" style="-fx-background-color: #40D0E0; -fx-background-radius: 15;" text="+   New Appointment" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
+      <Button fx:id="Refresh" layoutX="703.0" layoutY="341.0" mnemonicParsing="false" onAction="#initialize" prefHeight="30.0" prefWidth="44.0" style="-fx-background-color: white;">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/Refresh.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
+      <TextField fx:id="SearchBar" layoutX="771.0" layoutY="342.0" prefHeight="38.0" prefWidth="296.0" promptText="Search by patient name or appointment ID" />
+      <Button fx:id="SearchButton" layoutX="1078.0" layoutY="343.0" mnemonicParsing="false" onAction="#Search" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #40D0E0; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
    </children>
 </AnchorPane>

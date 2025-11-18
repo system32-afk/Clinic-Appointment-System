@@ -7,7 +7,7 @@ public class Database {
 
     private static final String URL = "jdbc:mysql://127.0.0.1:3307/medical_consultation_system";
     private static final String USER = "root";
-    private static final String PASSWORD = "Sample";//ENTER YOUR MYSQL PASSWORD HERE
+    private static final String PASSWORD = "2005";//ENTER YOUR MYSQL PASSWORD HERE
 
 
     // Establish connection with database
