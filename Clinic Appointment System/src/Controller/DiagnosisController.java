@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -166,11 +167,37 @@ public class DiagnosisController {
         stage.showAndWait();
     }
 
-    public void DashboardScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "ADMINDashboard");
+    /*
+     ===================SIDE PANEL BUTTONS=========================
+      */
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
     }
 
-    public void AppointmentScreen(ActionEvent e) throws IOException{
-        SceneManager.transition(e,"Appointments");
+    @FXML
+    public void openMedicalHistory(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"MedicalHistory");
+    }
+
+    @FXML
+    public void openDiagnosis(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Diagnosis");
+    }
+
+    @FXML
+    public void openRequestProcedure(MouseEvent e) throws IOException {
+        SceneManager.OpenPopup(e,"RequestProcedure","Reqest for procedure form");
+
+    }
+
+    @FXML
+    public void openPrescription(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"OpenPrescription");
+    }
+
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"DOCTORDashboard");
     }
 }
