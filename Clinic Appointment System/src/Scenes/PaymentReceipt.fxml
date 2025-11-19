@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PaymentReceiptController">
+    <children>
+        <VBox spacing="20" prefWidth="400" prefHeight="500" style="-fx-padding: 25;">
+            <children>
+                <!-- Receipt Header -->
+                <VBox spacing="5" alignment="CENTER">
+                    <children>
+                        <Text text="MEDICAL CONSULTATION SYSTEM" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+                        <Text text="OFFICIAL RECEIPT" style="-fx-font-size: 14; -fx-font-weight: bold;" />
+                        <Text fx:id="receiptDate" style="-fx-font-size: 12; -fx-fill: #666;" />
+                    </children>
+                </VBox>
+
+                <!-- Receipt Details -->
+                <VBox spacing="15" style="-fx-border-color: #ddd; -fx-border-width: 1; -fx-padding: 15; -fx-background-color: #f9f9f9;">
+                    <children>
+                        <VBox spacing="2">
+                            <Text text="Receipt No:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="receiptNumber" style="-fx-font-size: 12;" />
+                        </VBox>
+
+                        <VBox spacing="2">
+                            <Text text="Patient:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="patientName" style="-fx-font-size: 12;" />
+                        </VBox>
+
+                        <VBox spacing="2">
+                            <Text text="Doctor:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="doctorName" style="-fx-font-size: 12;" />
+                        </VBox>
+
+                        <VBox spacing="2">
+                            <Text text="Service:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="serviceName" style="-fx-font-size: 12;" />
+                        </VBox>
+
+                        <VBox spacing="2">
+                            <Text text="Procedure Date:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="procedureDate" style="-fx-font-size: 12;" />
+                        </VBox>
+
+                        <!-- Separator Line -->
+                        <Line endX="350.0" stroke="#ddd" />
+
+                        <VBox spacing="2">
+                            <Text text="Amount Paid:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="amountPaid" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-fill: #40D0E0;" />
+                        </VBox>
+
+                        <VBox spacing="2">
+                            <Text text="Payment Method:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="paymentMethod" style="-fx-font-size: 12;" />
+                        </VBox>
+
+                        <VBox spacing="2">
+                            <Text text="Payment Date:" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                            <Text fx:id="paymentDate" style="-fx-font-size: 12;" />
+                        </VBox>
+                    </children>
+                </VBox>
+
+                <!-- Footer -->
+                <VBox spacing="5" alignment="CENTER">
+                    <children>
+                        <Text text="Thank you!" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="15" alignment="CENTER">
+                    <children>
+                        <Button fx:id="printButton" text="Print Receipt" onAction="#printReceipt"
+                                style="-fx-background-color: #40D0E0; -fx-text-fill: white; -fx-background-radius: 5;" />
+                        <Button fx:id="closeButton" text="Close" onAction="#close"
+                                style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 5;" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
