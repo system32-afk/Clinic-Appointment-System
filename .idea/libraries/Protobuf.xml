@@ -1,10 +1,7 @@
 <component name="libraryTable">
   <library name="Protobuf">
-    <CLASSES>
-      <root url="file://C:/Java Lib/Protobuf" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://C:/Java Lib/Protobuf" recursive="false" />
   </library>
 </component>

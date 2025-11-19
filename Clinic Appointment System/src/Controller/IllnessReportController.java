@@ -30,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 public class IllnessReportController {
 
     @FXML
-    private BarChart casesGraph;
+    private BarChart<String, Number> casesGraph;
 
     @FXML
     private Text Date;

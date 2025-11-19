@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -13,6 +14,20 @@ import javafx.stage.Stage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Optional;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
+import javafx.scene.text.Font;
+
 
 public class AddDoctorController {
 
@@ -43,10 +58,9 @@ public class AddDoctorController {
         ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
         genderComboBox.setItems(genders);
 
-        // Define specialization list
+        // Define specialization list from clinicDB-NOV-15.sql
         String[] specializationNames = {
-            "Cardiology", "Neurology", "Oncology", "Pediatrics", "Orthopedics",
-            "Dermatology", "Psychiatry", "Radiology", "Anesthesiology", "Endocrinology"
+            "General Medicine", "Pediatrics", "Cardiology", "Dermatology", "Endocrinology"
         };
 
         // Insert specializations into database if not exists
@@ -54,25 +68,20 @@ public class AddDoctorController {
             Database.update("INSERT IGNORE INTO specialization (SpecializationName) VALUES (?)", name);
         }
 
-        // Populate specialization combo box from database
+        // Populate specialization combo box with only the predefined specializations
         loadSpecializations();
+
+        // Specializations are limited to predefined ones for Add Doctor
 
         // Generate initial email
         generateEmail();
     }
 
     private void loadSpecializations() {
-        ObservableList<String> specializations = FXCollections.observableArrayList();
-
-        try {
-            ResultSet rs = Database.query("SELECT SpecializationName FROM specialization ORDER BY SpecializationName");
-            while (rs.next()) {
-                specializations.add(rs.getString("SpecializationName"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        // Only display the predefined specializations
+        ObservableList<String> specializations = FXCollections.observableArrayList(
+            "General Medicine", "Pediatrics", "Cardiology", "Dermatology", "Endocrinology"
+        );
         specializationComboBox.setItems(specializations);
     }
 
@@ -101,8 +110,8 @@ public class AddDoctorController {
             }
 
             // Insert doctor into database
-            String insertQuery = "INSERT INTO doctor (FirstName, LastName, Sex, SpecializationID, Contact) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement stmt = Database.getConnection().prepareStatement(insertQuery);
+            String insertQuery = "INSERT INTO doctor (FirstName, LastName, Sex, SpecializationID, ContactNumber) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmt = Database.getConnection().prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
             stmt.setString(3, sex);
@@ -215,7 +224,16 @@ public class AddDoctorController {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        String[] words = name.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalized.append(word.substring(0, 1).toUpperCase())
+                           .append(word.substring(1).toLowerCase())
+                           .append(" ");
+            }
+        }
+        return capitalized.toString().trim();
     }
 
     private void generateEmail() {
@@ -233,4 +251,6 @@ public class AddDoctorController {
             emailField.setText("dr001@doctor.com");
         }
     }
+
+
 }

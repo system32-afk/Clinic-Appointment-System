@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
@@ -37,15 +38,15 @@
                         <Text fill="#00000080" layoutX="15.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sex" />
                         <Text fill="#00000080" layoutX="202.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specialization" />
                         <Text fx:id="sexText" layoutX="15.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Male" />
-                        <Pane layoutX="202.0" layoutY="73.0" prefHeight="18.0" prefWidth="112.0" style="-fx-border-color: #952bff; -fx-background-color: #e6ccff; -fx-background-radius: 10; -fx-border-radius: 10;">
-                           <children>
-                              <Text fx:id="specializationText" fill="#952bff" layoutX="19.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cardiologist" />
-                           </children>
-                        </Pane>
                         <Text fill="#00000080" layoutX="15.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" />
                         <Text fill="#00000080" layoutX="202.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
                         <Text fx:id="contactText" layoutX="15.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0912 345 6789" />
                         <Text fx:id="emailText" layoutX="202.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Example@example.com" />
+                        <MenuButton fx:id="specializationMenuButton" layoutX="202.0" layoutY="72.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="109.0" style="-fx-background-color: #e6ccff; -fx-border-color: #952bff; -fx-background-radius: 10; -fx-border-radius: 10;" text="Specialization">
+                           <font>
+                              <Font name="Arial" size="11.0" />
+                           </font>
+                        </MenuButton>
                      </children>
                   </AnchorPane>
               </items>

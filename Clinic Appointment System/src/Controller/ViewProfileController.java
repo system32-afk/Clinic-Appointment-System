@@ -4,6 +4,8 @@ import Util.Alerts;
 import Util.Database;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -21,8 +23,7 @@ public class ViewProfileController {
     @FXML
     private Text sexText;
 
-    @FXML
-    private Text specializationText;
+
 
     @FXML
     private Text contactText;
@@ -42,32 +43,51 @@ public class ViewProfileController {
     @FXML
     private VBox patientsVBox;
 
+    @FXML
+    private MenuButton specializationMenuButton;
+
     public void setDoctorData(int doctorID) {
         try {
-            // Query doctor details
+            // Query doctor details including multiple specializations
             String query = "SELECT d.DoctorID, d.FirstName, d.LastName, d.Sex, " +
-                          "s.SpecializationName, d.Contact " +
+                          "GROUP_CONCAT(DISTINCT COALESCE(s2.SpecializationName, s1.SpecializationName) ORDER BY COALESCE(s2.SpecializationName, s1.SpecializationName) SEPARATOR ', ') AS Specializations, " +
+                          "d.ContactNumber AS Contact " +
                           "FROM doctor d " +
-                          "LEFT JOIN specialization s ON d.SpecializationID = s.SpecializationID " +
-                          "WHERE d.DoctorID = ?";
+                          "LEFT JOIN specialization s1 ON d.SpecializationID = s1.SpecializationID " +
+                          "LEFT JOIN doctor_specialization ds ON d.DoctorID = ds.DoctorID " +
+                          "LEFT JOIN specialization s2 ON ds.SpecializationID = s2.SpecializationID " +
+                          "WHERE d.DoctorID = ? " +
+                          "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, d.ContactNumber";
         ResultSet rs = Database.query(query, doctorID);
         if (rs != null && rs.next()) {
             // Format Doctor ID
             doctorIDText.setText("DR" + String.format("%03d", rs.getInt("DoctorID")));
-            
+
             // Properly format name with title
             String firstName = rs.getString("FirstName");
             String lastName = rs.getString("LastName");
-            String fullName = "DR. " + firstName + " " + lastName;
+            String fullName = "Dr. " + firstName + " " + lastName;
             nameText.setText(fullName);
-            
+
             // Set other fields
             sexText.setText(rs.getString("Sex"));
-            
-            // Handle null specialization
-            String specialization = rs.getString("SpecializationName");
-            specializationText.setText(specialization != null ? specialization : "N/A");
-            
+
+            // Handle multiple specializations
+            String specializations = rs.getString("Specializations");
+
+            // Populate the MenuButton with specializations
+            specializationMenuButton.getItems().clear();
+            if (specializations != null && !specializations.isEmpty()) {
+                String[] specializationArray = specializations.split(", ");
+                for (String spec : specializationArray) {
+                    MenuItem menuItem = new MenuItem(spec.trim());
+                    specializationMenuButton.getItems().add(menuItem);
+                }
+                specializationMenuButton.setText(specializationArray[0].trim()); // Set the first specialization as default text
+            } else {
+                specializationMenuButton.setText("N/A");
+            }
+
             // Format contact
             String contact = rs.getString("Contact");
             contactText.setText(contact != null ? contact : "N/A");

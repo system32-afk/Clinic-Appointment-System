@@ -10,18 +10,12 @@ import javafx.stage.Stage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestProcedureController {
+public class EditProcedureController {
 
-    @FXML
-    private Text Date;
 
-    @FXML
-    private Text Time;
 
     @FXML
     private ComboBox<String> PatientComboBox;
@@ -31,6 +25,11 @@ public class RequestProcedureController {
 
     @FXML
     private ComboBox<String> ServiceComboBox;
+
+    @FXML
+    private ComboBox<String> StatusComboBox;
+
+
 
     @FXML
     private DatePicker ProcedureDatePicker;
@@ -47,26 +46,21 @@ public class RequestProcedureController {
     private List<Patient> patients = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
     private List<Service> services = new ArrayList<>();
-    private PaymentProcessingController parentController;
 
-    public void setParentController(PaymentProcessingController parent) {
-        this.parentController = parent;
+    private int procedureID;
+    private int appointmentID;
+
+    public void setProcedureID(int procedureID) {
+        this.procedureID = procedureID;
+        loadExistingData();
     }
 
     @FXML
     public void initialize() {
-        updateDateTime();
         loadPatients();
         loadDoctors();
         loadServices();
-    }
-
-    private void updateDateTime() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
-        Date.setText(dateFormatter.format(now));
-        Time.setText(timeFormatter.format(now));
+        loadStatusOptions();
     }
 
     private void loadPatients() {
@@ -130,6 +124,60 @@ public class RequestProcedureController {
         }
     }
 
+    private void loadStatusOptions() {
+        StatusComboBox.getItems().clear();
+        StatusComboBox.getItems().addAll("Pending", "Completed", "Canceled");
+    }
+
+    private void loadExistingData() {
+        String query = "SELECT pr.AppointmentID, pr.ServiceID, pr.ProcedureDate, pr.Notes, pr.Status, " +
+                      "a.PatientID, a.DoctorID " +
+                      "FROM procedurerequest pr " +
+                      "JOIN appointment a ON pr.AppointmentID = a.AppointmentID " +
+                      "WHERE pr.ProcedureID = ?";
+        try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
+            stmt.setInt(1, procedureID);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                appointmentID = rs.getInt("AppointmentID");
+                int patientID = rs.getInt("PatientID");
+                int doctorID = rs.getInt("DoctorID");
+                int serviceID = rs.getInt("ServiceID");
+                LocalDate date = rs.getDate("ProcedureDate").toLocalDate();
+                String notes = rs.getString("Notes");
+                String status = rs.getString("Status");
+
+                // Set values in ComboBoxes
+                for (int i = 0; i < patients.size(); i++) {
+                    if (patients.get(i).id == patientID) {
+                        PatientComboBox.getSelectionModel().select(i);
+                        break;
+                    }
+                }
+                for (int i = 0; i < doctors.size(); i++) {
+                    if (doctors.get(i).id == doctorID) {
+                        DoctorComboBox.getSelectionModel().select(i);
+                        break;
+                    }
+                }
+                for (int i = 0; i < services.size(); i++) {
+                    if (services.get(i).id == serviceID) {
+                        ServiceComboBox.getSelectionModel().select(i);
+                        break;
+                    }
+                }
+
+                ProcedureDatePicker.setValue(date);
+                NotesTextArea.setText(notes);
+                // Map 'Cancelled' to 'Canceled' to match database ENUM
+                String mappedStatus = status.equals("Cancelled") ? "Canceled" : status;
+                StatusComboBox.setValue(mappedStatus);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void submitRequest(ActionEvent event) {
         // Validate inputs
@@ -153,38 +201,31 @@ public class RequestProcedureController {
         int serviceID = services.get(serviceIndex).id;
         LocalDate procedureDate = ProcedureDatePicker.getValue();
         String notes = NotesTextArea.getText();
+        String status = StatusComboBox.getValue();
 
-        // Create appointment first (assuming procedure is linked to appointment)
-        String insertAppointment = "INSERT INTO appointment (PatientID, DoctorID, ReasonForVisit, Date, Time, Status) VALUES (?, ?, ?, ?, '08:00:00', 'Pending')";
-        int appointmentID = Database.insertAndGetKey(insertAppointment, patientID, doctorID, "Procedure Request", procedureDate);
+        // Update appointment
+        String updateAppointment = "UPDATE appointment SET PatientID = ?, DoctorID = ? WHERE AppointmentID = ?";
+        Database.update(updateAppointment, patientID, doctorID, appointmentID);
 
-        if (appointmentID > 0) {
-            // Insert procedure request
-            String insertProcedure = "INSERT INTO procedurerequest (AppointmentID, ServiceID, ProcedureDate, Notes) VALUES (?, ?, ?, ?)";
-            int result = Database.update(insertProcedure, appointmentID, serviceID, procedureDate, notes);
+        // Update procedure request
+        String updateProcedure = "UPDATE procedurerequest SET ServiceID = ?, ProcedureDate = ?, Notes = ?, Status = ? WHERE ProcedureID = ?";
+        int result = Database.update(updateProcedure, serviceID, procedureDate, notes, status, procedureID);
 
-            if (result > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Procedure Requested");
-                alert.setContentText("The procedure has been successfully requested.");
-                alert.showAndWait();
+        if (result > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Procedure Updated");
+            alert.setContentText("The procedure has been successfully updated.");
+            alert.showAndWait();
 
-                // Close the window
-                Stage stage = (Stage) SubmitButton.getScene().getWindow();
-                stage.close();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Request Failed");
-                alert.setContentText("Failed to request the procedure. Please try again.");
-                alert.showAndWait();
-            }
+            // Close the window
+            Stage stage = (Stage) SubmitButton.getScene().getWindow();
+            stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Request Failed");
-            alert.setContentText("Failed to create appointment. Please try again.");
+            alert.setHeaderText("Update Failed");
+            alert.setContentText("Failed to update the procedure. Please try again.");
             alert.showAndWait();
         }
     }

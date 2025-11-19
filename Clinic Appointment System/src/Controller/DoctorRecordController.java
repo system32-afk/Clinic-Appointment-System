@@ -2,7 +2,6 @@ package Controller;
 
 import Util.Alerts;
 import Util.Database;
-import Util.HoverPopup;
 import Util.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -16,9 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -79,18 +76,6 @@ public class DoctorRecordController {
 
     @FXML
     private TableColumn<Doctor, HBox> ActionColumn;
-
-    @FXML
-    private Pane ManagementPane;
-
-    @FXML
-    private Pane RecordsManagementButton;
-
-    @FXML
-    private Pane ReportsButton;
-
-    @FXML
-    private Pane ReportsManagement;
 
     @FXML
     public void initialize() {
@@ -207,23 +192,6 @@ public class DoctorRecordController {
             }
         });
 
-
-        /*
-        ======================== HOVER FEATURE =========================
-         */
-        HoverPopup.attachHoverPopup(
-                RecordsManagementButton,
-                ManagementPane,
-                Duration.seconds(0.3)
-        );
-
-        HoverPopup.attachHoverPopup(
-                ReportsButton,
-                ReportsManagement,
-                Duration.seconds(0.3)
-        );
-
-
         // Load initial data
         loadData();
         updateStatistics();
@@ -246,12 +214,15 @@ public class DoctorRecordController {
         ObservableList<Doctor> doctors = FXCollections.observableArrayList();
 
         String query = "SELECT d.DoctorID, CONCAT(d.FirstName, ' ', d.LastName) AS Name, d.Sex, " +
-                      "s.SpecializationName, d.ContactNumber, " +
+                      "GROUP_CONCAT(DISTINCT COALESCE(s2.SpecializationName, s1.SpecializationName) ORDER BY COALESCE(s2.SpecializationName, s1.SpecializationName) SEPARATOR ', ') AS Specializations, " +
+                      "d.ContactNumber AS Contact, " +
                       "COUNT(DISTINCT a.PatientID) AS Patients " +
                       "FROM doctor d " +
-                      "LEFT JOIN ref_specialization s ON d.SpecializationID = s.SpecializationID " +
+                      "LEFT JOIN specialization s1 ON d.SpecializationID = s1.SpecializationID " +
+                      "LEFT JOIN doctor_specialization ds ON d.DoctorID = ds.DoctorID " +
+                      "LEFT JOIN specialization s2 ON ds.SpecializationID = s2.SpecializationID " +
                       "LEFT JOIN appointment a ON d.DoctorID = a.DoctorID " +
-                      "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, s.SpecializationName, d.ContactNumber";
+                      "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, d.ContactNumber";
 
         try (ResultSet rs = Database.query(query)) {
             if (rs != null) {
@@ -259,22 +230,20 @@ public class DoctorRecordController {
                     int doctorID = rs.getInt("DoctorID");
                     String name = rs.getString("Name");
                     String sex = rs.getString("Sex");
-                    String specialization = rs.getString("SpecializationName");
-                    String contact = rs.getString("ContactNumber");
+                    String specialization = rs.getString("Specializations");
+                    String contact = rs.getString("Contact");
                     int patients = rs.getInt("Patients");
 
                     // Create buttons for Profile and Action
                     Button profileButton = new Button("View");
                     Button editButton = new Button("Edit");
-                    Button deleteButton = new Button("Delete");
 
                     // Add action handlers
                     profileButton.setOnAction(e -> viewDoctorProfile(doctorID));
                     editButton.setOnAction(e -> editDoctor(doctorID));
-                    deleteButton.setOnAction(e -> deleteDoctor(doctorID));
 
                     // Create HBox for action buttons
-                    HBox actionHBox = new HBox(10, profileButton, editButton, deleteButton);
+                    HBox actionHBox = new HBox(10, profileButton, editButton);
                     actionHBox.setAlignment(javafx.geometry.Pos.CENTER);
 
                     Doctor doctor = new Doctor(doctorID, name, sex, specialization, contact, patients, profileButton, actionHBox);
@@ -340,13 +309,16 @@ public class DoctorRecordController {
         ObservableList<Doctor> doctors = FXCollections.observableArrayList();
 
         String query = "SELECT d.DoctorID, CONCAT(d.FirstName, ' ', d.LastName) AS Name, d.Sex, " +
-                      "s.SpecializationName, d.Contact, " +
+                      "GROUP_CONCAT(DISTINCT COALESCE(s2.SpecializationName, s1.SpecializationName) ORDER BY COALESCE(s2.SpecializationName, s1.SpecializationName) SEPARATOR ', ') AS Specializations, " +
+                      "d.ContactNumber AS Contact, " +
                       "COUNT(DISTINCT a.PatientID) AS Patients " +
                       "FROM doctor d " +
-                      "LEFT JOIN specialization s ON d.SpecializationID = s.SpecializationID " +
+                      "LEFT JOIN specialization s1 ON d.SpecializationID = s1.SpecializationID " +
+                      "LEFT JOIN doctor_specialization ds ON d.DoctorID = ds.DoctorID " +
+                      "LEFT JOIN specialization s2 ON ds.SpecializationID = s2.SpecializationID " +
                       "LEFT JOIN appointment a ON d.DoctorID = a.DoctorID " +
-                      "WHERE d.FirstName LIKE ? OR d.LastName LIKE ? OR s.SpecializationName LIKE ? OR CAST(d.DoctorID AS CHAR) LIKE ? " +
-                      "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, s.SpecializationName, d.Contact";
+                      "WHERE d.FirstName LIKE ? OR d.LastName LIKE ? OR COALESCE(s2.SpecializationName, s1.SpecializationName) LIKE ? OR CAST(d.DoctorID AS CHAR) LIKE ? " +
+                      "GROUP BY d.DoctorID, d.FirstName, d.LastName, d.Sex, d.ContactNumber";
 
         try (PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
             String searchLike = "%" + search + "%";
@@ -360,18 +332,16 @@ public class DoctorRecordController {
                 int doctorID = rs.getInt("DoctorID");
                 String name = rs.getString("Name");
                 String sex = rs.getString("Sex");
-                String specialization = rs.getString("SpecializationName");
+                String specialization = rs.getString("Specializations");
                 int patients = rs.getInt("Patients");
 
                 Button profileButton = new Button("View");
                 Button editButton = new Button("Edit");
-                Button deleteButton = new Button("Delete");
                 profileButton.setOnAction(e -> viewDoctorProfile(doctorID));
                 editButton.setOnAction(e -> editDoctor(doctorID));
-                deleteButton.setOnAction(e -> deleteDoctor(doctorID));
 
                 // Create HBox for action buttons
-                HBox actionHBox = new HBox(10, profileButton, editButton, deleteButton);
+                HBox actionHBox = new HBox(10, profileButton, editButton);
                 actionHBox.setAlignment(javafx.geometry.Pos.CENTER);
 
                 Doctor doctor = new Doctor(doctorID, name, sex, specialization, rs.getString("Contact"), patients, profileButton, actionHBox);
@@ -436,20 +406,7 @@ public class DoctorRecordController {
         }
     }
 
-    private void deleteDoctor(int doctorID) {
-        boolean confirm = Alerts.Confirmation("Are you sure you want to delete this doctor? This action cannot be undone.");
-        if (confirm) {
-            try {
-                Database.update("DELETE FROM doctor WHERE DoctorID = ?", doctorID);
-                Alerts.Info("Doctor deleted successfully!");
-                loadData(); // Refresh the table
-                updateStatistics(); // Update statistics after deletion
-            } catch (Exception e) { // catch any exception thrown by Database.update
-                e.printStackTrace();
-                Alerts.Warning("Failed to delete doctor: " + e.getMessage());
-            }
-        }
-    }
+
 
     // Inner class for Doctor data
     public static class Doctor {
