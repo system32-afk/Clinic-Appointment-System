@@ -20,7 +20,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/DOCTORDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/IllnessReport.fxml"));
         primaryStage.setTitle("Clinic Appointment System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
