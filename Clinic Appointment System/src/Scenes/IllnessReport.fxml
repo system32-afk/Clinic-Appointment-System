@@ -102,7 +102,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <ScrollPane layoutX="200.0" layoutY="175.0" prefHeight="1057.0" prefWidth="1026.0">
+      <ScrollPane layoutX="200.0" layoutY="175.0" prefHeight="546.0" prefWidth="1026.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1120.0" prefWidth="1010.0">
                <children>
