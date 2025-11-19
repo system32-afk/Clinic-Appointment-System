@@ -7,9 +7,11 @@ import Util.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -20,12 +22,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IllnessReportController {
 
@@ -111,28 +117,28 @@ public class IllnessReportController {
     }
 
     @FXML
-    private void loadData(){
+    private void loadData() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         StringBuilder top10cases = new StringBuilder();
-        String [] colors = {"#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#F44336"};
-        int i=0; // used for color rotation
+        String[] colors = {"#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#F44336"};
+        int i = 0; // used for color rotation
 
-        if (caseFromFilter.getValue() == null){
+        if (caseFromFilter.getValue() == null) {
             Alerts.Warning("Please select a start date");
             return;
         }
-        if (caseToFilter.getValue() == null){
+        if (caseToFilter.getValue() == null) {
             Alerts.Warning("Please select an end date");
             return;
         }
 
-        LocalDate sd = caseFromFilter.getValue(); //raw date
+        LocalDate sd = caseFromFilter.getValue();
         LocalDate ed = caseToFilter.getValue();
         String startDate = sd.toString();
         String endDate = ed.toString();
 
-
-
+        // List to store all categories so X-axis shows every label
+        List<String> categories = new ArrayList<>();
 
         ResultSet top5 = Database.query(
                 "SELECT i.IllnessName AS Illness, COUNT(*) AS Cases " +
@@ -146,46 +152,50 @@ public class IllnessReportController {
         );
 
         ResultSet top10 = Database.query(
-                "SELECT i.IllnessName AS Illness, COUNT(*) AS Cases " +
+                "SELECT i.IllnessName AS Illness, COUNT(*) AS CaseCount " +
                         "FROM diagnosis d " +
                         "JOIN illness i ON d.illnessID = i.illnessID " +
                         "WHERE d.dateDiagnosed BETWEEN ? AND ? " +
                         "GROUP BY i.IllnessName " +
-                        "ORDER BY Cases DESC " +
-                        "LIMIT 5 OFFSET 5",
+                        "ORDER BY CaseCount DESC " +
+                        "LIMIT 5, 5",
                 startDate, endDate
         );
 
-
+        // ======= Add top 5 to series =======
         try {
-            while(top5.next()){
+            while (top5.next()) {
                 String illness = top5.getString("Illness");
                 int count = top5.getInt("Cases");
 
                 XYChart.Data<String, Number> data = new XYChart.Data<>(illness, count);
                 series.getData().add(data);
 
-                int colorIndex = i;
-                // Set custom bar color
+                categories.add(illness); // store category
+
+                int colorIndex = i % colors.length;
                 data.nodeProperty().addListener((obs, oldNode, newNode) -> {
                     if (newNode != null) {
-                        newNode.setStyle("-fx-bar-fill:"+colors[colorIndex]+";"); // green bar, change color if needed
+                        newNode.setStyle("-fx-bar-fill:" + colors[colorIndex] + ";");
                     }
-
                 });
 
                 i++;
             }
-
-            // Update chart after loop
-            casesGraph.getData().clear();
-            casesGraph.getData().add(series);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             Alerts.Warning("There was an error getting data for the bar chart");
+            e.printStackTrace();
         }
 
+        // ======= Force X-axis to show all labels =======
+        CategoryAxis xAxis = (CategoryAxis) casesGraph.getXAxis();
+        xAxis.setAutoRanging(false);
+        xAxis.setCategories(FXCollections.observableArrayList(categories));
 
+        casesGraph.getData().clear();
+        casesGraph.getData().add(series);
 
+        // ======= Populate other top illnesses (6-10) =======
         try {
             while (top10.next()) {
                 top10cases.append(top10.getString("Illness"))
@@ -195,10 +205,13 @@ public class IllnessReportController {
             }
             otherIllnesses.setText(top10cases.toString());
             System.out.println(top10cases);
-        }catch (SQLException e){
+        } catch (SQLException e) {
+            e.printStackTrace();
             Alerts.Warning("There was an error getting the top 10 data.");
         }
     }
+
+
 
 
     @FXML

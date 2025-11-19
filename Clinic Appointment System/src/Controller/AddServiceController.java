@@ -58,8 +58,28 @@ public class AddServiceController {
             return;
         }
 
-        //if this edits the record @ServiceID has a valid value
-        if(this.ServiceID != -1){
+        /*
+        DUPLICATE NAME CHECK
+        */
+        if (this.ServiceID == -1) {  // Only check duplicates when adding
+            ResultSet rs = Database.query(
+                    "SELECT COUNT(*) AS count FROM service WHERE serviceName = ?",
+                    serviceName
+            );
+
+            try {
+                if (rs.next() && rs.getInt("count") > 0) {
+                    Alerts.Warning("A service with this name already exists.\nPlease choose a different name.");
+                    return;
+                }
+            } catch (SQLException e) {
+                Alerts.Warning("Error checking for duplicate service name.");
+                return;
+            }
+        }
+
+        // If editing
+        if (this.ServiceID != -1) {
             String sql = "UPDATE service SET serviceName = ?, price = ? WHERE serviceID = ?";
             Database.update(sql, serviceName, price, this.ServiceID);
             Alerts.Info("Service record edited successfully!");
@@ -68,16 +88,15 @@ public class AddServiceController {
             return;
         }
 
-
-        // If all good, proceed to insert
+        // If adding new
         String sql = "INSERT INTO service (serviceName, price) VALUES (?, ?)";
         Database.update(sql, serviceName, price);
 
         Alerts.Info("Service added successfully!");
         Stage stage = (Stage) AddService.getScene().getWindow();
         stage.close();
-
     }
+
 
 
 
