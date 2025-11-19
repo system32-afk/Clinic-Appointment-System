@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -87,7 +88,7 @@ public class DOCTORDashboardController {
                     "SELECT a.AppointmentID, " +
                             "CONCAT(p.LastName, ', ', p.FirstName) AS PatientName, " +
                             "CONCAT('Dr. ', d.LastName) AS DoctorName, " +
-                            "Time, Status " +
+                            "a.Time, a.Status " +
                             "FROM appointment a " +
                             "JOIN patient p ON a.PatientID = p.PatientID " +
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
@@ -179,23 +180,9 @@ public class DOCTORDashboardController {
 
 
 
-    public void AppointmentScreen(ActionEvent e) throws IOException{
-        SceneManager.transition(e,"Appointments");
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
     }
 
-        public void openPaymentScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "PaymentProcessing");
-    }
-
-    public void openMedicineManagement(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicineManagement");
-    }
-
-    public void openMedicalHistory(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicalHistory");
-    }
-
-    public void openAppointmentReport(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "AppointmentReport");
-    }
 }
