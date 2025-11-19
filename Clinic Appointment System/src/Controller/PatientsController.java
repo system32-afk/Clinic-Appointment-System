@@ -107,7 +107,7 @@ public class PatientsController {
             //Default Select statement when screen loads
             ResultSet InitialData = Database.query(
                     "SELECT p.PatientID, CONCAT(p.LastName, ', ',p.FirstName) CompleteName," +
-                            "p.Sex, p.Age, p.ContactNumber, CONCAT(p.BuildingNo,' ',p.Street,' ',p.BarangayNo,' ',p.City," +
+                            "p.Sex, p.Age, p.ContactNumber,p.status, CONCAT(p.BuildingNo,' ',p.Street,' ',p.BarangayNo,' ',p.City," +
                             "' ',p.Province) AS Address FROM Patient p"
             );
             loadData(InitialData);
@@ -130,7 +130,7 @@ public class PatientsController {
                 int Age = PatientsData.getInt("Age");
                 String ContactNumber = PatientsData.getString("ContactNumber");
                 String Address = PatientsData.getString("Address");
-
+                String status = PatientsData.getString("Status");
 
 
                 // === Create the GridPane row ===
@@ -148,7 +148,7 @@ public class PatientsController {
                 ColumnConstraints col4 = new ColumnConstraints(80);  // Sex
                 ColumnConstraints col5 = new ColumnConstraints(120);  // Contact Number
                 ColumnConstraints col6 = new ColumnConstraints(250);  // Address
-                ColumnConstraints col7 = new ColumnConstraints(120);
+                ColumnConstraints col7 = new ColumnConstraints(200);
 
                 grid.getColumnConstraints().addAll(col1, col2, col3, col4, col5, col6,col7);
 
@@ -174,25 +174,26 @@ public class PatientsController {
 
 
                 Button Update = new Button();
-                Button Delete = new Button();
+                ComboBox<String> statusCombo = new ComboBox<>();
+                statusCombo.getItems().addAll("Active", "In-Active");
+                statusCombo.setValue(status); // set current status from DB
+
 
                 //set images
                 Image updateImg = new Image(getClass().getResourceAsStream("/Assets/Update.png"));
-                Image deleteImg = new Image(getClass().getResourceAsStream("/Assets/Delete.png"));
+
 
                 //put images in ImageView
                 ImageView updateIcon = new ImageView(updateImg);
-                ImageView deleteIcon = new ImageView(deleteImg);
+
 
                 //resize buttons
                 updateIcon.setFitWidth(16);
                 updateIcon.setFitHeight(16);
-                deleteIcon.setFitWidth(16);
-                deleteIcon.setFitHeight(16);
 
                 //set the images as graphic in the buttons
                 Update.setGraphic(updateIcon);
-                Delete.setGraphic(deleteIcon);
+
 
 
                 Update.setOnAction(event -> {
@@ -219,13 +220,24 @@ public class PatientsController {
                     }
                 });
 
-                Delete.setOnAction(event -> {
-                    if(Alerts.Confirmation("Are you sure you want to delete this patient?")){
-                        Database.update("DELETE FROM patient WHERE Patientid = ?", patientID);
-                        Alerts.Info("Patient deleted successfully!");
-                        initialize(); // refresh the screen
+                statusCombo.setOnAction(event -> {
+                    String newStatus = statusCombo.getValue();
+                    try {
+                        String updateQuery = "UPDATE Patient SET Status = ? WHERE PatientID = ?";
+                        PreparedStatement ps = Database.getConnection().prepareStatement(updateQuery);
+                        ps.setString(1, newStatus);
+                        ps.setInt(2, patientID);
+                        ps.executeUpdate();
+                        ps.close();
+                        Alerts.Info("Status Updated, Patient status has been updated successfully.");
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        Alerts.Warning("Database Error, Failed to update patient status.");
                     }
                 });
+
+
+
 
 
                 // Add to GridPane
@@ -238,7 +250,7 @@ public class PatientsController {
                 // Create an HBox for the action buttons
                 HBox actionButtons = new HBox(8); // spacing = 8px between buttons
                 actionButtons.setAlignment(Pos.CENTER_LEFT); // or CENTER if you prefer
-                actionButtons.getChildren().addAll(Update, Delete);
+                actionButtons.getChildren().addAll(Update,statusCombo);
 
                 grid.add(actionButtons, 6, 0);
 
