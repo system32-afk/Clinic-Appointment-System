@@ -54,6 +54,9 @@ public class DiagnosisController {
     private Label TotalDiagnosisCount;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
     public void initialize() {
         updateDateTime();
 
@@ -67,7 +70,9 @@ public class DiagnosisController {
     }
 
     private void loadData() {
+
         try {
+
             ResultSet DiagnosisData = Database.query(
                     "SELECT " +
                             "d.DiagnosisID, " +

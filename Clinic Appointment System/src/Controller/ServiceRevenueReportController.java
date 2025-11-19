@@ -50,6 +50,19 @@ public class ServiceRevenueReportController {
     private Text Time;
 
     @FXML
+    private Pane ManagementPane;
+
+    @FXML
+    private Pane RecordsManagementButton;
+
+    @FXML
+    private Pane ReportsButton;
+
+    @FXML
+    private Pane ReportsManagement;
+
+
+    @FXML
     private TableView<ServiceRevenueRecord> RevenueTable;
     @FXML
     private TableColumn<ServiceRevenueRecord, String> YearColumn;
@@ -75,26 +88,16 @@ public class ServiceRevenueReportController {
     private Connection conn;
 
     @FXML
-    private Pane ManagementPane;
-
-    @FXML
-    private Pane RecordsManagementButton;
-
-    @FXML
-    private Pane ReportsButton;
-
-    @FXML
-    private Pane ReportsManagement;
-
-    @FXML
     private void initialize() {
 
-        Data = FXCollections.observableArrayList();
+        updateDateTime();
 
-        // Sort unique values
-        Set<String> years = new TreeSet<>();
-        Set<String> months = new TreeSet<>();
-        Set<String> services = new TreeSet<>();
+        Timeline clock = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> updateDateTime())
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+
         /*
         ======================== HOVER FEATURE =========================
          */
@@ -109,6 +112,15 @@ public class ServiceRevenueReportController {
                 ReportsManagement,
                 Duration.seconds(0.3)
         );
+
+
+
+        Data = FXCollections.observableArrayList();
+
+        // Sort unique values
+        Set<String> years = new TreeSet<>();
+        Set<String> months = new TreeSet<>();
+        Set<String> services = new TreeSet<>();
 
         conn = Database.getConnection();
 
@@ -192,6 +204,10 @@ public class ServiceRevenueReportController {
         Time.setText(timeFormatter.format(now));
     }
 
+    public void ViewChart(ActionEvent e) throws IOException {
+        SceneManager.transition(e, "ServiceRevenueLine");
+    }
+
 
     /*
     =============SIDE PANEL FUNCTIONS==========================
@@ -264,9 +280,6 @@ public class ServiceRevenueReportController {
     public void openDashboard(MouseEvent e) throws IOException {
         SceneManager.transition(e,"ADMINDashboard");
     }
-
-
-
 
 
 }

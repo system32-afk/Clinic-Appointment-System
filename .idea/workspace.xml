@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Avoid duplicate in illness and Specialization">
+    <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Service Report Features added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/SpecializationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/SpecializationRecordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/SpecializationRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/SpecializationRecord.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ServiceRevenueLine.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ServiceRevenueLine.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ServiceRevenueReport.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ServiceRevenueReport.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,7 +315,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763471789115</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Avoid duplicate in illness and Specialization">
+      <option name="closed" value="true" />
+      <created>1763471923035</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763471923035</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Service Report Features added">
+      <option name="closed" value="true" />
+      <created>1763482724058</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763482724058</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,6 +359,7 @@
     <MESSAGE value="Diagnose Window Added" />
     <MESSAGE value="Service Revenue Report" />
     <MESSAGE value="Avoid duplicate in illness and Specialization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Avoid duplicate in illness and Specialization" />
+    <MESSAGE value="Service Report Features added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Service Report Features added" />
   </component>
 </project>
