@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -73,13 +74,21 @@ public class DOCTORDashboardController {
     private void loadData() {
         try {
             // Get appointment count
-            ResultSet result = Database.query("SELECT COUNT(*) AS Count FROM patient");
-            if (result.next()) {
-                int appointments = result.getInt("Count");
-                AppointmentCount.setText(String.valueOf(appointments));
-                CompletedAppointments.setText(String.valueOf(appointments));
-                CanceledAppointments.setText(String.valueOf(appointments));
-                InProgressAppointments.setText(String.valueOf(appointments));
+            // Get appointment count
+            ResultSet result = Database.query(
+                    "SELECT " +
+                            "COUNT(*) AS total, " +
+                            "SUM(CASE WHEN status = 'Completed' THEN 1 ELSE 0 END) AS completed, " +
+                            "SUM(CASE WHEN status = 'Canceled' THEN 1 ELSE 0 END) AS canceled, " +
+                            "SUM(CASE WHEN status = 'In-Progress' THEN 1 ELSE 0 END) AS in_progress " +
+                            "FROM appointment"
+            );
+
+            if (result != null && result.next()) {
+                AppointmentCount.setText(String.valueOf(result.getInt("total")));
+                CompletedAppointments.setText(String.valueOf(result.getInt("completed")));
+                CanceledAppointments.setText(String.valueOf(result.getInt("canceled")));
+                InProgressAppointments.setText(String.valueOf(result.getInt("in_progress")));
             }
 
             // Get appointment info
@@ -87,7 +96,7 @@ public class DOCTORDashboardController {
                     "SELECT a.AppointmentID, " +
                             "CONCAT(p.LastName, ', ', p.FirstName) AS PatientName, " +
                             "CONCAT('Dr. ', d.LastName) AS DoctorName, " +
-                            "Time, Status " +
+                            "a.Time, a.Status " +
                             "FROM appointment a " +
                             "JOIN patient p ON a.PatientID = p.PatientID " +
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
@@ -179,23 +188,9 @@ public class DOCTORDashboardController {
 
 
 
-    public void AppointmentScreen(ActionEvent e) throws IOException{
-        SceneManager.transition(e,"Appointments");
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
     }
 
-        public void openPaymentScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "PaymentProcessing");
-    }
-
-    public void openMedicineManagement(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicineManagement");
-    }
-
-    public void openMedicalHistory(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicalHistory");
-    }
-
-    public void openAppointmentReport(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "AppointmentReport");
-    }
 }

@@ -2,17 +2,14 @@ package Controller;
 
 import Util.Database;
 import Util.SceneManager;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -25,6 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import Util.HoverPopup;
+
 
 
 public class ADMINDashboardController {
@@ -51,10 +50,27 @@ public class ADMINDashboardController {
     private VBox statsContainer;
 
     @FXML
+    private Pane ManagementPane;
+
+    @FXML
+    private Pane RecordsManagementButton;
+
+    @FXML
+    private Pane ReportsButton;
+
+    @FXML
+    private Pane ReportsManagement;
+
+    @FXML
     private HBox row = new HBox();
+
+    //for delaying used in the popup when hovering
+    private final PauseTransition hideDelay = new PauseTransition(Duration.millis(200));
+
 
     @FXML
     public void initialize() {
+
         // Set and update time
         updateDateTime();
 
@@ -63,6 +79,24 @@ public class ADMINDashboardController {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+
+
+        /*
+        ======================== HOVER FEATURE =========================
+         */
+        HoverPopup.attachHoverPopup(
+                RecordsManagementButton,
+                ManagementPane,
+                Duration.seconds(0.3)
+        );
+
+        HoverPopup.attachHoverPopup(
+                ReportsButton,
+                ReportsManagement,
+                Duration.seconds(0.3)
+        );
+
+
 
         // Load database data
         loadData();
@@ -73,21 +107,29 @@ public class ADMINDashboardController {
     private void loadData() {
         try {
             // Get appointment count
-            ResultSet result = Database.query("SELECT COUNT(*) AS Count FROM patient");
-            if (result.next()) {
-                int appointments = result.getInt("Count");
-                AppointmentCount.setText(String.valueOf(appointments));
-                CompletedAppointments.setText(String.valueOf(appointments));
-                CanceledAppointments.setText(String.valueOf(appointments));
-                InProgressAppointments.setText(String.valueOf(appointments));
+            ResultSet result = Database.query(
+                    "SELECT " +
+                            "COUNT(*) AS total, " +
+                            "SUM(CASE WHEN status = 'Completed' THEN 1 ELSE 0 END) AS completed, " +
+                            "SUM(CASE WHEN status = 'Canceled' THEN 1 ELSE 0 END) AS canceled, " +
+                            "SUM(CASE WHEN status = 'In-Progress' THEN 1 ELSE 0 END) AS in_progress " +
+                            "FROM appointment"
+            );
+
+            if (result != null && result.next()) {
+                AppointmentCount.setText(String.valueOf(result.getInt("total")));
+                CompletedAppointments.setText(String.valueOf(result.getInt("completed")));
+                CanceledAppointments.setText(String.valueOf(result.getInt("canceled")));
+                InProgressAppointments.setText(String.valueOf(result.getInt("in_progress")));
             }
+
 
             // Get appointment info
             ResultSet Appointment = Database.query(
                     "SELECT a.AppointmentID, " +
                             "CONCAT(p.LastName, ', ', p.FirstName) AS PatientName, " +
                             "CONCAT('Dr. ', d.LastName) AS DoctorName, " +
-                            "Time, Status " +
+                            "a.Time, a.Status " +
                             "FROM appointment a " +
                             "JOIN patient p ON a.PatientID = p.PatientID " +
                             "JOIN doctor d ON a.DoctorID = d.DoctorID"
@@ -179,27 +221,72 @@ public class ADMINDashboardController {
 
 
 
-    public void AppointmentScreen(ActionEvent e) throws IOException{
+    /*
+    =============SIDE PANEL FUNCTIONS==========================
+     */
+    @FXML
+    public void AppointmentScreen(MouseEvent e) throws IOException{
         SceneManager.transition(e,"Appointments");
     }
-
-    public void openPaymentScreen(ActionEvent e) throws IOException {
+    @FXML
+    public void openPaymentScreen(MouseEvent e) throws IOException {
         SceneManager.transition(e, "PaymentProcessing");
     }
-
-    public void openDoctorRecord(ActionEvent e) throws IOException {
+    @FXML
+    public void openDoctorRecord(MouseEvent e) throws IOException {
         SceneManager.transition(e, "DoctorRecord");
     }
-
-    public void openMedicineManagement(ActionEvent e) throws IOException {
+    @FXML
+    public void openMedicineManagement(MouseEvent e) throws IOException {
         SceneManager.transition(e, "MedicineManagement");
     }
-
-    public void openMedicalHistory(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicalHistory");
+    @FXML
+    public void openPatientsRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Patients");
     }
 
-    public void openAppointmentReport(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "AppointmentReport");
+    @FXML
+    public void openServicesRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Services");
     }
+
+
+    @FXML
+    public void openIllnessesRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Illness");
+    }
+
+    @FXML
+    public void openSpecializationRecord(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"SpecializationRecord");
+    }
+
+    @FXML
+    public void openIllnessReport(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"IllnessReport");
+    }
+
+    @FXML
+    public void openAppointmentReport(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"AppointmentReport");
+    }
+
+    @FXML
+    public void openServiceRevenue(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"ServiceRevenueReport");
+    }
+
+    @FXML
+    public void openSpecializationReport(MouseEvent e) throws IOException {
+        //SceneManager.transition(e,"SpecializationReport");
+    }
+
+
+
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
+    }
+
+
 }
