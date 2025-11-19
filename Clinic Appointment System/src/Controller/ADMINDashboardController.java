@@ -107,14 +107,22 @@ public class ADMINDashboardController {
     private void loadData() {
         try {
             // Get appointment count
-            ResultSet result = Database.query("SELECT COUNT(*) AS Count FROM patient");
-            if (result.next()) {
-                int appointments = result.getInt("Count");
-                AppointmentCount.setText(String.valueOf(appointments));
-                CompletedAppointments.setText(String.valueOf(appointments));
-                CanceledAppointments.setText(String.valueOf(appointments));
-                InProgressAppointments.setText(String.valueOf(appointments));
+            ResultSet result = Database.query(
+                    "SELECT " +
+                            "COUNT(*) AS total, " +
+                            "SUM(CASE WHEN status = 'Completed' THEN 1 ELSE 0 END) AS completed, " +
+                            "SUM(CASE WHEN status = 'Canceled' THEN 1 ELSE 0 END) AS canceled, " +
+                            "SUM(CASE WHEN status = 'In-Progress' THEN 1 ELSE 0 END) AS in_progress " +
+                            "FROM appointment"
+            );
+
+            if (result != null && result.next()) {
+                AppointmentCount.setText(String.valueOf(result.getInt("total")));
+                CompletedAppointments.setText(String.valueOf(result.getInt("completed")));
+                CanceledAppointments.setText(String.valueOf(result.getInt("canceled")));
+                InProgressAppointments.setText(String.valueOf(result.getInt("in_progress")));
             }
+
 
             // Get appointment info
             ResultSet Appointment = Database.query(
