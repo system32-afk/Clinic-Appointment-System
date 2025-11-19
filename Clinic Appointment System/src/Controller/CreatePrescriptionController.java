@@ -181,36 +181,33 @@ public class CreatePrescriptionController {
 
         // Insert prescription
         String fullDosage = dosage + ", " + frequency + ", for " + duration + " - " + instructions;
-        try {
-            String insertQuery = "INSERT INTO prescription (AppointmentID, IllnessID, MedicineID, Dosage) VALUES (?, ?, ?, ?)";
-            int result = Database.update(insertQuery, appointmentID, illnessID, medicineID, fullDosage);
-            if (result > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Prescription Created");
-                alert.setContentText("The prescription has been created successfully.");
-                alert.showAndWait();
+        String insertQuery = "INSERT INTO prescription (AppointmentID, IllnessID, MedicineID, Dosage) VALUES (?, ?, ?, ?)";
+        int result = Database.update(insertQuery, appointmentID, illnessID, medicineID, fullDosage);
+        if (result > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Prescription Created");
+            alert.setContentText("The prescription has been created successfully.");
+            alert.showAndWait();
 
-                // Refresh parent tables
-                if (adminParentController != null) {
-                    adminParentController.loadData();
-                    adminParentController.updateStatistics();
-                }
-                if (doctorParentController != null) {
-                    doctorParentController.loadData();
-                    doctorParentController.updateStatistics();
-                }
-
-                // Close dialog
-                Stage stage = (Stage) SubmitButton.getScene().getWindow();
-                stage.close();
+            // Refresh parent tables
+            if (adminParentController != null) {
+                adminParentController.loadData();
+                adminParentController.updateStatistics();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            if (doctorParentController != null) {
+                doctorParentController.loadData();
+                doctorParentController.updateStatistics();
+            }
+
+            // Close dialog
+            Stage stage = (Stage) SubmitButton.getScene().getWindow();
+            stage.close();
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Creation Failed");
-            alert.setContentText("Failed to create the prescription: " + ex.getMessage());
+            alert.setContentText("Failed to create the prescription. Please check the data and try again.");
             alert.showAndWait();
         }
     }

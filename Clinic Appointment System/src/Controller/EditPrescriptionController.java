@@ -210,39 +210,36 @@ public class EditPrescriptionController {
         }
 
         // Update database
-        try {
-            String updatePrescriptionQuery = "UPDATE prescription SET IllnessID = ?, MedicineID = ?, Dosage = ? WHERE PrescriptionID = ?";
-            int prescriptionResult = Database.update(updatePrescriptionQuery, illnessID, medicineID, dosage, prescriptionID);
+        String updatePrescriptionQuery = "UPDATE prescription SET IllnessID = ?, MedicineID = ?, Dosage = ? WHERE PrescriptionID = ?";
+        int prescriptionResult = Database.update(updatePrescriptionQuery, illnessID, medicineID, dosage, prescriptionID);
 
-            String updateAppointmentQuery = "UPDATE appointment SET Status = ? WHERE AppointmentID = ?";
-            int appointmentResult = Database.update(updateAppointmentQuery, status, appointmentID);
+        String updateAppointmentQuery = "UPDATE appointment SET Status = ? WHERE AppointmentID = ?";
+        int appointmentResult = Database.update(updateAppointmentQuery, status, appointmentID);
 
-            if (prescriptionResult > 0 && appointmentResult > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Prescription Updated");
-                alert.setContentText("The prescription has been updated successfully.");
-                alert.showAndWait();
+        if (prescriptionResult > 0 && appointmentResult > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Prescription Updated");
+            alert.setContentText("The prescription has been updated successfully.");
+            alert.showAndWait();
 
-                // Refresh parent table
-                if (adminParentController != null) {
-                    adminParentController.loadData();
-                    adminParentController.updateStatistics();
-                } else if (doctorParentController != null) {
-                    doctorParentController.loadData();
-                    doctorParentController.updateStatistics();
-                }
-
-                // Close dialog
-                Stage stage = (Stage) PatientComboBox.getScene().getWindow();
-                stage.close();
+            // Refresh parent table
+            if (adminParentController != null) {
+                adminParentController.loadData();
+                adminParentController.updateStatistics();
+            } else if (doctorParentController != null) {
+                doctorParentController.loadData();
+                doctorParentController.updateStatistics();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+
+            // Close dialog
+            Stage stage = (Stage) PatientComboBox.getScene().getWindow();
+            stage.close();
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Update Failed");
-            alert.setContentText("Failed to update the prescription: " + ex.getMessage());
+            alert.setContentText("Failed to update the prescription. Please check the data and try again.");
             alert.showAndWait();
         }
     }
