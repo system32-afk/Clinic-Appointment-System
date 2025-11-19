@@ -286,7 +286,7 @@ public class PaymentProcessingController implements Initializable {
 
     @FXML
     public void openSpecializationReport(MouseEvent e) throws IOException {
-        //SceneManager.transition(e,"SpecializationReport");
+        SceneManager.transition(e,"Reports");
     }
 
 
