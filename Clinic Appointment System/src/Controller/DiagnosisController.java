@@ -131,6 +131,8 @@ public class DiagnosisController {
                 row.setPadding(new Insets(8, 20, 8, 40));
                 row.setAlignment(Pos.BASELINE_LEFT);
 
+
+
                 // === Add cells ===
                 Label diagnosisLabel = new Label(String.valueOf(DiagnosisID));
                 Label appointmentLabel = new Label(String.valueOf(AppointmentID));
@@ -217,13 +219,13 @@ public class DiagnosisController {
 
     @FXML
     public void openRequestProcedure(MouseEvent e) throws IOException {
-        SceneManager.transition(e,"DoctorProcedures");
+        SceneManager.OpenPopup(e,"RequestProcedure","Reqest for procedure form");
 
     }
 
     @FXML
     public void openPrescription(MouseEvent e) throws IOException {
-        SceneManager.transition(e,"DoctorPrescription");
+        SceneManager.transition(e,"OpenPrescription");
     }
 
     @FXML

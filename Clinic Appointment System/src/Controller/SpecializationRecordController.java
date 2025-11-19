@@ -1,6 +1,7 @@
 package Controller;
 
 import Util.Database;
+import Util.HoverPopup;
 import Util.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -10,16 +11,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -47,6 +51,18 @@ public class SpecializationRecordController {
     private Label TotalSpecializationCount;
 
     @FXML
+    private Pane ManagementPane;
+
+    @FXML
+    private Pane RecordsManagementButton;
+
+    @FXML
+    private Pane ReportsButton;
+
+    @FXML
+    private Pane ReportsManagement;
+
+    @FXML
     public void initialize() {
         updateDateTime();
 
@@ -55,6 +71,23 @@ public class SpecializationRecordController {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+
+        /*
+        ======================== HOVER FEATURE =========================
+         */
+        HoverPopup.attachHoverPopup(
+                RecordsManagementButton,
+                ManagementPane,
+                Duration.seconds(0.3)
+        );
+
+        HoverPopup.attachHoverPopup(
+                ReportsButton,
+                ReportsManagement,
+                Duration.seconds(0.3)
+        );
+
+
 
         loadData();
     }
@@ -86,6 +119,17 @@ public class SpecializationRecordController {
                 Label idLabel = new Label(String.valueOf(SpecializationID));
                 Label nameLabel = new Label(SpecializationName);
 
+                // === Update ====
+                Image editImage = new Image(getClass().getResourceAsStream("/Assets/Update.png"));
+                ImageView editIcon = new ImageView(editImage);
+                editIcon.setFitHeight(20);
+                editIcon.setFitWidth(20);
+
+                Button edit =  new Button();
+                edit.setGraphic(editIcon);
+                edit.setStyle("-fx-background-color: transparent;");
+                edit.setOnAction(event -> editSpecialization(SpecializationID));
+
                 // Adjust margins
                 idLabel.setPrefWidth(100);
                 nameLabel.setPrefWidth(200);
@@ -93,7 +137,7 @@ public class SpecializationRecordController {
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                row.getChildren().addAll(idLabel, nameLabel, spacer);
+                row.getChildren().addAll(idLabel, nameLabel, edit, spacer);
 
                 // === Add separator line below each row ===
                 Separator separator = new Separator();
@@ -134,44 +178,83 @@ public class SpecializationRecordController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(specializationName -> {
-            specializationName = specializationName.trim();
-
-            if(specializationName.isEmpty()) {
+            if(specializationName.trim().isEmpty()) {
                 statusLabel.setText("Specialization name cannot be empty");
                 statusLabel.setStyle("-fx-text-fill: red;");
                 return;
             }
 
-            String checkQuery = "SELECT * FROM ref_specialization WHERE SpecializationName = ?";
-            ResultSet rs = Database.query(checkQuery, specializationName);
+            String query = "INSERT INTO ref_specialization (SpecializationName) VALUES (?)";
+            Database.update(query, specializationName);
 
-            try {
-                if(rs.next()) {
-                    statusLabel.setText("Specialization already exists");
-                    statusLabel.setStyle("-fx-text-fill: red;");
-                } else {
+            loadData();
+            statusLabel.setText("Specialization added successfully");
+            statusLabel.setStyle("-fx-text-fill: green;");
 
-                    String query = "INSERT INTO ref_specialization (SpecializationName) VALUES (?)";
-                    Database.update(query, specializationName);
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(e-> statusLabel.setVisible(false));
+            pause.play();
+        });
 
+    }
+
+    private void editSpecialization(int SpecializationID) {
+
+        try {
+            String sql = "SELECT SpecializationName FROM ref_specialization WHERE SpecializationID = ?";
+            PreparedStatement ps = Database.getConnection().prepareStatement(sql);
+            ps.setInt(1, SpecializationID);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                Stage editStage = new Stage();
+                editStage.setTitle("Edit Specialization");
+
+                GridPane grid = new GridPane();
+                grid.setPadding(new  Insets(20));
+                grid.setVgap(8);
+                grid.setHgap(8);
+
+                Label nameLabel = new Label("Specialization Name: ");
+                TextField nameField = new TextField(rs.getString("SpecializationName"));
+
+                Button save = new Button("Save");
+                save.setOnAction(e-> {
+                    updateSpecialization(SpecializationID, nameField.getText());
+                    editStage.close();
                     loadData();
-                    statusLabel.setText("Specialization added successfully");
-                    statusLabel.setStyle("-fx-text-fill: green;");
+                });
 
-                    PauseTransition pause = new PauseTransition(Duration.seconds(3));
-                    pause.setOnFinished(e-> statusLabel.setVisible(false));
-                    pause.play();
+                grid.add(nameLabel, 0, 0);
+                grid.add(nameField, 1, 0);
+                grid.add(save, 1, 1);
 
-                }
+                Scene scene = new Scene(grid);
+                editStage.setScene(scene);
+                editStage.initModality(Modality.APPLICATION_MODAL);
+                editStage.showAndWait();
 
-            } catch (Exception e) {
-                statusLabel.setText("Database error: could not add Specialization");
-                statusLabel.setStyle("-fx-text-fill: red;");
-                e.printStackTrace();
+
+
             }
 
 
-        });
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void updateSpecialization(int SpecializationID, String SpecializationName) {
+        String sql = "UPDATE ref_specialization SET SpecializationName = ? WHERE SpecializationID = ?";
+        try(PreparedStatement ps = Database.getConnection().prepareStatement(sql)) {
+            ps.setString(1, SpecializationName);
+            ps.setInt(2, SpecializationID);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
