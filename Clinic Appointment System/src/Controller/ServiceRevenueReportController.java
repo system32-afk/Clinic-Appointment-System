@@ -90,6 +90,11 @@ public class ServiceRevenueReportController {
     @FXML
     private void initialize() {
 
+        YearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        MonthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
+        ServiceColumn.setCellValueFactory(new PropertyValueFactory<>("service"));
+        RevenueColumn.setCellValueFactory(new PropertyValueFactory<>("revenue"));
+
         updateDateTime();
 
         Timeline clock = new Timeline(
@@ -112,8 +117,6 @@ public class ServiceRevenueReportController {
                 ReportsManagement,
                 Duration.seconds(0.3)
         );
-
-
 
         Data = FXCollections.observableArrayList();
 
@@ -159,9 +162,15 @@ public class ServiceRevenueReportController {
         monthFilter.getItems().addAll(FXCollections.observableArrayList(months));
         serviceFilter.getItems().addAll(FXCollections.observableArrayList(services));
 
+        yearFilter.valueProperty().addListener((obs,  oldVal, newVal) -> updateFilter());
+        monthFilter.valueProperty().addListener((obs,  oldVal, newVal) -> updateFilter());
+        serviceFilter.valueProperty().addListener((obs,  oldVal, newVal) -> updateFilter());
+
         // Filter Data
         FilteredData = new FilteredList<>(Data, record -> true);
         RevenueTable.setItems(FilteredData);
+
+        updateTotalRevenue();
 
     }
 
@@ -189,7 +198,7 @@ public class ServiceRevenueReportController {
             total += record.getRevenue();
         }
 
-        totalRevenueLabel.setText(String.format("Total Revenue: ₱%,.2f", total));
+        totalRevenueLabel.setText(String.format("₱%,.2f", total));
 
     }
 

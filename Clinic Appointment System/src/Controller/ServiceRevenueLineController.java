@@ -153,6 +153,11 @@ public class ServiceRevenueLineController {
             monthFilter.getItems().addAll(FXCollections.observableArrayList(months));
             serviceFilter.getItems().addAll(FXCollections.observableArrayList(services));
 
+            yearFilter.valueProperty().addListener((obs,  oldVal, newVal) -> updateFilter());
+            monthFilter.valueProperty().addListener((obs,  oldVal, newVal) -> updateFilter());
+            serviceFilter.valueProperty().addListener((obs,  oldVal, newVal) -> updateFilter());
+
+
             // Filter Data
             FilteredData = new FilteredList<>(Data, record -> true);
 

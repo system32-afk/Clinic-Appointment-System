@@ -259,6 +259,17 @@
                </Pane>
            </children>
        </Pane>
+      <Rectangle arcHeight="22.0" arcWidth="22.0" fill="#f7f7f7" height="102.0" layoutX="648.0" layoutY="104.0" stroke="#525252" strokeLineCap="ROUND" strokeType="INSIDE" width="200.0" />
+      <Text fontSmoothingType="LCD" layoutX="666.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue" wrappingWidth="139.635">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="totalRevenueLabel" layoutX="666.0" layoutY="162.0" prefHeight="21.0" prefWidth="167.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
 
    </children>
 </AnchorPane>
