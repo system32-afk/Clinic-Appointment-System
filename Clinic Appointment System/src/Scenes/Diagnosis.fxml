@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DiagnosisController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="706.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="83.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="83.0" layoutX="200.0" stroke="#bebebe" strokeType="INSIDE" width="1026.0" />
+
+      <Text fx:id="Date" layoutX="224.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+
+      <Text fx:id="Time" layoutX="224.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+
+      <Text fontSmoothingType="LCD" layoutX="240.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diagnosis Management" wrappingWidth="394.635">
+         <font>
+            <Font name="Arial" size="27.0" />
+         </font>
+      </Text>
+
+                  <ScrollPane fx:id="scrollPane" layoutX="240.0" layoutY="381.0" prefHeight="311.0" prefWidth="973.0" style="-fx-background-radius: 31; -fx-border-radius: 31; -fx-background-color: #ffffff;">
+         <content>
+            <VBox fx:id="DiagnosisTBL" prefHeight="351.0" prefWidth="946.0" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-color: #dddddd;">
+               <children>
+                  <HBox prefHeight="46.0" prefWidth="914.0" style="-fx-spacing: 50;">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diagnosis ID" textAlignment="CENTER" wrappingWidth="90.80780029296875">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID" textAlignment="CENTER" wrappingWidth="99.80780029296875">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="174.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient" textAlignment="CENTER" wrappingWidth="107.80780029296875">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="174.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Illness" textAlignment="CENTER" wrappingWidth="107.80780029296875">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="338.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Diagnosed" textAlignment="CENTER" wrappingWidth="113.80780029296875">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <VBox fx:id="DiagnosisRows" prefHeight="280.0" prefWidth="874.0" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+
+      <Rectangle arcHeight="22.0" arcWidth="22.0" fill="#f7f7f7" height="145.0" layoutX="254.0" layoutY="164.0" stroke="#525252" strokeLineCap="ROUND" strokeType="INSIDE" width="200.0" />
+      <ImageView fitHeight="56.0" fitWidth="56.0" layoutX="385.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Diagnosis.png" />
+         </image>
+      </ImageView>
+
+      <Text layoutX="268.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Diagnosis" wrappingWidth="126.73779296875">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Text>
+
+      <Label fx:id="TotalDiagnosisCount" layoutX="343.0" layoutY="237.0" text="0" textAlignment="CENTER">
+         <font>
+            <Font name="Arial" size="42.0" />
+         </font>
+      </Label>
+
+      <VBox fx:id="sidepanel" layoutY="79.0" prefHeight="429.0" prefWidth="200.0" style="-fx-padding: 15; -fx-spacing: 5;">
+         <children>
+            <Pane onMouseClicked="#openDashboard" prefHeight="60.0" prefWidth="197.0">
+               <children>
+                  <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/dashboard.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="25.0" layoutY="25.0" onMouseClicked="#openMedicalHistory" prefHeight="60.0" prefWidth="197.0">
+               <children>
+                  <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/medical-history.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medical histories" wrappingWidth="72.2900390625">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="25.0" layoutY="90.0" onMouseClicked="#openDiagnosis" prefHeight="60.0" prefWidth="197.0">
+               <children>
+                  <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/Diagnosis.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diagnosis">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="25.0" layoutY="155.0" onMouseClicked="#openPrescription" prefHeight="60.0" prefWidth="197.0">
+               <children>
+                  <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/Prescription.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prescription">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="25.0" layoutY="220.0" onMouseClicked="#openRequestProcedure" prefHeight="60.0" prefWidth="197.0">
+               <children>
+                  <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/robotic-surgery.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="85.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procedures">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <Text layoutX="240.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diagnosis">
+         <font>
+            <Font name="Arial" size="19.0" />
+         </font>
+      </Text>
+      <Text fill="#868686" fontSmoothingType="LCD" layoutX="240.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create / Update Diagnosis" wrappingWidth="345.2349755859375">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="addDiagnosisButton" cache="true" cacheHint="QUALITY" layoutX="1013.0" layoutY="107.0" mnemonicParsing="false" onAction="#AddDiagnosis" prefHeight="28.0" prefWidth="170.0" style="-fx-background-color: BLACK; -fx-background-radius: 15;" text="+ Create Diagnosis" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+
+       <TextField fx:id="searchField" layoutX="881.0" layoutY="342.0" onKeyReleased="#handleSearch" prefHeight="25.0" prefWidth="170.0" promptText="Search by ID, Name, or Illness..." />
+       <Button fx:id="SearchButton" layoutX="1066.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #40D0E0; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
+       
+
+       <Label fx:id="statusLabel" layoutX="1006.0" layoutY="380.0" style="-fx-test-fill: green; -fx-font-size: 13px;" text="" />
+      <Pane fx:id="logoPane" prefHeight="83.0" prefWidth="207.0">
+         <children>
+            <ImageView fitHeight="83.0" fitWidth="76.0" layoutX="6.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/DocIcon.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="93.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clinic Appointment System" wrappingWidth="100.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+         </children></Pane>
+
+      <Pane layoutY="622.0" onMouseClicked="#logout" prefHeight="83.0" prefWidth="200.0" style="-fx-border-color: gray;">
+         <children>
+            <ImageView fitHeight="57.0" fitWidth="50.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/logout.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="100.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logout" wrappingWidth="56.999999999999886">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+
+
+   </children>
+</AnchorPane>
