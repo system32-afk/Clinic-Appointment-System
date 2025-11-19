@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class SpecializationController {
+public class SpecializationRecordController {
 
     @FXML
     private Text Date;
