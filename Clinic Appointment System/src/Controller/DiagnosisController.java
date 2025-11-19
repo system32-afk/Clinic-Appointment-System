@@ -24,6 +24,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.TextField;
+
 
 import java.io.IOException;
 import java.sql.ResultSet;
