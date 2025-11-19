@@ -58,4 +58,23 @@ public class Database {
         }
     }
 
+    // Run INSERT and return generated key
+    public static int insertAndGetKey(String sql, Object... params) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+            for (int i = 0; i < params.length; i++) {
+                pst.setObject(i + 1, params[i]);
+            }
+            pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return -1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 }

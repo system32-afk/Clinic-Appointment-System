@@ -47,6 +47,11 @@ public class RequestProcedureController {
     private List<Patient> patients = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
     private List<Service> services = new ArrayList<>();
+    private PaymentProcessingController parentController;
+
+    public void setParentController(PaymentProcessingController parent) {
+        this.parentController = parent;
+    }
 
     @FXML
     public void initialize() {
@@ -151,44 +156,35 @@ public class RequestProcedureController {
 
         // Create appointment first (assuming procedure is linked to appointment)
         String insertAppointment = "INSERT INTO appointment (PatientID, DoctorID, ReasonForVisit, Date, Time, Status) VALUES (?, ?, ?, ?, '08:00:00', 'Pending')";
-        try {
-            int appointmentID = Database.insertAndGetKey(insertAppointment, patientID, doctorID, "Procedure Request", procedureDate);
+        int appointmentID = Database.insertAndGetKey(insertAppointment, patientID, doctorID, "Procedure Request", procedureDate);
 
-            if (appointmentID > 0) {
-                // Insert procedure request
-                String insertProcedure = "INSERT INTO procedurerequest (AppointmentID, ServiceID, ProcedureDate, Notes) VALUES (?, ?, ?, ?)";
-                int result = Database.update(insertProcedure, appointmentID, serviceID, procedureDate, notes);
+        if (appointmentID > 0) {
+            // Insert procedure request
+            String insertProcedure = "INSERT INTO procedurerequest (AppointmentID, ServiceID, ProcedureDate, Notes) VALUES (?, ?, ?, ?)";
+            int result = Database.update(insertProcedure, appointmentID, serviceID, procedureDate, notes);
 
-                if (result > 0) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Procedure Requested");
-                    alert.setContentText("The procedure has been successfully requested.");
-                    alert.showAndWait();
+            if (result > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Procedure Requested");
+                alert.setContentText("The procedure has been successfully requested.");
+                alert.showAndWait();
 
-                    // Close the window
-                    Stage stage = (Stage) SubmitButton.getScene().getWindow();
-                    stage.close();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Request Failed");
-                    alert.setContentText("Failed to request the procedure. Please try again.");
-                    alert.showAndWait();
-                }
+                // Close the window
+                Stage stage = (Stage) SubmitButton.getScene().getWindow();
+                stage.close();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Request Failed");
-                alert.setContentText("Failed to create appointment. Please try again.");
+                alert.setContentText("Failed to request the procedure. Please try again.");
                 alert.showAndWait();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Database Error");
-            alert.setContentText("An error occurred while processing the request: " + e.getMessage());
+            alert.setHeaderText("Request Failed");
+            alert.setContentText("Failed to create appointment. Please try again.");
             alert.showAndWait();
         }
     }

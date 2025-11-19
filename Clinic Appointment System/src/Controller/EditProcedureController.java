@@ -205,36 +205,27 @@ public class EditProcedureController {
 
         // Update appointment
         String updateAppointment = "UPDATE appointment SET PatientID = ?, DoctorID = ? WHERE AppointmentID = ?";
-        try {
-            Database.update(updateAppointment, patientID, doctorID, appointmentID);
+        Database.update(updateAppointment, patientID, doctorID, appointmentID);
 
-            // Update procedure request
-            String updateProcedure = "UPDATE procedurerequest SET ServiceID = ?, ProcedureDate = ?, Notes = ?, Status = ? WHERE ProcedureID = ?";
-            int result = Database.update(updateProcedure, serviceID, procedureDate, notes, status, procedureID);
+        // Update procedure request
+        String updateProcedure = "UPDATE procedurerequest SET ServiceID = ?, ProcedureDate = ?, Notes = ?, Status = ? WHERE ProcedureID = ?";
+        int result = Database.update(updateProcedure, serviceID, procedureDate, notes, status, procedureID);
 
-            if (result > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Procedure Updated");
-                alert.setContentText("The procedure has been successfully updated.");
-                alert.showAndWait();
+        if (result > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Procedure Updated");
+            alert.setContentText("The procedure has been successfully updated.");
+            alert.showAndWait();
 
-                // Close the window
-                Stage stage = (Stage) SubmitButton.getScene().getWindow();
-                stage.close();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Update Failed");
-                alert.setContentText("Failed to update the procedure. Please try again.");
-                alert.showAndWait();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            // Close the window
+            Stage stage = (Stage) SubmitButton.getScene().getWindow();
+            stage.close();
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Database Error");
-            alert.setContentText("An error occurred while updating the procedure: " + e.getMessage());
+            alert.setHeaderText("Update Failed");
+            alert.setContentText("Failed to update the procedure. Please try again.");
             alert.showAndWait();
         }
     }
