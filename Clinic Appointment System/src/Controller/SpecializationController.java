@@ -11,15 +11,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -115,6 +119,17 @@ public class SpecializationController {
                 Label idLabel = new Label(String.valueOf(SpecializationID));
                 Label nameLabel = new Label(SpecializationName);
 
+                // === Update ====
+                Image editImage = new Image(getClass().getResourceAsStream("/Assets/Update.png"));
+                ImageView editIcon = new ImageView(editImage);
+                editIcon.setFitHeight(20);
+                editIcon.setFitWidth(20);
+
+                Button edit =  new Button();
+                edit.setGraphic(editIcon);
+                edit.setStyle("-fx-background-color: transparent;");
+                edit.setOnAction(event -> editSpecialization(SpecializationID));
+
                 // Adjust margins
                 idLabel.setPrefWidth(100);
                 nameLabel.setPrefWidth(200);
@@ -122,7 +137,7 @@ public class SpecializationController {
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                row.getChildren().addAll(idLabel, nameLabel, spacer);
+                row.getChildren().addAll(idLabel, nameLabel, edit, spacer);
 
                 // === Add separator line below each row ===
                 Separator separator = new Separator();
@@ -180,6 +195,66 @@ public class SpecializationController {
             pause.setOnFinished(e-> statusLabel.setVisible(false));
             pause.play();
         });
+
+    }
+
+    private void editSpecialization(int SpecializationID) {
+
+        try {
+            String sql = "SELECT SpecializationName FROM ref_specialization WHERE SpecializationID = ?";
+            PreparedStatement ps = Database.getConnection().prepareStatement(sql);
+            ps.setInt(1, SpecializationID);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                Stage editStage = new Stage();
+                editStage.setTitle("Edit Specialization");
+
+                GridPane grid = new GridPane();
+                grid.setPadding(new  Insets(20));
+                grid.setVgap(8);
+                grid.setHgap(8);
+
+                Label nameLabel = new Label("Specialization Name: ");
+                TextField nameField = new TextField(rs.getString("SpecializationName"));
+
+                Button save = new Button("Save");
+                save.setOnAction(e-> {
+                    updateSpecialization(SpecializationID, nameField.getText());
+                    editStage.close();
+                    loadData();
+                });
+
+                grid.add(nameLabel, 0, 0);
+                grid.add(nameField, 1, 0);
+                grid.add(save, 1, 1);
+
+                Scene scene = new Scene(grid);
+                editStage.setScene(scene);
+                editStage.initModality(Modality.APPLICATION_MODAL);
+                editStage.showAndWait();
+
+
+
+            }
+
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void updateSpecialization(int SpecializationID, String SpecializationName) {
+        String sql = "UPDATE ref_specialization SET SpecializationName = ? WHERE SpecializationID = ?";
+        try(PreparedStatement ps = Database.getConnection().prepareStatement(sql)) {
+            ps.setString(1, SpecializationName);
+            ps.setInt(2, SpecializationID);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

@@ -6,14 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Diagnosis Search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/IllnessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/IllnessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/SpecializationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/SpecializationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Diagnosis.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/Diagnosis.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Util/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/MedicalHistoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/MedicalHistoryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/PatientsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/PatientsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DiagnosisController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DiagnosisController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/IllnessController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/IllnessController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/Diagnosis.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/Diagnosis.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/MedicalHistory.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/MedicalHistory.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -358,7 +356,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763539186844</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Diagnosis Search">
+      <option name="closed" value="true" />
+      <created>1763541036982</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763541036982</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

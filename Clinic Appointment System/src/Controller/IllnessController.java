@@ -11,15 +11,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -116,6 +120,18 @@ public class IllnessController {
                 Label idLabel = new Label(String.valueOf(IllnessID));
                 Label nameLabel = new Label(IllnessName);
 
+                // === Update ====
+                Image editImage = new Image(getClass().getResourceAsStream("/Assets/Update.png"));
+                ImageView editIcon = new ImageView(editImage);
+                editIcon.setFitHeight(20);
+                editIcon.setFitWidth(20);
+
+                Button edit =  new Button();
+                edit.setGraphic(editIcon);
+                edit.setStyle("-fx-background-color: transparent;");
+                edit.setOnAction(event -> editIllness(IllnessID));
+
+
                 // Adjust margins
                 idLabel.setPrefWidth(100);
                 nameLabel.setPrefWidth(200);
@@ -123,7 +139,7 @@ public class IllnessController {
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                row.getChildren().addAll(idLabel, nameLabel, spacer);
+                row.getChildren().addAll(idLabel, nameLabel, edit, spacer);
 
                 // === Add separator line below each row ===
                 Separator separator = new Separator();
@@ -139,6 +155,66 @@ public class IllnessController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void editIllness(int IllnessID) {
+
+        try {
+            String sql = "SELECT IllnessName FROM illness WHERE IllnessID = ?";
+            PreparedStatement ps = Database.getConnection().prepareStatement(sql);
+            ps.setInt(1, IllnessID);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                Stage editStage = new Stage();
+                editStage.setTitle("Edit Illness");
+
+                GridPane grid = new GridPane();
+                grid.setPadding(new  Insets(20));
+                grid.setVgap(8);
+                grid.setHgap(8);
+
+                Label nameLabel = new Label("Illness Name: ");
+                TextField nameField = new TextField(rs.getString("IllnessName"));
+
+                Button save = new Button("Save");
+                save.setOnAction(e-> {
+                    updateIllness(IllnessID, nameField.getText());
+                    editStage.close();
+                    loadData();
+                });
+
+                grid.add(nameLabel, 0, 0);
+                grid.add(nameField, 1, 0);
+                grid.add(save, 1, 1);
+
+                Scene scene = new Scene(grid);
+                editStage.setScene(scene);
+                editStage.initModality(Modality.APPLICATION_MODAL);
+                editStage.showAndWait();
+
+
+
+            }
+
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void updateIllness(int IllnessID, String IllnessName) {
+        String sql = "UPDATE illness SET IllnessName = ? WHERE IllnessID = ?";
+        try(PreparedStatement ps = Database.getConnection().prepareStatement(sql)) {
+            ps.setString(1, IllnessName);
+            ps.setInt(2, IllnessID);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void updateDateTime() {
