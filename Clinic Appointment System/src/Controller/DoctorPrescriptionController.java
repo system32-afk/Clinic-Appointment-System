@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
 
 public class DoctorPrescriptionController {
@@ -259,6 +260,9 @@ public class DoctorPrescriptionController {
             e.printStackTrace();
         }
 
+        // Sort prescriptions by prescriptionID ascending
+        prescriptions.sort(Comparator.comparingInt(Prescription::getPrescriptionID));
+
         PrescriptionTable.setItems(prescriptions);
     }
 
@@ -391,10 +395,10 @@ public class DoctorPrescriptionController {
     private void createPrescription(ActionEvent e) throws IOException {
         // Load the FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/CreatePrescription.fxml"));
+        CreatePrescriptionController controller = new CreatePrescriptionController();
+        loader.setController(controller);
         Parent root = loader.load();
 
-        // Get the controller
-        CreatePrescriptionController controller = loader.getController();
         controller.setDoctorParentController(this);
 
         // Create dialog stage
@@ -410,13 +414,37 @@ public class DoctorPrescriptionController {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/ViewPrescription.fxml"));
+            ViewPrescriptionController controller = new ViewPrescriptionController();
+            loader.setController(controller);
             Parent root = loader.load();
 
-            // Get the controller
-            ViewPrescriptionController controller = loader.getController();
+            // Fetch prescription details
+            String query = "SELECT p.PrescriptionID, CONCAT(pt.FirstName, ' ', pt.LastName) AS Patient, " +
+                          "CONCAT(d.FirstName, ' ', d.LastName) AS Doctor, i.IllnessName AS Illness, " +
+                          "m.MedicineName AS Medicine, p.Dosage, a.Status " +
+                          "FROM prescription p " +
+                          "JOIN appointment a ON p.AppointmentID = a.AppointmentID " +
+                          "JOIN patient pt ON a.PatientID = pt.PatientID " +
+                          "JOIN doctor d ON a.DoctorID = d.DoctorID " +
+                          "JOIN illness i ON p.IllnessID = i.IllnessID " +
+                          "JOIN medicine m ON p.MedicineID = m.MedicineID " +
+                          "WHERE p.PrescriptionID = ?";
 
-            // Set prescription ID in the controller
-            controller.setPrescriptionData(prescriptionID);
+            try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
+                stmt.setInt(1, prescriptionID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    String patient = rs.getString("Patient");
+                    String doctor = rs.getString("Doctor");
+                    String illness = rs.getString("Illness");
+                    String medicine = rs.getString("Medicine");
+                    String dosage = rs.getString("Dosage");
+                    String status = rs.getString("Status");
+
+                    // Set prescription ID in the controller
+                    controller.setPrescriptionData(prescriptionID);
+                }
+            }
 
             // Create dialog stage
             Stage dialogStage = new Stage();
@@ -433,6 +461,13 @@ public class DoctorPrescriptionController {
             alert.setHeaderText("Failed to load view");
             alert.setContentText("Could not load the prescription view: " + e.getMessage());
             alert.showAndWait();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load prescription details");
+            alert.setContentText("Could not retrieve prescription details: " + e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -440,10 +475,10 @@ public class DoctorPrescriptionController {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditPrescription.fxml"));
+            EditPrescriptionController controller = new EditPrescriptionController();
+            loader.setController(controller);
             Parent root = loader.load();
 
-            // Get the controller
-            EditPrescriptionController controller = loader.getController();
             controller.setDoctorParentController(this);
 
             // Fetch current prescription data

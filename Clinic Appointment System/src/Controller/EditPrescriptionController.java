@@ -117,35 +117,27 @@ public class EditPrescriptionController {
         DoctorComboBox.setValue(doctor);
         ServiceComboBox.setValue(illness);
         DoctorComboBox1.setValue(medicine);
+        ServiceComboBox1111.setValue(status);
 
         // Parse dosage string
         parseDosage(dosage);
     }
 
     private void parseDosage(String dosage) {
-        // Parse dosage like "1 Tablet 2x/day for 1 week note"
-        String[] parts = dosage.split(" for ");
-        if (parts.length >= 2) {
-            String beforeFor = parts[0];
-            String afterFor = parts[1];
-
-            String[] beforeParts = beforeFor.split(" ");
-            if (beforeParts.length >= 3) {
-                String quantity = beforeParts[0] + " " + beforeParts[1];
-                String frequency = beforeParts[2].replace("/", " a ");
-
+        // Parse dosage like "1 Tablet 2/day for 1 week note"
+        String[] parts = dosage.split(" ");
+        if (parts.length >= 6) {
+            String quantity = parts[0] + " " + parts[1]; // e.g., "1 Tablet"
+            String frequency = parts[2].replace("/", " / "); // e.g., "2 / day"
+            if (parts[3].equals("for")) {
+                String duration = parts[4] + " " + parts[5]; // e.g., "1 week"
                 ServiceComboBox1.setValue(quantity);
                 ServiceComboBox11.setValue(frequency);
-            }
-
-            String[] afterParts = afterFor.split(" ");
-            if (afterParts.length >= 2) {
-                String duration = afterParts[0] + " " + afterParts[1];
                 ServiceComboBox111.setValue(duration);
 
                 // Instructions if present
-                if (afterParts.length > 2) {
-                    String instructions = String.join(" ", java.util.Arrays.copyOfRange(afterParts, 2, afterParts.length));
+                if (parts.length > 6) {
+                    String instructions = String.join(" ", java.util.Arrays.copyOfRange(parts, 6, parts.length));
                     NotesTextArea.setText(instructions);
                 }
             }
@@ -183,7 +175,7 @@ public class EditPrescriptionController {
         }
 
         // Construct dosage string
-        String dosage = quantity + " " + frequency.replace(" / ", "/") + " for " + duration +
+        String dosage = quantity + " " + frequency.replace("x a ", "/") + " for " + duration +
                        (instructions.isEmpty() ? "" : " " + instructions);
 
         // Get IDs

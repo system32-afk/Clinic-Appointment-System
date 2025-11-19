@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 
 public class AdminPrescriptionController {
 
@@ -253,6 +254,9 @@ public class AdminPrescriptionController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Sort prescriptions by prescriptionID ascending
+        prescriptions.sort(Comparator.comparingInt(Prescription::getPrescriptionID));
 
         PrescriptionTable.setItems(prescriptions);
     }

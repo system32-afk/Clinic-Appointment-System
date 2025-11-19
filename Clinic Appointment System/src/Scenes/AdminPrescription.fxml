@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdminPrescriptionController">
    <children>
       <Line endX="1003.0" endY="0.3000030517578125" layoutX="97.0" layoutY="101.0" startX="134.50711059570312" startY="0.3000030517578125" stroke="#00000033" />
       <Line endX="35.50712585449219" endY="577.0" layoutX="196.0" layoutY="73.0" startX="35.507110595703125" startY="28.800003051757812" stroke="#00000032" />
@@ -55,9 +55,9 @@
             <Image url="@../Assets/Location.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="312.0">
+      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="47.0" layoutY="311.0">
          <image>
-            <Image url="@../Assets/Prescription.png" />
+            <Image url="@../Assets/Prescription123.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="60.0" fitWidth="120.0" layoutX="64.0" layoutY="338.0">

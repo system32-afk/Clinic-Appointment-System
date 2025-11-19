@@ -106,30 +106,32 @@ public class ViewPrescriptionController {
     }
 
     private void parseDosage(String dosage) {
-        // Parse dosage like "1 Tablet 2/day for 1 week note"
+        DosageText.setText("N/A");
+        FrequencyText.setText("N/A");
+        DurationText.setText("N/A");
+        InstructionsText.setText("None");
+
         String[] parts = dosage.split(" ");
-        if (parts.length >= 6) {
-            DosageText.setText(parts[0] + " " + parts[1]); // e.g., "1 Tablet"
-            FrequencyText.setText(parts[2].replace("/", " / ")); // e.g., "2 / day"
-            if (parts[3].equals("for")) {
-                DurationText.setText(parts[4] + " " + parts[5]); // e.g., "1 week"
-                // Instructions if present
-                if (parts.length > 6) {
-                    String instructions = String.join(" ", java.util.Arrays.copyOfRange(parts, 6, parts.length));
-                    InstructionsText.setText(instructions);
-                } else {
-                    InstructionsText.setText("None");
-                }
-            } else {
-                // Fallback if format differs
-                DurationText.setText("N/A");
-                InstructionsText.setText("None");
+        if (parts.length >= 2) {
+            DosageText.setText(parts[0] + " " + parts[1]);
+        }
+        if (parts.length >= 3) {
+            FrequencyText.setText(parts[2].replace("/", " / "));
+        }
+
+        // Find "for" to parse duration and instructions
+        int forIndex = -1;
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].equals("for")) {
+                forIndex = i;
+                break;
             }
-        } else {
-            DosageText.setText("N/A");
-            FrequencyText.setText("N/A");
-            DurationText.setText("N/A");
-            InstructionsText.setText("None");
+        }
+        if (forIndex != -1 && forIndex + 2 < parts.length) {
+            DurationText.setText(parts[forIndex + 1] + " " + parts[forIndex + 2]);
+            if (forIndex + 3 < parts.length) {
+                InstructionsText.setText(String.join(" ", java.util.Arrays.copyOfRange(parts, forIndex + 3, parts.length)));
+            }
         }
     }
 

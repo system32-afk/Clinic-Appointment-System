@@ -45,11 +45,6 @@
                <Image url="@../Assets/Diagnoses.png" />
            </image>
        </ImageView>
-       <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="241.0">
-           <image>
-               <Image url="@../Assets/Prescription.png" />
-           </image>
-       </ImageView>
        <ImageView fitHeight="60.0" fitWidth="120.0" layoutX="64.0" layoutY="268.0">
            <image>
                <Image url="@../Assets/Procedure.png" />
@@ -244,5 +239,10 @@
             </Text>
          </children>
       </Pane>
+      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="45.0" layoutY="242.0">
+         <image>
+            <Image url="@../Assets/Prescription123.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
