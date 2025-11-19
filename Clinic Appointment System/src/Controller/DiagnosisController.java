@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -25,8 +26,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.TextField;
+
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -66,14 +70,20 @@ public class DiagnosisController {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
-        loadData();
+        loadData("");
+
+        searchField.textProperty().addListener((observable, oldValue, newText) -> {
+            loadData(newText);
+        });
+
     }
 
-    private void loadData() {
+
+    private void loadData(String searchQuery) {
 
         try {
 
-            ResultSet DiagnosisData = Database.query(
+            String sql =
                     "SELECT " +
                             "d.DiagnosisID, " +
                             "d.AppointmentID, " +
@@ -83,9 +93,25 @@ public class DiagnosisController {
                             "FROM diagnosis d " +
                             "JOIN appointment a ON d.AppointmentID=a.AppointmentID " +
                             "JOIN patient p ON a.PatientID=p.PatientID " +
-                            "JOIN illness i ON d.IllnessID=i.IllnessID " +
-                            "ORDER BY d.DiagnosisID"
-            );
+                            "JOIN illness i ON d.IllnessID=i.IllnessID ";
+
+            if(searchQuery != null && !searchQuery.isEmpty()) {
+                sql += "WHERE d.DiagnosisID LIKE ? " +
+                        "OR CONCAT(p.FirstName, ' ', p.LastName) LIKE ? " +
+                        "OR d.DateDiagnosed LIKE ?";
+
+            }
+
+            PreparedStatement ps = Database.getConnection().prepareStatement(sql);
+
+            if(searchQuery != null && !searchQuery.isEmpty()) {
+                String likeQuery = "%" + searchQuery + "%";
+                ps.setString(1, likeQuery);
+                ps.setString(2, likeQuery);
+                ps.setString(3, likeQuery);
+            }
+
+            ResultSet DiagnosisData = ps.executeQuery();
 
             DiagnosisRows.getChildren().clear();
             scrollPane.setFitToWidth(true);
@@ -138,6 +164,12 @@ public class DiagnosisController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleSearch(KeyEvent event) {
+        String query = searchField.getText();
+        loadData(query);
     }
 
     private void updateDateTime() {
