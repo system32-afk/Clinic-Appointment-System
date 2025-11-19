@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -275,27 +276,37 @@ public class MedicalHistoryController implements Initializable {
         loadMedicalHistories();
     }
 
-    public void DashboardScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "ADMINDashboard");
+    /*
+    ===================SIDE PANEL BUTTONS=========================
+     */
+    @FXML
+    public void logout(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"login");
     }
 
-    public void AppointmentScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "Appointments");
+    @FXML
+    public void openMedicalHistory(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"MedicalHistory");
     }
 
-    public void openMedicineManagement(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicineManagement");
+    @FXML
+    public void openDiagnosis(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Diagnosis");
     }
 
-    public void openMedicalHistory(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "MedicalHistory");
+    @FXML
+    public void openRequestProcedure(MouseEvent e) throws IOException {
+        SceneManager.OpenPopup(e,"RequestProcedure","Reqest for procedure form");
+
     }
 
-    public void openPaymentScreen(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "PaymentProcessing");
+    @FXML
+    public void openPrescription(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"OpenPrescription");
     }
 
-    public void openAppointmentReport(ActionEvent e) throws IOException {
-        SceneManager.transition(e, "AppointmentReport");
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"DOCTORDashboard");
     }
 }

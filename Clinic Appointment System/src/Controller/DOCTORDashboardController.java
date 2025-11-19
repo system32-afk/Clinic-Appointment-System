@@ -188,9 +188,40 @@ public class DOCTORDashboardController {
 
 
 
+    /*
+    ===================SIDE PANEL BUTTONS=========================
+     */
     @FXML
     public void logout(MouseEvent e) throws IOException {
         SceneManager.transition(e,"login");
     }
+
+    @FXML
+    public void openMedicalHistory(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"MedicalHistory");
+    }
+
+    @FXML
+    public void openDiagnosis(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"Diagnosis");
+    }
+
+    @FXML
+    public void openRequestProcedure(MouseEvent e) throws IOException {
+        SceneManager.OpenPopup(e,"RequestProcedure","Reqest for procedure form");
+        
+    }
+
+    @FXML
+    public void openPrescription(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"OpenPrescription");
+    }
+
+    @FXML
+    public void openDashboard(MouseEvent e) throws IOException {
+        SceneManager.transition(e,"DOCTORDashboard");
+    }
+
+
 
 }
