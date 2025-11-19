@@ -6,9 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="2cf5e6ba-e28b-41e3-afc0-622f317bc849" name="Changes" comment="Updated tab Illness, Specialization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/SpecializationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/SpecializationRecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Controller/ServiceRevenueReportController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/SpecializationRecord.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/SpecializationRecord.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ServiceRevenueReport.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Clinic Appointment System/src/Scenes/ServiceRevenueReport.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DiagnosisController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/DiagnosisController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ServiceRevenueReportController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Controller/ServiceRevenueReportController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Driver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ServiceRevenueReport.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Clinic Appointment System/Scenes/ServiceRevenueReport.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,7 +374,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763543825902</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Updated tab Illness, Specialization">
+      <option name="closed" value="true" />
+      <created>1763544177546</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1763544177546</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
