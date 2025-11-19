@@ -369,9 +369,10 @@ public class DoctorRecordController {
     private void viewDoctorProfile(int doctorID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/ViewProfile.fxml"));
+            ViewProfileController controller = new ViewProfileController();
+            loader.setController(controller);
             Parent root = loader.load();
 
-            ViewProfileController controller = loader.getController();
             controller.setDoctorData(doctorID);
 
             Stage stage = new Stage();
@@ -388,8 +389,8 @@ public class DoctorRecordController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditDoctor.fxml"));
             Parent root = loader.load();
-
             EditDoctorController controller = loader.getController();
+
             controller.setDoctorData(doctorID);
 
             Stage stage = new Stage();

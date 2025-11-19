@@ -18,7 +18,12 @@ public class SceneManager {
     //for buttons
     public static void transition(ActionEvent event, String screenName) throws IOException {
         try{
-            Parent root = FXMLLoader.load(SceneManager.class.getResource("/Scenes/"+screenName+".fxml"));
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/Scenes/"+screenName+".fxml"));
+            Object controller = getControllerForScreen(screenName);
+            if (controller != null) {
+                loader.setController(controller);
+            }
+            Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene scene = new Scene(root);
@@ -40,7 +45,12 @@ public class SceneManager {
     //for panes
     public static void transition(MouseEvent event, String screenName) throws IOException {
         try{
-            Parent root = FXMLLoader.load(SceneManager.class.getResource("/Scenes/"+screenName+".fxml"));
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/Scenes/"+screenName+".fxml"));
+            Object controller = getControllerForScreen(screenName);
+            if (controller != null) {
+                loader.setController(controller);
+            }
+            Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene scene = new Scene(root);
@@ -63,6 +73,10 @@ public class SceneManager {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/Scenes/"+screenName+".fxml"));
+        Object controller = getControllerForScreen(screenName);
+        if (controller != null) {
+            loader.setController(controller);
+        }
         Parent root = loader.load();
 
         Stage stage = new Stage();
@@ -73,6 +87,18 @@ public class SceneManager {
         stage.initOwner(currentStage);
         stage.initModality(Modality.WINDOW_MODAL); // blocks input to owner
         stage.showAndWait(); // use showAndWait to block until closed
+    }
+
+    private static Object getControllerForScreen(String screenName) {
+        switch (screenName) {
+            case "AdminPrescription":
+                return new Controller.AdminPrescriptionController();
+            case "DoctorPrescription":
+                return new Controller.DoctorPrescriptionController();
+            // Add other cases as needed
+            default:
+                return null;
+        }
     }
 }
 

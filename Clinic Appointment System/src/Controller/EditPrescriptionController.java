@@ -204,9 +204,8 @@ public class EditPrescriptionController {
             // Get appointment ID for this prescription
             rs = Database.query("SELECT AppointmentID FROM prescription WHERE PrescriptionID = ?", prescriptionID);
             if (rs != null && rs.next()) appointmentID = rs.getInt("AppointmentID");
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         // Update database

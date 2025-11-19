@@ -370,10 +370,10 @@ public class AdminPrescriptionController {
     private void createPrescription(ActionEvent e) throws IOException {
         // Load the FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/CreatePrescription.fxml"));
+        CreatePrescriptionController controller = new CreatePrescriptionController();
+        loader.setController(controller);
         Parent root = loader.load();
 
-        // Get the controller
-        CreatePrescriptionController controller = loader.getController();
         controller.setAdminParentController(this);
 
         // Create dialog stage
@@ -389,10 +389,9 @@ public class AdminPrescriptionController {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/ViewPrescription.fxml"));
+            ViewPrescriptionController controller = new ViewPrescriptionController();
+            loader.setController(controller);
             Parent root = loader.load();
-
-            // Get the controller
-            ViewPrescriptionController controller = loader.getController();
 
             // Fetch prescription details
             String query = "SELECT p.PrescriptionID, CONCAT(pt.FirstName, ' ', pt.LastName) AS Patient, " +
@@ -451,10 +450,10 @@ public class AdminPrescriptionController {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/EditPrescription.fxml"));
+            EditPrescriptionController controller = new EditPrescriptionController();
+            loader.setController(controller);
             Parent root = loader.load();
 
-            // Get the controller
-            EditPrescriptionController controller = loader.getController();
             controller.setAdminParentController(this);
 
             // Fetch current prescription data

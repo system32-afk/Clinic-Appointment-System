@@ -51,22 +51,27 @@
             <Image url="@../Assets/Diagnoses.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="277.0">
+      <ImageView fitHeight="51.0" fitWidth="145.0" layoutX="66.0" layoutY="273.0">
          <image>
-            <Image url="@../Assets/Prescription.png" />
+            <Image url="@../Assets/Location.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="146.0" layoutX="50.0" layoutY="314.0">
+      <ImageView fitHeight="60.0" fitWidth="120.0" layoutX="64.0" layoutY="338.0">
+         <image>
+            <Image url="@../Assets/Procedure.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="146.0" layoutX="50.0" layoutY="384.0">
          <image>
             <Image url="@../Assets/Services.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="145.0" layoutX="52.0" layoutY="350.0">
+      <ImageView fitHeight="37.0" fitWidth="145.0" layoutX="52.0" layoutY="421.0">
          <image>
             <Image url="@../Assets/Payments.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="149.0" layoutX="48.0" layoutY="383.0">
+      <ImageView fitHeight="42.0" fitWidth="149.0" layoutX="48.0" layoutY="453.0">
          <image>
             <Image url="@../Assets/Reports.png" />
          </image>
@@ -74,21 +79,23 @@
       <Line endX="175.8000030517578" layoutX="55.0" layoutY="504.0" startX="-100.0" stroke="#0000000c" />
       <Line endX="156.80001831054688" endY="0.39288330078125" layoutX="74.0" layoutY="101.0" startX="-100.0" stroke="#0000000c" />
       <Line endX="17.507110595703125" endY="62.30000305175781" layoutX="214.0" layoutY="39.0" startX="18.507110595703125" startY="-39.0" stroke="#0000000c" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="107.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="142.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="177.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="212.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="247.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="282.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="317.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="27.0" layoutY="352.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
-      <Button blendMode="DARKEN" layoutX="28.0" layoutY="387.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="107.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="142.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="177.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="212.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="247.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="282.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="317.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="27.0" layoutY="352.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="28.0" layoutY="387.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="29.0" layoutY="422.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
+      <Button blendMode="DARKEN" layoutX="29.0" layoutY="457.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="33.0" prefWidth="180.0" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" />
       <Text fx:id="Date" fill="#00000060" layoutX="246.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="576.8612060546875">
          <font>
             <Font size="30.0" />
          </font>
       </Text>
-      <Button layoutX="16.0" layoutY="583.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" text="         Sign Out" textFill="#00000060">
+      <Button layoutX="16.0" layoutY="583.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" style="-fx-background-color: #ebf5f5; -fx-border-color: #C7EBEB; -fx-background-radius: 10; -fx-border-radius: 10;" text="         Sign Out" textFill="#00000060">
          <font>
             <Font size="18.0" />
          </font>
@@ -121,7 +128,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="SearchBar" layoutX="560.0" layoutY="9.0" prefHeight="37.0" prefWidth="180.0" promptText="Search by name, ID, or specialization" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="search-bar" />
+                              <TextField fx:id="SearchBar" layoutX="560.0" layoutY="9.0" prefHeight="37.0" prefWidth="180.0" promptText="Search by name or specialization" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #4ab3b7; -fx-background-color: #EBF5F5;" styleClass="search-bar" />
                               <Button layoutX="295.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddDoctor" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="+   Doctor" textFill="#4ab1b5e6">
                                  <font>
                                     <Font size="15.0" />
@@ -135,10 +142,10 @@
                               <Button layoutX="427.0" layoutY="-1.0" mnemonicParsing="false" onAction="#reloadData" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: transparent;" />
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="774.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="774.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
                            <children>
                               <ListView layoutX="-2.0" layoutY="-5.0" prefHeight="234.0" prefWidth="776.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                              <TableView fx:id="DoctorTable" layoutX="-2.0" layoutY="-1.0" prefHeight="226.0" prefWidth="774.0">
+                              <TableView fx:id="DoctorTable" layoutX="-1.0" prefHeight="226.0" prefWidth="774.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
                                 <columns>
                                   <TableColumn fx:id="DoctorIDColumn" prefWidth="70.39998853206635" text="Doctor ID" />
                                   <TableColumn fx:id="NameColumn" prefWidth="102.39997100830078" text="Name" />
@@ -234,6 +241,11 @@
                         </Pane>
                      </children>
                   </HBox>
+                  <Button layoutX="652.0" layoutY="19.0" mnemonicParsing="false" onAction="#AddDoctor" style="-fx-background-color: #e8f5f5; -fx-border-color: #4ab3b7; -fx-background-radius: 10; -fx-border-radius: 10;" text="+   Add Doctor" textFill="#4ab3b7">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
         </content>
@@ -250,12 +262,12 @@
       </Text>
       <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="1008.0" layoutY="20.0">
          <image>
-            <Image url="@../Assets/icons.png" />
+            <Image url="@../Assets/Admin.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="8.0" layoutY="509.0">
          <image>
-            <Image url="@../Assets/icons.png" />
+            <Image url="@../Assets/Admin.png" />
          </image>
       </ImageView>
       <Text layoutX="83.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin User">
@@ -272,5 +284,10 @@
             </Text>
          </children>
       </Pane>
+      <ImageView fitHeight="42.0" fitWidth="169.0" layoutX="46.0" layoutY="312.0">
+         <image>
+            <Image url="@../Assets/Prescription123.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
