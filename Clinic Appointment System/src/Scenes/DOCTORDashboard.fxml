@@ -132,9 +132,9 @@
          </font>
       </Label>
 
-      <VBox layoutY="79.0" prefHeight="429.0" prefWidth="200.0" style="-fx-padding: 15; -fx-spacing: 5;">
+      <VBox fx:id="sidepanel" layoutY="79.0" prefHeight="429.0" prefWidth="200.0" style="-fx-padding: 15; -fx-spacing: 5;">
          <children>
-            <Pane prefHeight="60.0" prefWidth="197.0">
+            <Pane onMouseClicked="#openDashboard" prefHeight="60.0" prefWidth="197.0">
                <children>
                   <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -148,7 +148,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="25.0" layoutY="25.0" prefHeight="60.0" prefWidth="197.0">
+            <Pane layoutX="25.0" layoutY="25.0" onMouseClicked="#openMedicalHistory" prefHeight="60.0" prefWidth="197.0">
                <children>
                   <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -162,7 +162,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="25.0" layoutY="90.0" prefHeight="60.0" prefWidth="197.0">
+            <Pane layoutX="25.0" layoutY="90.0" onMouseClicked="#openDiagnosis" prefHeight="60.0" prefWidth="197.0">
                <children>
                   <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -176,7 +176,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="25.0" layoutY="155.0" prefHeight="60.0" prefWidth="197.0">
+            <Pane layoutX="25.0" layoutY="155.0" onMouseClicked="#openPrescription" prefHeight="60.0" prefWidth="197.0">
                <children>
                   <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -190,7 +190,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="25.0" layoutY="220.0" prefHeight="60.0" prefWidth="197.0">
+            <Pane layoutX="25.0" layoutY="220.0" onMouseClicked="#openRequestProcedure" prefHeight="60.0" prefWidth="197.0">
                <children>
                   <ImageView fitHeight="60.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
