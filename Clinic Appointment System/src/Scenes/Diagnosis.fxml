@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DiagnosisController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DiagnosisController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="706.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="83.0" stroke="#bebebe" strokeType="INSIDE" width="200.0" />
@@ -180,13 +180,15 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="addDiagnosisButton" cache="true" cacheHint="QUALITY" layoutX="1007.0" layoutY="341.0" mnemonicParsing="false" onAction="#AddDiagnosis" prefHeight="28.0" prefWidth="170.0" style="-fx-background-color: BLACK; -fx-background-radius: 15;" text="+ Create Diagnosis" textFill="WHITE">
+      <Button fx:id="addDiagnosisButton" cache="true" cacheHint="QUALITY" layoutX="1013.0" layoutY="107.0" mnemonicParsing="false" onAction="#AddDiagnosis" prefHeight="28.0" prefWidth="170.0" style="-fx-background-color: BLACK; -fx-background-radius: 15;" text="+ Create Diagnosis" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
 
-       <TextField fx:id="searchField" layoutX="751.0" layoutY="331.0" onKeyReleased="#handleSearch" prefHeight="40.0" prefWidth="230.0" promptText="Search by ID, Name, or Illness..." />
+       <TextField fx:id="searchField" layoutX="881.0" layoutY="342.0" onKeyReleased="#handleSearch" prefHeight="25.0" prefWidth="170.0" promptText="Search by ID, Name, or Illness..." />
+       <Button fx:id="SearchButton" layoutX="1066.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #40D0E0; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
+       
 
        <Label fx:id="statusLabel" layoutX="1006.0" layoutY="380.0" style="-fx-test-fill: green; -fx-font-size: 13px;" text="" />
       <Pane fx:id="logoPane" prefHeight="83.0" prefWidth="207.0">
@@ -201,8 +203,7 @@
                   <Font size="17.0" />
                </font>
             </Text>
-         </children>
-      </Pane>
+         </children></Pane>
 
       <Pane layoutY="622.0" onMouseClicked="#logout" prefHeight="83.0" prefWidth="200.0" style="-fx-border-color: gray;">
          <children>
@@ -218,6 +219,7 @@
             </Text>
          </children>
       </Pane>
+
 
    </children>
 </AnchorPane>
