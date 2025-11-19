@@ -394,42 +394,23 @@ public class AdminProceduresController {
     }
 
     private void viewProcedure(int procedureID) {
-        // Fetch procedure details
-        String query = "SELECT pr.ProcedureID, CONCAT(p.FirstName, ' ', p.LastName) AS Patient, " +
-                      "CONCAT(d.FirstName, ' ', d.LastName) AS Doctor, s.ServiceName AS Service, " +
-                      "pr.ProcedureDate AS Date, s.Price AS Cost, pr.Status AS Status, pr.Notes " +
-                      "FROM procedurerequest pr " +
-                      "JOIN appointment a ON pr.AppointmentID = a.AppointmentID " +
-                      "JOIN patient p ON a.PatientID = p.PatientID " +
-                      "JOIN doctor d ON a.DoctorID = d.DoctorID " +
-                      "JOIN service s ON pr.ServiceID = s.ServiceID " +
-                      "WHERE pr.ProcedureID = ?";
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/ViewProcedure.fxml"));
+            Parent root = loader.load();
 
-        try (java.sql.PreparedStatement stmt = Database.getConnection().prepareStatement(query)) {
-            stmt.setInt(1, procedureID);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String details = "Procedure ID: PROC" + String.format("%03d", rs.getInt("ProcedureID")) + "\n" +
-                                 "Patient: " + rs.getString("Patient") + "\n" +
-                                 "Doctor: " + rs.getString("Doctor") + "\n" +
-                                 "Service: " + rs.getString("Service") + "\n" +
-                                 "Date: " + rs.getString("Date") + "\n" +
-                                 "Cost: ₱" + String.format("%.2f", rs.getDouble("Cost")) + "\n" +
-                                 "Status: " + rs.getString("Status") + "\n" +
-                                 "Notes: " + rs.getString("Notes");
+            ViewProcedureController controller = loader.getController();
+            controller.setProcedureData(procedureID);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Procedure Details");
-                alert.setHeaderText("Details for Procedure PROC" + String.format("%03d", procedureID));
-                alert.setContentText(details);
-                alert.showAndWait();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Stage stage = new Stage();
+            stage.setTitle("View Procedure");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Failed to load procedure details");
-            alert.setContentText("Could not retrieve procedure details: " + e.getMessage());
+            alert.setHeaderText("Failed to open view form");
+            alert.setContentText("Could not load the procedure view form: " + ex.getMessage());
             alert.showAndWait();
         }
     }
