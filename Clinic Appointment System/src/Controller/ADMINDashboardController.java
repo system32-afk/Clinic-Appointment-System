@@ -106,14 +106,15 @@ public class ADMINDashboardController {
 
     private void loadData() {
         try {
-            // Get appointment count
+            // Get appointment count for today only
             ResultSet result = Database.query(
                     "SELECT " +
                             "COUNT(*) AS total, " +
                             "SUM(CASE WHEN status = 'Completed' THEN 1 ELSE 0 END) AS completed, " +
                             "SUM(CASE WHEN status = 'Canceled' THEN 1 ELSE 0 END) AS canceled, " +
                             "SUM(CASE WHEN status = 'In-Progress' THEN 1 ELSE 0 END) AS in_progress " +
-                            "FROM appointment"
+                            "FROM appointment " +
+                            "WHERE Date = CURDATE()"
             );
 
             if (result != null && result.next()) {
@@ -124,7 +125,7 @@ public class ADMINDashboardController {
             }
 
 
-            // Get appointment info
+            // Get appointment info for today only
             ResultSet Appointment = Database.query(
                     "SELECT a.AppointmentID, " +
                             "CONCAT(p.LastName, ', ', p.FirstName) AS PatientName, " +
@@ -132,7 +133,9 @@ public class ADMINDashboardController {
                             "a.Time, a.Status " +
                             "FROM appointment a " +
                             "JOIN patient p ON a.PatientID = p.PatientID " +
-                            "JOIN doctor d ON a.DoctorID = d.DoctorID"
+                            "JOIN doctor d ON a.DoctorID = d.DoctorID " +
+                            "WHERE a.Date = CURDATE() " +
+                            "ORDER BY a.Time ASC"
             );
 
             statsContainer.getChildren().clear(); // clear previous rows

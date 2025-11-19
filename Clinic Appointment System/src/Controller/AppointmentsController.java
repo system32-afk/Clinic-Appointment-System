@@ -118,7 +118,8 @@ public class AppointmentsController {
                         "a.Status, a.Time, a.Date, a.ReasonForVisit " +  // removed the trailing comma
                         "FROM appointment a " +
                         "JOIN patient p ON a.patientID = p.patientID " +
-                        "JOIN doctor d ON a.doctorID = d.doctorID"
+                        "JOIN doctor d ON a.doctorID = d.doctorID " +
+                        "ORDER BY a.appointmentID desc"
         );
 
         loadData(initialdata);
@@ -137,7 +138,8 @@ public class AppointmentsController {
                             "SUM(CASE WHEN a.Status = 'Pending' THEN 1 ELSE 0 END) OVER() AS PendingAppointments " +
                             "FROM appointment a " +
                             "JOIN patient p ON a.PatientID = p.PatientID " +
-                            "JOIN doctor d ON a.DoctorID = d.DoctorID"
+                            "JOIN doctor d ON a.DoctorID = d.DoctorID " +
+                            "ORDER BY a.appointmentID desc"
             );
 
             AppointmentRows.getChildren().clear();

@@ -6,21 +6,20 @@ import javafx.stage.Stage;
 import Util.Database;
 
 import java.sql.Connection;
-import java.util.Random;
-
 
 public class Driver extends Application {
     public static void main(String[] args) {
-
         Connection connection = Database.getConnection();
         if(connection != null){
             launch(args);
+        } else {
+            System.err.println("Database connection failed. Exiting...");
         }
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/IllnessReport.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/DOCTORDashboard.fxml"));
         primaryStage.setTitle("Clinic Appointment System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

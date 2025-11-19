@@ -158,7 +158,7 @@ public class ScheduleAppointmentController {
     private List<String> generateTimeSlots() {
         List<String> slots = new ArrayList<>();
         LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(17, 0);
+        LocalTime end = LocalTime.of(19, 0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         while (!start.isAfter(end.minusHours(1))) { // Stop 1 hour before end

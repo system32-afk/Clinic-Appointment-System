@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewProcedureController">
+   <children>
+      <AnchorPane layoutY="-1.0" prefHeight="560.0" prefWidth="750.0" style="-fx-background-color: #ebf5f5; -fx-background-radius: 20; -fx-border-radius: 20;">
+         <children>
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#4ab3b7" layoutX="403.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attending Doctor">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#4ab3b7" layoutX="403.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date - (MM-DD-YYYY)">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Button fx:id="CancelButton" layoutX="560.0" layoutY="492.0" mnemonicParsing="false" onAction="#cancelRequest" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #ff6b6b; -fx-background-radius: 10; -fx-border-radius: 10;" text="Close" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Button>
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Details">
+               <font>
+                  <Font name="Arial" size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="ProcedureIDText" layoutX="55.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROC000">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="PatientText" layoutX="52.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName Lastname">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="DoctorText" layoutX="400.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dr. FirstName Lastname">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="ServiceText" layoutX="52.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ex. Blood Test">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="DateText" layoutX="400.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ex. 01-31-2025">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#4ab3b7" layoutX="55.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#4ab3b7" layoutX="403.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#4ab3b7" layoutX="54.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="CostText" layoutX="52.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ex. ₱9999">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="StatusText" layoutX="400.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ex. Pending">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="NotesText" layoutX="53.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ex. Drink Water" wrappingWidth="221.6225128173828">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

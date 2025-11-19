@@ -206,15 +206,15 @@ public class DOCTORDashboardController {
         SceneManager.transition(e,"Diagnosis");
     }
 
-    @FXML
+ @FXML
     public void openRequestProcedure(MouseEvent e) throws IOException {
-        SceneManager.OpenPopup(e,"RequestProcedure","Reqest for procedure form");
-        
+        SceneManager.transition(e,"DoctorProcedures");
+
     }
 
     @FXML
     public void openPrescription(MouseEvent e) throws IOException {
-        SceneManager.transition(e,"OpenPrescription");
+        SceneManager.transition(e,"DoctorPrescription");
     }
 
     @FXML
